@@ -7,6 +7,7 @@ import View.MainWindow;
 import View.StartWindow;
 import View.GameOverWindow;
 
+//This is a comment
 public class Main {
 
     public static GamePanel gamePanel;
