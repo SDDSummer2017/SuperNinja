@@ -8,7 +8,6 @@ import View.StartWindow;
 import View.GameOverWindow;
 
 //This is a comment
-//this is matlocks' comment
 public class Main {
 
     public static GamePanel gamePanel;
