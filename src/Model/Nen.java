@@ -10,14 +10,14 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import View.GamePanel;
 
-public class Marine extends GameFigure {
+public class Nen extends GameFigure {
 
     private final Image launcherImage;
     private int jumpHeight = 0;
     private int dy = -7;
     public boolean jump, movingLeft, movingRight;
 
-    public Marine(int x, int y, int size) {
+    public Nen(int x, int y, int size) {
         super(x, y, size);
         this.health = 100;
         movingRight = jump = movingLeft = false;
@@ -26,7 +26,7 @@ public class Marine extends GameFigure {
         String separator = System.getProperty("file.separator");
 
         launcherImage = getImage(imagePath + separator + "images" + separator
-                + "Marine.png");
+                + "Nen.png");
     }
 
     @Override

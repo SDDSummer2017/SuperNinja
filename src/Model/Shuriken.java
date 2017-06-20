@@ -8,7 +8,7 @@ import javax.vecmath.Vector2f;
 import View.GamePanel;
 
 
-public class MarineBullet extends GameFigure {
+public class Shuriken extends GameFigure {
     
     private final Color color;
     public double targetX, targetY, dx, dy;
@@ -18,7 +18,7 @@ public class MarineBullet extends GameFigure {
     Vector2f targetPath;
     
     
-    public MarineBullet(double x, double y, double tx, double ty, Color color) {
+    public Shuriken(double x, double y, double tx, double ty, Color color) {
         super(x, y, 3);
         this.targetX = tx;
         this.targetY = ty;

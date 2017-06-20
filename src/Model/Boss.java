@@ -7,7 +7,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
-import static Model.Marine.getImage;
+import static Model.Nen.getImage;
 import View.GamePanel;
 
 public class Boss extends GameFigure {

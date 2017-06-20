@@ -13,17 +13,17 @@ public class TimerListener implements ActionListener {
   
     @Override
     public void actionPerformed(ActionEvent ae) {      
-        if(mutaCount == 0){
-            Main.gameData.addMutalisk(4);
-            mutaCount = 4;
-        }
-        else if(mutaCount == 16){
-            Main.gameData.addMutalisk(1);
-            Main.gameData.mutaTimer.stop();  
-        }
-        else{
-            Main.gameData.addMutalisk(4);
-            mutaCount+=4;   
-            }
+//        if(mutaCount == 0){
+//            Main.gameData.addMutalisk(4);
+//            mutaCount = 4;
+//        }
+//        else if(mutaCount == 16){
+//            Main.gameData.addMutalisk(1);
+//            Main.gameData.mutaTimer.stop();  
+//        }
+//        else{
+//            Main.gameData.addMutalisk(4);
+//            mutaCount+=4;   
+//            }
     }   
 }

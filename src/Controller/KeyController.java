@@ -2,11 +2,11 @@ package Controller;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import Model.Marine;
+import Model.Nen;
 
 
 public class KeyController implements KeyListener {
-    Marine marine = Main.gameData.marine;
+    Nen marine = Main.gameData.marine;
     @Override
     public void keyPressed(KeyEvent e) {   
         switch (e.getKeyCode()){

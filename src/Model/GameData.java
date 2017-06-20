@@ -18,7 +18,7 @@ public class GameData {
     public final List<GameFigure> deadEnemys;
     public final List<GameFigure> bullets;
     public final List<GameFigure> deadBullets;
-    public final Marine marine;
+    public final Nen marine;
     public Timer mutaTimer, bossTimer;
     public TimerListener timerListener;
     public Thread gameThread;
@@ -44,18 +44,18 @@ public class GameData {
         
         gameThread = new Thread(Main.animator);
         
-        marine = new Marine(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - 90, 90);
+        marine = new Nen(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - 90, 90);
        
     }
 
     public void addMutalisk(int n) {
-        Random r = new Random();
-         synchronized (enemys) {
-            for (int i = 0; i < n; i++) {
-                enemys.add(new Mutalisk(r.nextInt(GamePanel.PWIDTH),
-                        r.nextInt(GamePanel.PHEIGHT), SIZE));
-            }
-        }
+//        Random r = new Random();
+//         synchronized (enemys) {
+//            for (int i = 0; i < n; i++) {
+//                enemys.add(new Mutalisk(r.nextInt(GamePanel.PWIDTH),
+//                        r.nextInt(GamePanel.PHEIGHT), SIZE));
+//            }
+//        }
     }
     
     public void addBoss(){
@@ -66,7 +66,7 @@ public class GameData {
     }
     public void addMarineBullet(double x1, double y1, double x2, double y2, Color color) {
         synchronized (bullets) {
-                bullets.add(new MarineBullet(x1, y1, x2, y2, color));
+                bullets.add(new Shuriken(x1, y1, x2, y2, color));
         }
     }
     

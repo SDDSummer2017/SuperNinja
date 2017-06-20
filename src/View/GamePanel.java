@@ -8,7 +8,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JPanel;
 import Model.GameFigure;
-import static Model.Marine.getImage;
+import static Model.Nen.getImage;
 
 public class GamePanel extends JPanel {
 
