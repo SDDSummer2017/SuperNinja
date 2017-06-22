@@ -5,15 +5,15 @@
  */
 package Model.States;
 
-import Model.GameFigure;
-import Model.States.State;
-
+import Model.GameFigure; 
 /**
  *
  * @author Garrett A. Clement
  */
 public abstract class MotionState extends State {
-
+    protected MotionState previousState;
+    protected CombatState combatState;
+    
     public MotionState(GameFigure gameFigure) {
         super(gameFigure);
     }

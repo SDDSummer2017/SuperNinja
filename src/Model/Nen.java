@@ -1,5 +1,7 @@
 package Model;
 
+import Model.States.Nen.NeutralCombat;
+import Model.States.Nen.NeutralMotion;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -11,7 +13,7 @@ import javax.swing.JOptionPane;
 import View.GamePanel;
 
 public class Nen extends GameFigure {
-
+   
     private final Image launcherImage;
     private int jumpHeight = 0;
     private int dy = -7;
@@ -20,6 +22,9 @@ public class Nen extends GameFigure {
     public Nen(int x, int y, int size) {
         super(x, y, size);
         this.health = 100;
+        mState = new NeutralMotion(this);
+        cState = new NeutralCombat(this);
+        
         movingRight = jump = movingLeft = false;
         String imagePath = System.getProperty("user.dir");
         // separator: Windows '\', Linux '/'
@@ -42,41 +47,50 @@ public class Nen extends GameFigure {
 
     @Override
     public void update() {
-        if (movingLeft) {
-            translate(-7, 0);
-        }
-        if (movingRight) {
-            translate(7, 0);
-        }
-        if (jump) {
-            jump();
-        }
+        
+//        if(cState instance of NS)
+//            mState.execute();
+//        else
+//            cState.execute();
+  
+        mState.execute();
+        cState.execute();
+        
+//        if (movingLeft) {
+//            translate(-7, 0);
+//        }
+//        if (movingRight) {
+//            translate(7, 0);
+//        }
+//        if (jump) {
+//            jump();
+//        }
     }
 
-    public void jump() {
-        jumpHeight += dy;
-        if (jumpHeight <= -100) {
-            dy = 7;
-        }
-        if (jumpHeight == 0) {
-            jump = false;
-            dy = -7;
-            super.y = GamePanel.PHEIGHT - super.size;
-            return;
-        }
-        super.y += dy;
-    }
-
-    public void translate(int dx, int dy) {
-        if (super.x <= 0 && dx < 0) {
-            dx = 0;
-        }
-        if (((super.x + super.size) >= GamePanel.PWIDTH) && (dx > 0)) {
-            dx = 0;
-        }
-        super.x += dx;
-        super.y += dy;
-    }
+//    public void jump() {
+//        jumpHeight += dy;
+//        if (jumpHeight <= -100) {
+//            dy = 7;
+//        }
+//        if (jumpHeight == 0) {
+//            jump = false;
+//            dy = -7;
+//            super.y = GamePanel.PHEIGHT - super.size;
+//            return;
+//        }
+//        super.y += dy;
+//    }
+//
+//    public void translate(int dx, int dy) {
+//        if (super.x <= 0 && dx < 0) {
+//            dx = 0;
+//        }
+//        if (((super.x + super.size) >= GamePanel.PWIDTH) && (dx > 0)) {
+//            dx = 0;
+//        }
+//        super.x += dx;
+//        super.y += dy;
+//    }
 
     public void resetMarine() {
         this.health = 100;

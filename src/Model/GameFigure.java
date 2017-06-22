@@ -1,5 +1,7 @@
 package Model;
 
+import Model.States.CombatState;
+import Model.States.MotionState;
 import java.awt.Graphics;
 import java.awt.geom.Point2D;
 
@@ -9,6 +11,10 @@ public abstract class GameFigure implements Collision {
     public double y;
     public double size;
     public double health;
+    public double damage;
+    public boolean isFacingRight;
+    public CombatState cState;
+    public MotionState mState;
     public Point2D.Double location;
     public boolean hit;
 

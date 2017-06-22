@@ -5,8 +5,7 @@
  */
 package Model.States;
 
-import Model.GameFigure; 
-import Model.States.State;
+import Model.GameFigure;  
 
 /**
  *
@@ -15,6 +14,8 @@ import Model.States.State;
 public abstract class CombatState extends State {
     protected long initTime;
     protected long comboWindow;
+    protected CombatState previousState;
+    protected MotionState motionState;
     
     public CombatState(GameFigure gameFigure) {
         super(gameFigure);
