@@ -13,7 +13,7 @@ import View.GamePanel;
  *
  * @author Garrett A. Clement
  */
-public class Jump extends Move {
+public class Jump extends MotionState {
 
     private boolean isMoving = false;
     private boolean jumpMade;
@@ -27,10 +27,6 @@ public class Jump extends Move {
 
     @Override
     public void execute() {
-        super.execute();
-        System.out.println("JUMP HEIGHT:" + jumpHeight);
-        System.out.println("nen: " + gameFigure.y);
-        System.out.println("gamePanel: " + gameFigure.size);
         if(JUMP_LIMIT >= jumpHeight)
         { 
             jumpMade = true;
@@ -46,7 +42,6 @@ public class Jump extends Move {
     }
 
     public void move(){
-        System.out.println("I am here yeahhhh");
         if(gameFigure.isFacingRight)
             gameFigure.x += 5;
         else
@@ -56,7 +51,9 @@ public class Jump extends Move {
     @Override
     public void nextState(String s) {
         if(s.equals("Move"))
-            isMoving = !isMoving;
+            isMoving = true;
+        else if(s.equals("NeutralMotion"))
+            isMoving = false;
         if(s.equals("JumpMade") && isMoving)
             gameFigure.mState = new Move(gameFigure);
         else if(s.equals("JumpMade"))
