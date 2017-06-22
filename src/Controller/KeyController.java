@@ -6,18 +6,20 @@ import Model.Nen;
 
 
 public class KeyController implements KeyListener {
-    Nen marine = Main.gameData.marine;
+    Nen nen = Main.gameData.marine;
     @Override
     public void keyPressed(KeyEvent e) {   
         switch (e.getKeyCode()){
             case  KeyEvent.VK_LEFT:
-                marine.movingLeft = true;
+                nen.isFacingRight = false;
+                nen.mState.nextState("Move");
                 break;
             case KeyEvent.VK_RIGHT:
-                marine.movingRight = true;
+                nen.isFacingRight = true;
+                nen.mState.nextState("Move");
                 break;
             case KeyEvent.VK_UP:
-                marine.jump = true;
+                nen.mState.nextState("Jump");
                 break;
         }
     }
@@ -30,10 +32,10 @@ public class KeyController implements KeyListener {
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()){
             case  KeyEvent.VK_LEFT:
-                marine.movingLeft = false;
+                nen.mState.nextState("NeutralMotion");
                 break;
             case KeyEvent.VK_RIGHT:
-                marine.movingRight = false;
+                nen.mState.nextState("NeutralMotion");
                 break;        
         }
     }
