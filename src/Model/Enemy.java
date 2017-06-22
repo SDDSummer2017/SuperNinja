@@ -9,25 +9,28 @@ import java.util.Random;
 import static Model.Nen.getImage;
 import View.GamePanel;
 
-public class Enemy extends GameFigure {
+public abstract class Enemy extends GameFigure {
 
-    private final Image mutaliskImage;
-    private int dx;
-    private int dy;
-    private int updateCount = 0;
-    private final Random random;
+    public Image attack1;
+    public Image attack2;
+    public Image block;
+    public Image hit;
+    public Image movement;
+    public Image neutral;
+    public Image is_Thrown;
+    
+    public int dx;
+    public int dy;
+    public int updateCount = 0;
+    public final Random random;
 
-
-    public Enemy(int x, int y, int size) {
-        super(x, y, size);
-        this.health = 50;
-        this.random = new Random();
-        String imagePath = System.getProperty("user.dir");
-        String separator = System.getProperty("file.separator");
-        mutaliskImage = getImage(imagePath + separator + "images" + separator
-                + "Enemy.jpg");
-
-    }
+    /**
+     *
+     * @param x
+     * @param y
+     * @param size
+     */
+    public Enemy(int x, int y, int size) {}
     
     public void shoot(){
         double targetX = Main.gameData.marine.x + Main.gameData.marine.size/2;
@@ -38,16 +41,7 @@ public class Enemy extends GameFigure {
     }
     
     @Override
-    public void render(Graphics g) {
-        g.drawImage(mutaliskImage, (int)super.x, (int)super.y, (int)super.size, (int)super.size, null);
-        
-        g.setColor(Color.red);
-        g.fillRect((int)x, (int)y, (int)super.size, 2); 
-        
-        g.setColor(Color.green);
-        g.fillRect((int)x, (int)y, (int)health, 2);       
-        
-    }
+    public void render(Graphics g) {}
 
     @Override
     public void update() {
@@ -83,5 +77,4 @@ public class Enemy extends GameFigure {
     public Rectangle2D.Double getCollisionBox() {
         return new Rectangle2D.Double(super.x, super.y, super.size, super.size);
     }
-    
 }

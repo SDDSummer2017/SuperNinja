@@ -6,6 +6,7 @@
 package Model;
 
 import static Model.Nen.getImage;
+import java.awt.Graphics;
 
 /**
  *
@@ -21,5 +22,8 @@ public class Rai extends Enemy {
         super.attack1 = getImage(imagePath + separator + "images" + separator
                 + "Rai_ViperStrike.png");
     }
+    
+    @Override
+    public void render(Graphics g) {}
     
 }
