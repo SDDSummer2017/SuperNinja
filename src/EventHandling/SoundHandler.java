@@ -15,11 +15,17 @@ import javafx.scene.media.MediaPlayer;
  * @author abilb
  */
 public class SoundHandler extends ResourceHandler implements CollisionObserver, StateObserver{
-
+    //Must find resource path. This may change later if we impliment a flywieght pattern, in which case the resource paths may 
+    //may reference an in-memory location. 
+    
     public SoundHandler(String resourcePath) {
         super(resourcePath);
     }
 
+    
+    //Our onNotify methods take a variety of arguments for different situations.
+    //Add conditions inside these and play the appropriate sounds inside theses methods. 
+    
     @Override
     public void onNotify(GameFigure gameFigureOne, GameFigure gameFigureTwo) {
          System.out.print("Two objects have collided, and now we will play a sound" );
@@ -35,6 +41,9 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
         System.out.print(string);
     }
 
+    
+    // Use this method to play sounds inside the on notify methods. 
+    
     private void playSound(String sound)
     {
         
