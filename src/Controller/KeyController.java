@@ -3,6 +3,8 @@ package Controller;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import Model.Nen;
+import Model.States.Nen.Jump;
+import Model.States.Nen.Move;
 
 
 public class KeyController implements KeyListener {
@@ -12,14 +14,23 @@ public class KeyController implements KeyListener {
         switch (e.getKeyCode()){
             case  KeyEvent.VK_LEFT:
                 nen.isFacingRight = false;
+                
                 nen.mState.nextState("Move");
                 break;
             case KeyEvent.VK_RIGHT:
                 nen.isFacingRight = true;
-                nen.mState.nextState("Move");
+               
+                if(nen.mState.getClass() != Move.class)
+                {
+                     nen.mState.nextState("Move");
+                }
                 break;
             case KeyEvent.VK_UP:
-                nen.mState.nextState("Jump");
+                if(nen.mState.getClass() != Jump.class)
+                {
+                     nen.mState.nextState("Jump");
+                }
+               
                 break;
         }
     }

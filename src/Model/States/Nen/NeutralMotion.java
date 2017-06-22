@@ -5,8 +5,10 @@
  */
 package Model.States.Nen;
 
+import EventHandling.Observer;
 import Model.GameFigure;
 import Model.States.MotionState;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,9 +16,8 @@ import Model.States.MotionState;
  */
 public class NeutralMotion extends MotionState {
 
-    public NeutralMotion(GameFigure gameFigure) {
-        super(gameFigure);
-        
+    public NeutralMotion(GameFigure gameFigure, ArrayList<Observer> observers) {
+        super(gameFigure, observers) ;
     }
 
     @Override
@@ -25,9 +26,12 @@ public class NeutralMotion extends MotionState {
     @Override
     public void nextState(String s){
         if(s.equals("Move") && gameFigure.cState instanceof NeutralCombat)
-           gameFigure.mState = new Move(gameFigure);
+           gameFigure.mState = new Move(gameFigure, observers);
         if(s.equals("Jump") && gameFigure.cState instanceof NeutralCombat)
-           gameFigure.mState = new Jump(gameFigure);
+           gameFigure.mState = new Jump(gameFigure, observers);
+        
+        
+        
     }
     
 }

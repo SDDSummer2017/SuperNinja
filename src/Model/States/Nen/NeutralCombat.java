@@ -5,8 +5,10 @@
  */
 package Model.States.Nen;
 
+import EventHandling.Observer;
 import Model.GameFigure;
 import Model.States.CombatState;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,9 +16,8 @@ import Model.States.CombatState;
  */
 public class NeutralCombat extends CombatState {
 
-    public NeutralCombat(GameFigure gameFigure) {
-        super(gameFigure);
-        
+    public NeutralCombat(GameFigure gameFigure, ArrayList<Observer> observers) {
+        super(gameFigure, observers) ;
     }
 
     @Override
@@ -27,7 +28,7 @@ public class NeutralCombat extends CombatState {
     @Override
     public void nextState(String s) {
         if(s.equals("LightAttack"))
-            gameFigure.cState = new LightAttack(gameFigure);
+            gameFigure.cState = new LightAttack(gameFigure, observers);
         
     }
     

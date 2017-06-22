@@ -9,6 +9,9 @@ package EventHandling;
  *
  * @author abilb
  */
-class State {
-    // Place holder class, will be deleted later. 
+public interface Subject {
+    
+    public void registerObserver(Observer observer);
+    public void deregisterObserver(Observer observer);
+    public void notifyObservers();
 }

@@ -4,8 +4,11 @@
  * and open the template in the editor.
  */
 package Model.States.Nen; 
+import EventHandling.Observer;
 import Model.GameFigure;
+import Model.States.CombatState;
 import Model.States.MotionState;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,9 +16,10 @@ import Model.States.MotionState;
  */
 public class Move extends MotionState {
 
-    public Move(GameFigure gameFigure)
-    {
-        super(gameFigure);
+    CombatState combatState; 
+    
+    public Move(GameFigure gameFigure, ArrayList<Observer> observers) {
+        super(gameFigure, observers) ;
         combatState = gameFigure.cState;
     }
     
@@ -32,9 +36,10 @@ public class Move extends MotionState {
     public void nextState(String s) {
   
         if(s.equals("NeutralMotion") && combatState instanceof NeutralCombat)
-            gameFigure.mState = new NeutralMotion(gameFigure);
+            gameFigure.mState = new NeutralMotion(gameFigure, observers);
         else if(s.equals("Jump" ) && combatState instanceof NeutralCombat)
-            gameFigure.mState = new Jump(gameFigure);
+            gameFigure.mState = new Jump(gameFigure, observers);
+        this.notifyObservers();
     }
     
 }

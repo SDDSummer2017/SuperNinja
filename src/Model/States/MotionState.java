@@ -5,16 +5,20 @@
  */
 package Model.States;
 
+import EventHandling.Observer;
 import Model.GameFigure; 
+import java.util.ArrayList;
 /**
  *
  * @author Garrett A. Clement
  */
-public abstract class MotionState extends State {
+public abstract class MotionState extends State  {
     protected MotionState previousState;
     protected CombatState combatState;
     
-    public MotionState(GameFigure gameFigure) {
-        super(gameFigure);
+    public MotionState(GameFigure gameFigure, ArrayList<Observer> observers) {
+        super(gameFigure, observers);
     }
+    
+   
 }

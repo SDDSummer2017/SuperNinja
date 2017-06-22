@@ -1,5 +1,6 @@
 package Model;
 
+import EventHandling.Observer;
 import Model.States.Nen.NeutralCombat;
 import Model.States.Nen.NeutralMotion;
 import java.awt.Color;
@@ -11,20 +12,25 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import View.GamePanel;
-
+import EventHandling.SoundHandler; 
+import java.util.ArrayList;
 public class Nen extends GameFigure {
    
     private final Image launcherImage;
     private int jumpHeight = 0;
     private int dy = -7;
     public boolean jump, movingLeft, movingRight;
-
+    private final SoundHandler soundHandler = new SoundHandler("");
     public Nen(int x, int y, int size) {
         super(x, y, size);
         this.health = 100;
-        mState = new NeutralMotion(this);
-        cState = new NeutralCombat(this);
         
+        ArrayList<Observer> observers = new ArrayList<Observer>();
+        mState = new NeutralMotion(this, observers);
+        cState = new NeutralCombat(this, observers);
+        
+        mState.registerObserver(soundHandler);
+        cState.registerObserver(soundHandler);
         movingRight = jump = movingLeft = false;
         String imagePath = System.getProperty("user.dir");
         // separator: Windows '\', Linux '/'
@@ -53,6 +59,7 @@ public class Nen extends GameFigure {
 //        else
 //            cState.execute();
   
+        
         mState.execute();
         cState.execute();
         

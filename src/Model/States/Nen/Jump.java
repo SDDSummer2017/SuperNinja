@@ -5,9 +5,11 @@
  */
 package Model.States.Nen;
 
+import EventHandling.Observer;
 import Model.GameFigure;
 import Model.States.MotionState;
 import View.GamePanel;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,9 +22,8 @@ public class Jump extends MotionState {
     private final int JUMP_LIMIT = 100;
     private int jumpHeight = 1;
     private int dy = 7;
-    public Jump(GameFigure gameFigure) {
-        super(gameFigure);
-        
+    public Jump(GameFigure gameFigure, ArrayList<Observer> observers) {
+        super(gameFigure, observers) ;
     }
 
     @Override
@@ -55,9 +56,11 @@ public class Jump extends MotionState {
         else if(s.equals("NeutralMotion"))
             isMoving = false;
         if(s.equals("JumpMade") && isMoving)
-            gameFigure.mState = new Move(gameFigure);
+            gameFigure.mState = new Move(gameFigure, observers);
         else if(s.equals("JumpMade"))
-            gameFigure.mState = new NeutralMotion(gameFigure);
+            gameFigure.mState = new NeutralMotion(gameFigure, observers);
+        this.notifyObservers();
+         
     }
     
 }

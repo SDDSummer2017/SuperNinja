@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package EventHandling;
 
+package EventHandling;
 /**
  *
  * @author abilb
  */
+
+import Model.States.State;
+
 public interface StateObserver extends Observer {
     
     public void onNotify(State state); 

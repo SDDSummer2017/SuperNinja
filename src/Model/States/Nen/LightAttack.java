@@ -5,8 +5,10 @@
  */
 package Model.States.Nen;
 
+import EventHandling.Observer;
 import Model.GameFigure;
 import Model.States.CombatState;
+import java.util.ArrayList;
  
 
 /**
@@ -15,8 +17,8 @@ import Model.States.CombatState;
  */
 public class LightAttack extends CombatState {
 
-    public LightAttack(GameFigure gameFigure) {
-        super(gameFigure);
+    public LightAttack(GameFigure gameFigure, ArrayList<Observer> observers) {
+        super(gameFigure, observers) ;
     }
 
     @Override

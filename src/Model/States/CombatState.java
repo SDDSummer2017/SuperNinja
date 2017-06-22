@@ -5,7 +5,9 @@
  */
 package Model.States;
 
+import EventHandling.Observer;
 import Model.GameFigure;  
+import java.util.ArrayList;
 
 /**
  *
@@ -17,8 +19,8 @@ public abstract class CombatState extends State {
     protected CombatState previousState;
     protected MotionState motionState;
     
-    public CombatState(GameFigure gameFigure) {
-        super(gameFigure);
+    public CombatState(GameFigure gameFigure, ArrayList<Observer> observers) {
+        super(gameFigure,observers);
         initTime = System.currentTimeMillis();
     }
 }

@@ -6,10 +6,11 @@
 package EventHandling;
 
 import Model.GameFigure;
+import Model.States.State;
 import java.net.URL;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
+  
 /**
  *
  * @author abilb
@@ -28,12 +29,12 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
     
     @Override
     public void onNotify(GameFigure gameFigureOne, GameFigure gameFigureTwo) {
-         System.out.print("Two objects have collided, and now we will play a sound" );
+         System.out.println("Two objects have collided, and now we will play a sound" );
     }
 
     @Override
     public void onNotify(State state) {
-         System.out.print("An object has changed state, and now we are going to play a sound.");
+         System.out.println("An object has changed state, and now we are going to play a sound.");
     }
 
     @Override
@@ -53,5 +54,6 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
         final MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
 }
-    
+
+     
 }

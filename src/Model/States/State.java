@@ -5,19 +5,47 @@
  */
 package Model.States;
 
+import EventHandling.Observer;
+import EventHandling.SoundHandler;
+import EventHandling.Subject;
 import Model.GameFigure;
 import View.GamePanel;
+import java.util.ArrayList;
+import EventHandling.StateObserver;
 
 /**
  *
  * @author Garrett A. Clement
  */
-public abstract class State {
+public abstract class State implements Subject {
     protected GameFigure gameFigure;
-       
-    public State(GameFigure gameFigure)
+    protected ArrayList<Observer> observers; 
+    
+    public State(GameFigure gameFigure, ArrayList<Observer> observers)
     {
         this.gameFigure = gameFigure;
+        this.observers  = observers; 
+    }
+    
+     @Override 
+    public void registerObserver(Observer observer)
+    {
+        this.observers.add(observer);
+    }
+    
+    @Override 
+    public void deregisterObserver(Observer observer)
+    {
+         this.observers.remove(observer);
+    }
+    
+    @Override
+    public void notifyObservers()
+    {
+        for(int i = 0; i < observers.size(); i++)
+        {
+            ((StateObserver)observers.get(i)).onNotify(this);
+        }
     }
     
     public abstract void execute();
