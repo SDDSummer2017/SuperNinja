@@ -8,6 +8,7 @@ package Model;
 import static Model.Nen.getImage;
 import Model.States.CombatState;
 import Model.States.Rai_States.Movement;
+import static com.sun.org.apache.bcel.internal.Repository.instanceOf;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 
@@ -17,9 +18,9 @@ import java.awt.geom.Rectangle2D;
  */
 public class Rai extends Enemy {
     
-    public Rai(int x, int y, int size) {
+    public Rai(double x, double y, double size) {
         super(x, y, size);
-        super.state = "Neutral";
+        super.mstate = Model.States.Rai_States.Neutral;
         this.health = 120;
         String imagePath = System.getProperty("user.dir");
         String separator = System.getProperty("file.separator");
@@ -38,20 +39,8 @@ public class Rai extends Enemy {
         super.staticImage = getImage(imagePath + separator + "images" + separator
                 + "Rai_Static.png");
     }
-    
-    @Override
-    public void render(Graphics g) {
-    if (super.cState instanceOf Movement){}
+        
     }
     
-    @Override
-    public void changeState(){}
-
-    @Override
-    public void update() {}
-
-    @Override
-    public Rectangle2D.Double getCollisionBox() {
-        return new Rectangle2D.Double(super.x, super.y, super.size, super.size);
-    }
+    
 }
