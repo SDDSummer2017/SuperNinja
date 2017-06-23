@@ -18,12 +18,13 @@ public class GameData {
     public final List<GameFigure> deadEnemys;
     public final List<GameFigure> bullets;
     public final List<GameFigure> deadBullets;
-    public final Nen marine;
-    public Timer mutaTimer, bossTimer;
+    public final Nen nen;
+    public Timer enemyTimer, bossTimer;
     public TimerListener timerListener;
     public Thread gameThread;
     public Boss boss;
     private boolean bossSpawned = false;
+    private final int nenSize = 300;
 
     public void setBossSpawned(boolean bossSpawned) {
         this.bossSpawned = bossSpawned;
@@ -36,26 +37,26 @@ public class GameData {
         deadBullets = Collections.synchronizedList(new ArrayList<GameFigure>());
         
         timerListener = new TimerListener();
-        mutaTimer = new Timer(5000, timerListener);
-        mutaTimer.setInitialDelay(3000);
+        enemyTimer = new Timer(5000, timerListener);
+        enemyTimer.setInitialDelay(3000);
         
         bossTimer = new Timer(3000, timerListener);
         bossTimer.setRepeats(false);
         
         gameThread = new Thread(Main.animator);
         
-        marine = new Nen(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - 90, 90);
+        nen = new Nen(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - nenSize, nenSize);
        
     }
 
-    public void addMutalisk(int n) {
-//        Random r = new Random();
-//         synchronized (enemys) {
-//            for (int i = 0; i < n; i++) {
-//                enemys.add(new Mutalisk(r.nextInt(GamePanel.PWIDTH),
-//                        r.nextInt(GamePanel.PHEIGHT), SIZE));
-//            }
-//        }
+    public void addEnemy(int n) {
+        Random r = new Random();
+         synchronized (enemys) {
+            for (int i = 0; i < n; i++) {
+                enemys.add(new Enemy(r.nextInt(GamePanel.PWIDTH),
+                        r.nextInt(GamePanel.PHEIGHT), SIZE));
+            }
+        }
     }
     
     public void addBoss(){
@@ -64,7 +65,7 @@ public class GameData {
             enemys.add(boss);
         }
     }
-    public void addMarineBullet(double x1, double y1, double x2, double y2, Color color) {
+    public void addNenBullet(double x1, double y1, double x2, double y2, Color color) {
         synchronized (bullets) {
                 bullets.add(new Shuriken(x1, y1, x2, y2, color));
         }
@@ -77,12 +78,12 @@ public class GameData {
     }
 
     public void checkGameCondition(){
-        if(enemys.isEmpty() && !mutaTimer.isRunning() && !bossSpawned){
+        if(enemys.isEmpty() && !enemyTimer.isRunning() && !bossSpawned){
             bossSpawned = true;
             addBoss();
-            mutaTimer.restart();
+            enemyTimer.restart();
         }
-        if (marine.health <= 0){
+        if (nen.health <= 0){
             Main.animator.running = false;
             Main.gameOverWindow.setOutcomeText("loose");
             Main.gameOverWindow.setVisible(true);
@@ -99,7 +100,7 @@ public class GameData {
     
     public void update() {
        
-        marine.update();
+        nen.update();
         
         synchronized (bullets) {
             for (GameFigure b : bullets) {
@@ -123,7 +124,7 @@ public class GameData {
         deadBullets.clear();
         deadEnemys.clear();
         int bulletCount = bullets.size();
-        MainWindow.message.setText("Bullets:" + bulletCount + mutaTimer.isRunning());
+        MainWindow.message.setText("Bullets:" + bulletCount + enemyTimer.isRunning());
         checkGameCondition();
     }
 }

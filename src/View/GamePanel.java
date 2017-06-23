@@ -46,8 +46,8 @@ public class GamePanel extends JPanel {
         //Render Background
         graphics.drawImage(bgImage , 0, 0, GamePanel.PWIDTH, GamePanel.PHEIGHT, null);
 
-        //Render Marine
-        Main.gameData.marine.render(graphics);
+        //Render Nen
+        Main.gameData.nen.render(graphics);
         //Redner the enemys
         synchronized (Main.gameData.enemys) {
             for (GameFigure f : Main.gameData.enemys) {

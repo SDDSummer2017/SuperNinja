@@ -24,7 +24,7 @@ public class StartWindow extends JFrame {
         startButton.addActionListener(buttonListener);
         
         
-        gameControls = "•Left/right arrow keys to move the Marine.\n\n"
+        gameControls = "•Left/right arrow keys to move  Nen.\n\n"
                 + "•Up arrow to jump.\n\n"
                 + "•Click in the game window to shoot.";
         

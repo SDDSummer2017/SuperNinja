@@ -13,9 +13,13 @@ import View.GamePanel;
 public class Nen extends GameFigure {
 
     private final Image launcherImage;
+    private final Image[] moveRightAnimation, moveLeftAnimation;
     private int jumpHeight = 0;
     private int dy = -7;
+    private int frameIndex;
+    private final int animationLength;
     public boolean jump, movingLeft, movingRight;
+    
 
     public Nen(int x, int y, int size) {
         super(x, y, size);
@@ -27,11 +31,38 @@ public class Nen extends GameFigure {
 
         launcherImage = getImage(imagePath + separator + "images" + separator
                 + "Nen.png");
+        
+        frameIndex = 0;
+        animationLength = 7;
+        moveRightAnimation = new Image[animationLength]; 
+        moveLeftAnimation = new Image[animationLength]; 
+        for(int i=0;i<moveRightAnimation.length;i++){
+            moveRightAnimation[i] = getImage(imagePath + separator + "images" + separator
+                + "NenRight" + i + ".jpg");
+            
+            moveLeftAnimation[i] = getImage(imagePath + separator + "images" + separator
+                + "NenLeft" + i + ".jpg");
+        }
+        
     }
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(launcherImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+        
+                
+        if(movingRight){
+            g.drawImage(moveRightAnimation[frameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            //If we've reached the end of the animation reset frameCounter to zero, otherwise increment it.
+            frameIndex = (frameIndex == animationLength-1) ? 0 : frameIndex + 1;           
+        }else if (movingLeft){
+            g.drawImage(moveLeftAnimation[frameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            frameIndex = (frameIndex == animationLength-1) ? 0 : frameIndex + 1;   
+        }
+        else{
+            g.drawImage(launcherImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            //If they are standing still we need to reset the frameCounter
+            frameIndex = 0;
+        }
 
         g.setColor(Color.red);
         g.fillRect(3, GamePanel.PHEIGHT - 102, 10, 100);
@@ -78,7 +109,7 @@ public class Nen extends GameFigure {
         super.y += dy;
     }
 
-    public void resetMarine() {
+    public void resetNen() {
         this.health = 100;
         jump = movingLeft = movingRight = false;
         jumpHeight = 0;

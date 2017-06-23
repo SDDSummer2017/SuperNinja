@@ -6,7 +6,7 @@ import Model.Nen;
 
 
 public class KeyController implements KeyListener {
-    Nen marine = Main.gameData.marine;
+    Nen marine = Main.gameData.nen;
     @Override
     public void keyPressed(KeyEvent e) {   
         switch (e.getKeyCode()){
