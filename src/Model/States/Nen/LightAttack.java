@@ -5,6 +5,8 @@
  */
 package Model.States.Nen;
 
+import Controller.Main;
+import Model.HitBox;
 import Model.GameFigure;
 import Model.States.CombatState;
  
@@ -14,19 +16,44 @@ import Model.States.CombatState;
  * @author Garrett A. Clement
  */
 public class LightAttack extends CombatState {
-
+    private static final long DURATION = 500; 
+    HitBox hitBox;
+    private int midX;
+    private int midRange = 150;
+    private int lowRange = 300;
     public LightAttack(GameFigure gameFigure) {
         super(gameFigure);
+        gameFigure.damage = 10;
+        hitBox =  new HitBox(gameFigure.x + (gameFigure.size/2), gameFigure.y, 75, 10);
+       
+       // hitBox =  new AttackHitBox(gameFigure.x + (gameFigure.size/2), gameFigure.y + (gameFigure.size/2));
+        
+        Main.gameData.addAlly(hitBox);
     }
 
     @Override
-    public void execute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void execute() {   
+       
+        if(System.currentTimeMillis() - initTime >= DURATION)
+        {
+            Main.gameData.removeAlly(hitBox);
+            nextState("NeutralCombat");
+        }
+        else if(System.currentTimeMillis() - initTime  >= midRange && System.currentTimeMillis() - initTime <= lowRange) 
+            hitBox.translate(gameFigure.x + (gameFigure.size/2) + 20, gameFigure.y + 30);  
+        else if(System.currentTimeMillis()  - initTime > lowRange) 
+            hitBox.translate(gameFigure.x + (gameFigure.size/2), gameFigure.y + 60);  
+        else
+            hitBox.translate(gameFigure.x + (gameFigure.size/2), gameFigure.y);
+        
     }
 
     @Override
     public void nextState(String s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       if(s.equals("NeutralCombat"))
+       {
+           gameFigure.cState = new NeutralCombat(gameFigure);
+       }
     }
 
 //    public LightAttack(GameFigure gameFigure) {

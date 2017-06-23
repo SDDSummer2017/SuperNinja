@@ -16,7 +16,7 @@ public class NeutralCombat extends CombatState {
 
     public NeutralCombat(GameFigure gameFigure) {
         super(gameFigure);
-        
+        gameFigure.damage = 0;
     }
 
     @Override

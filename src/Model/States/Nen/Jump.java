@@ -19,10 +19,10 @@ public class Jump extends MotionState {
     private boolean jumpMade;
     private final int JUMP_LIMIT = 100;
     private int jumpHeight = 1;
-    private int dy = 7;
+    private int dy = 15;
     public Jump(GameFigure gameFigure) {
         super(gameFigure);
-        
+        gameFigure.airborn = true;
     }
 
     @Override
@@ -31,10 +31,9 @@ public class Jump extends MotionState {
         { 
             jumpMade = true;
             gameFigure.y -= dy;
-        }else if(jumpMade && gameFigure.y >= 500)
+        }else if(jumpMade && !gameFigure.airborn)
             nextState("JumpMade"); 
-        else
-            gameFigure.y += dy;
+ 
         jumpHeight += dy;
         
         if(isMoving)

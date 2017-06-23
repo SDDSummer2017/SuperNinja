@@ -17,13 +17,17 @@ public class Nen extends GameFigure {
     private final Image launcherImage;
     private int jumpHeight = 0;
     private int dy = -7;
+     
     public boolean jump, movingLeft, movingRight;
 
     public Nen(int x, int y, int size) {
         super(x, y, size);
         this.health = 100;
-        mState = new NeutralMotion(this);
+        
+        
         cState = new NeutralCombat(this);
+        mState = new NeutralMotion(this);
+        
         
         movingRight = jump = movingLeft = false;
         String imagePath = System.getProperty("user.dir");
@@ -44,7 +48,7 @@ public class Nen extends GameFigure {
         g.setColor(Color.green);
         g.fillRect(3, GamePanel.PHEIGHT - (int) this.health - 2, 10, (int) this.health);
     }
-
+    
     @Override
     public void update() {
         
@@ -52,10 +56,11 @@ public class Nen extends GameFigure {
 //            mState.execute();
 //        else
 //            cState.execute();
-  
-        mState.execute();
-        cState.execute();
-        
+        if(cState instanceof NeutralCombat)
+            mState.execute();
+        else
+            cState.execute();
+        gravity();
 //        if (movingLeft) {
 //            translate(-7, 0);
 //        }
@@ -92,6 +97,12 @@ public class Nen extends GameFigure {
 //        super.y += dy;
 //    }
 
+    public void gravity(){
+        if(y <= 450)
+           y += 5; 
+        else
+            airborn = false;
+    }
     public void resetMarine() {
         this.health = 100;
         jump = movingLeft = movingRight = false;
