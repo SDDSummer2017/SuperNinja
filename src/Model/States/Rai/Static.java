@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model.States.Rai_States;
+package Model.States.Rai;
 
 import Model.GameFigure;
-import Model.States.CombatState;
+import Model.States.MotionState;
 
 /**
  *
  * @author matlock
  */
-public class Throw extends CombatState{
+public class Static extends MotionState{
 
-    public Throw(GameFigure gameFigure) {
+    public Static(GameFigure gameFigure) {
         super(gameFigure);
     }
 

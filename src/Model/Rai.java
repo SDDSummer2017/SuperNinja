@@ -5,13 +5,19 @@
  */
 package Model;
 
-import static Model.Nen.getImage;
 import Model.States.CombatState;
 import Model.States.MotionState;
-import Model.States.Rai_States.Default;
-import Model.States.Rai_States.Neutral;
+import Model.States.Rai.Default;
+import Model.States.Rai.Neutral;
+import View.GamePanel;
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.geom.Rectangle2D;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,8 +30,6 @@ public class Rai extends Enemy {
         super.mState = new Neutral(this);
         super.cState = new Default(this);
         this.health = 120;
-        this.comState = STATE_DEFAULT;
-        this.moveState = STATE_NEUTRAL;
         
         String imagePath = System.getProperty("user.dir");
         String separator = System.getProperty("file.separator");
@@ -45,40 +49,84 @@ public class Rai extends Enemy {
                 + "Rai_Static.png");
     }
     @Override
-    public void setMState(MotionState state){}
+    public void setMState(MotionState state){
+        this.mState = state;
+    }
     
     @Override
-    public void setCState(CombatState state){}
+    public void setCState(CombatState state){
+        this.cState = state;
+    }
     
     @Override
-    public void setIndex(int i){}
+    public void setIndex(int i){
+        this.index =i;
+    }
     
     @Override
-    public int getIndex(){return super.index;}
+    public int getIndex(){
+        return super.index;
+    }
     
     @Override
-    public int getX(){return (int) super.x;}
+    public int getX(){
+        return (int) super.x;
+    }
     
     @Override
-    public int getY(){return (int) super.y;}
+    public int getY(){
+        return (int) super.y;
+    }
     
     @Override
-    public MotionState getMState(){return this.mState;}
+    public MotionState getMState(){
+        return this.mState;
+    }
     
     @Override
-    public CombatState getCState(){return this.cState;}
+    public CombatState getCState(){
+        return this.cState;
+    }
     
     @Override
-    public void setImage(){}
+    public void setImage(Image i){
+        this.image = i;
+    }
     
     @Override
-    public void render(Graphics g) {}
+    public void render(Graphics g) {
+        g.drawImage(image, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+        g.setColor(Color.red);
+        g.fillRect(3, GamePanel.PHEIGHT - 102, 10, 100);
+        g.setColor(Color.green);
+        g.fillRect(3, GamePanel.PHEIGHT - (int) this.health - 2, 10, (int) this.health);
+    }
 
     @Override
-    public void update() {}
+    public void update() {
+        mState.execute();
+        cState.execute();
+    }
 
     @Override
     public Rectangle2D.Double getCollisionBox() {
         return new Rectangle2D.Double(super.x, super.y, super.size, super.size);
     }
+    
+    public static Image getImage(String fileName) {
+        Image image = null;
+        try {
+            image = ImageIO.read(new File(fileName));
+        } catch (IOException ioe) {
+            System.out.println("Error: Cannot open image:" + fileName);
+            JOptionPane.showMessageDialog(null, "Error: Cannot open image:" + fileName);
+        }
+        return image;
+    }
+    
+    @Override
+    public String toString() {
+        return super.x + ", " + super.y;
+    }
+    
 }

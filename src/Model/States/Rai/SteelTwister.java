@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model.States.Rai_States;
+package Model.States.Rai;
 
 import Model.GameFigure;
-import Model.States.MotionState;
+import Model.States.CombatState;
 
 /**
  *
  * @author matlock
  */
-public class Neutral extends MotionState{
+public class SteelTwister extends CombatState{
 
-    public Neutral(GameFigure gameFigure) {
+    public SteelTwister(GameFigure gameFigure) {
         super(gameFigure);
     }
 

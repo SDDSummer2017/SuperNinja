@@ -66,8 +66,10 @@ public abstract class Enemy extends GameFigure {
     
     public CombatState getCState(){return null;}
     
-    public void setImage(){}
+    public void setImage(Image i){}
     
+    public static Image getImage(String fileName){return null;}
+ 
     @Override
     public void render(Graphics g) {}
 

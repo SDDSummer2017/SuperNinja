@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model.States.Rai_States;
+package Model.States.Rai;
 
 import Model.GameFigure;
 import Model.States.CombatState;
@@ -12,9 +12,9 @@ import Model.States.CombatState;
  *
  * @author matlock
  */
-public class Default extends CombatState{
+public class Throw extends CombatState{
 
-    public Default(GameFigure gameFigure) {
+    public Throw(GameFigure gameFigure) {
         super(gameFigure);
     }
 
