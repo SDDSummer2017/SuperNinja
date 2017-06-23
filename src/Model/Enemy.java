@@ -16,17 +16,6 @@ public abstract class Enemy extends GameFigure {
     public State mstate;
     public State cstate;
     
-    public static final int STATE_NEUTRAL = 1;
-    public static final int STATE_MOVEMENT = 2;
-    public static final int STATE_DEFAULT = 0;
-    public static final int STATE_HIT = 3;
-    public static final int STATE_BLOCK = 4;
-    public static final int STATE_ATTACK1 = 5;
-    public static final int STATE_ATTACK2 = 6;
-    public static final int STATE_THROW = 7;
-    public static final int STATE_IS_THROWN = 8;
-    public static final int STATE_JUMP = 9;
-    
     public Image attack1;
     public Image attack2;
     public Image block;

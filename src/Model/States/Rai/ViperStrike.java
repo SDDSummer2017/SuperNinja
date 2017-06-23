@@ -17,10 +17,12 @@ import java.awt.Image;
  */
 public class ViperStrike extends CombatState {
 
+    public 
     public ViperStrike(GameFigure gameFigure) {
         super(gameFigure);
         motionState = gameFigure.mState;
         previousState = gameFigure.cState;
+        
     }
 
     @Override

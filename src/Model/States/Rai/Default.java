@@ -5,7 +5,10 @@
  */
 package Model.States.Rai;
 
+import Controller.Main;
+import Model.GameData;
 import Model.GameFigure;
+import Model.Nen;
 import Model.States.CombatState;
 
 /**
@@ -24,6 +27,16 @@ public class Default extends CombatState{
     public void execute() {
         //in the event that the combat state is in default setting then the movement
         //state should have priority and will dictate the animation sequence
+        Nen n = Main.gameData.marine;
+        if (((n.x + n.size) <= gameFigure.x && (n.x + n.size) >= (gameFigure.x - (gameFigure.size / 4))) 
+                || (n.x >= gameFigure.x + gameFigure.size) && (n.x <= gameFigure.x + ((gameFigure.size / 4) * 5))){
+            this.nextState("Throw");
+        }
+        else if((((n.x + n.size) <= gameFigure.x) && (n.x + n.size >= gameFigure.x - gameFigure.size / 2))
+                || (n.x >= gameFigure.x + (gameFigure.size)) && (n.x <= (gameFigure.x + (gameFigure.size / 2) * 3))){
+            this.nextState("ViperStrike");
+        }
+        else{}
     }
 
     @Override

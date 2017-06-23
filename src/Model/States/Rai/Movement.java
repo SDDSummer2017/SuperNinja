@@ -5,7 +5,10 @@
  */
 package Model.States.Rai;
 
+import Controller.Main;
+import Model.GameData;
 import Model.GameFigure;
+import Model.Nen;
 import Model.Rai;
 import Model.States.MotionState;
 
@@ -26,16 +29,28 @@ public class Movement extends MotionState{
         // this state is rais' first attack in his sequence chain
          //changes the images of the gamefigure depending on which state we are currently in 
         //alters the movement state to minimize the chance of errors
-        if()
-        Rai rai = (Rai) this.gameFigure;
-        rai.image = rai.attack1;
-        rai.setImage(rai.image);
-        gameFigure.mState = new Neutral(gameFigure);
+        Nen n = Main.gameData.marine;
+        if(combatState instanceof Default){
+            Rai rai = (Rai) this.gameFigure;
+            rai.image = rai.movement;
+            rai.setImage(rai.image);
+            if (n.x < gameFigure.x){
+                rai.x -= 10;
+            }
+            else if(n.x >= gameFigure.x + gameFigure.size){ 
+                rai.x += 10;
+            }
+        }
+        else{
+            this.nextState("Neutral");
+        }
     }
 
     @Override
     public void nextState(String s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         if(s.equals("Neutral") && previousState instanceof Movement){
+            gameFigure.mState = new Neutral(gameFigure);
+        }
     }
     
 }
