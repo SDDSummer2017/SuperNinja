@@ -5,11 +5,12 @@
  */
 package Model.States.Rai;
 
+import Controller.Main;
+import Controller.TimerListener;
 import Model.GameFigure;
+import Model.Nen;
 import Model.Rai;
-import static Model.Rai.getImage;
 import Model.States.CombatState;
-import java.awt.Image;
 
 /**
  *
@@ -17,7 +18,8 @@ import java.awt.Image;
  */
 public class ViperStrike extends CombatState {
 
-    public 
+    public TimerListener t;
+    
     public ViperStrike(GameFigure gameFigure) {
         super(gameFigure);
         motionState = gameFigure.mState;
@@ -33,6 +35,19 @@ public class ViperStrike extends CombatState {
         Rai rai = (Rai) this.gameFigure;
         rai.image = rai.attack1;
         rai.setImage(rai.image);
+        Nen n = Main.gameData.marine;
+        int a = rai.getCount();
+        System.out.println("Rai.c = " + a);
+        if (a >= 100 && (((n.x + n.size) <= gameFigure.x) && (n.x + n.size >= gameFigure.x - gameFigure.size / 2))
+            || (n.x >= gameFigure.x + (gameFigure.size)) && (n.x <= (gameFigure.x + (gameFigure.size / 2) * 3))){
+            this.nextState("SteelTwister");
+        }
+        else if (a >= 150){
+            this.nextState("Default");
+        }
+        else{
+            rai.setCount(a++);
+        }
         gameFigure.mState = new Neutral(gameFigure);
     }
 

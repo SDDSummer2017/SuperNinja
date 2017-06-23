@@ -5,7 +5,10 @@
  */
 package Model.States.Rai;
 
+import Controller.Main;
 import Model.GameFigure;
+import Model.Nen;
+import Model.Rai;
 import Model.States.MotionState;
 
 /**
@@ -16,16 +19,27 @@ public class Static extends MotionState{
 
     public Static(GameFigure gameFigure) {
         super(gameFigure);
+        previousState = gameFigure.mState;
+        combatState = gameFigure.cState;
     }
 
     @Override
     public void execute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Nen n = Main.gameData.marine;
+        Rai rai = (Rai) this.gameFigure;
+        rai.image = rai.movement;
+        rai.setImage(rai.image);
+        combatState = new Default(gameFigure);
+        /*if ((rai.x - n.x) <= Main.gamePanel.width){
+        this.nextState("Neutral");
+        }*/
     }
 
     @Override
     public void nextState(String s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(s.equals("Neutral") && previousState instanceof Static){
+            gameFigure.mState = new Neutral(gameFigure);
+        }
     }
     
 }

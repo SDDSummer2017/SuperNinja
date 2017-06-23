@@ -5,7 +5,10 @@
  */
 package Model.States.Rai;
 
+import Controller.Main;
 import Model.GameFigure;
+import Model.Nen;
+import Model.Rai;
 import Model.States.CombatState;
 
 /**
@@ -16,16 +19,31 @@ public class Throw extends CombatState{
 
     public Throw(GameFigure gameFigure) {
         super(gameFigure);
+        motionState = gameFigure.mState;
+        previousState = gameFigure.cState;
     }
 
     @Override
     public void execute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Rai rai = (Rai) this.gameFigure;
+        rai.image = rai.attack1;
+        rai.setImage(rai.image);
+        Nen n = Main.gameData.marine;
+        int a = rai.getCount();
+        if (a >= 100){
+            this.nextState("Default");
+        }
+        else{
+            rai.setCount(a++);
+        }
+        gameFigure.mState = new Neutral(gameFigure);
     }
 
     @Override
     public void nextState(String s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(s.equals("Default") && previousState instanceof Throw){
+            gameFigure.cState = new Default(gameFigure);
+        }
     }
     
 }

@@ -5,7 +5,10 @@
  */
 package Model.States.Rai;
 
+import Controller.Main;
 import Model.GameFigure;
+import Model.Nen;
+import Model.Rai;
 import Model.States.MotionState;
 
 /**
@@ -16,16 +19,25 @@ public class Neutral extends MotionState{
 
     public Neutral(GameFigure gameFigure) {
         super(gameFigure);
+        previousState = gameFigure.mState;
+        combatState = gameFigure.cState;
     }
 
     @Override
     public void execute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Rai rai = (Rai) this.gameFigure;
+        rai.image = rai.neutral;
+        rai.setImage(rai.image);
+        if (gameFigure.cState instanceof Default){
+            this.nextState("Movement");
+        }
     }
 
     @Override
     public void nextState(String s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(s.equals("Movement") && previousState instanceof Neutral){
+            gameFigure.mState = new Neutral(gameFigure);
+        }
     }
     
 }

@@ -30,7 +30,7 @@ public class Movement extends MotionState{
          //changes the images of the gamefigure depending on which state we are currently in 
         //alters the movement state to minimize the chance of errors
         Nen n = Main.gameData.marine;
-        if(combatState instanceof Default){
+        //if(combatState instanceof Default){
             Rai rai = (Rai) this.gameFigure;
             rai.image = rai.movement;
             rai.setImage(rai.image);
@@ -41,10 +41,10 @@ public class Movement extends MotionState{
                 rai.x += 10;
             }
         }
-        else{
-            this.nextState("Neutral");
-        }
-    }
+        //else{
+        //    this.nextState("Neutral");
+        //}
+    //}
 
     @Override
     public void nextState(String s) {

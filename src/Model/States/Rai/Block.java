@@ -30,6 +30,14 @@ public class Block extends CombatState{
         rai.image = rai.block;
         rai.setImage(rai.image);
         gameFigure.mState = new Neutral(gameFigure);
+        int a = rai.getCount();
+        if (a >= 100){
+            this.nextState("Default");
+        }
+        else{
+            a++;
+            rai.setCount(a);
+        }
     }
 
     @Override
@@ -37,9 +45,6 @@ public class Block extends CombatState{
         //only next state for combat is the default state which will again signal to 
         //the motion state that it can enter into the next state and retain focus
         if(s.equals("Default") && previousState instanceof Block){
-            gameFigure.cState = new Default(gameFigure);
-        }
-        else if(s.equals("Default") && previousState instanceof ViperStrike){
             gameFigure.cState = new Default(gameFigure);
         }
         else {}

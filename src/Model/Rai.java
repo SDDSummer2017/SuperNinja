@@ -24,6 +24,7 @@ import javax.swing.JOptionPane;
  * @author matlock
  */
 public class Rai extends Enemy {
+    public int c = 0; // used as a display count for placeholders only
     
     public Rai(double x, double y, double size) {
         super(x, y, size);
@@ -31,23 +32,33 @@ public class Rai extends Enemy {
         super.cState = new Default(this);
         this.health = 120;
         
+        
         String imagePath = System.getProperty("user.dir");
         String separator = System.getProperty("file.separator");
         super.attack1 = getImage(imagePath + separator + "images" + separator
-                + "Rai_ViperStrike.png");
+                + "ViperStrike.png");
         super.attack2 = getImage(imagePath + separator + "images" + separator
-                + "Rai_SteelTwister.png");
+                + "SteelTwister.png");
         super.movement = getImage(imagePath + separator + "images" + separator
-                + "Rai_Movement.png");
+                + "Movement.png");
         super.block = getImage(imagePath + separator + "images" + separator
-                + "Rai_Block.png");
+                + "Block.png");
         super.neutral = getImage(imagePath + separator + "images" + separator
-                + "Rai_Neutral.png");
+                + "Neutral.png");
         super.throwImage = getImage(imagePath + separator + "images" + separator
-                + "Rai_Throw.png");
+                + "Throw.png");
         super.staticImage = getImage(imagePath + separator + "images" + separator
-                + "Rai_Static.png");
+                + "Static.png");
     }
+    // the following count functions are only used for the placeholders until animation
+    // is implemented.
+    public int getCount(){
+        return this.c;
+    }
+    public void setCount(int i){
+        c = i;
+    }
+    
     @Override
     public void setMState(MotionState state){
         this.mState = state;
@@ -104,8 +115,13 @@ public class Rai extends Enemy {
 
     @Override
     public void update() {
-        mState.execute();
-        cState.execute();
+        System.out.println("Rai.mState = " + mState + ",   Rai.cState = " + cState);
+        if (cState instanceof Default){
+            mState.execute();
+        }
+        else{
+            cState.execute();
+        }
     }
 
     @Override

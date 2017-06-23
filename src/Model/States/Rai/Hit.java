@@ -28,6 +28,14 @@ public class Hit extends CombatState{
         Rai rai = (Rai) this.gameFigure;
         rai.image = rai.hit;
         rai.setImage(rai.image);
+        int a = rai.getCount();
+        if (a >= 100){
+            this.nextState("Block");
+        }
+        else{
+            a++;
+            rai.setCount(a);
+        }
         gameFigure.mState = new Neutral(gameFigure);
     }
 
