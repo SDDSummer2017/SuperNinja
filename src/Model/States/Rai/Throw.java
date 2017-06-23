@@ -30,19 +30,22 @@ public class Throw extends CombatState{
         rai.setImage(rai.image);
         Nen n = Main.gameData.marine;
         int a = rai.getCount();
-        if (a >= 100){
+        if (a >= 10){
+            a = 0;
+            rai.setCount(a);
             this.nextState("Default");
         }
         else{
-            rai.setCount(a++);
+            a++;
+            rai.setCount(a);
         }
         gameFigure.mState = new Neutral(gameFigure);
     }
 
     @Override
     public void nextState(String s) {
-        if(s.equals("Default") && previousState instanceof Throw){
-            gameFigure.cState = new Default(gameFigure);
+        if(s.equals("Default")){
+            gameFigure.cState = new Default(this.gameFigure);
         }
     }
     

@@ -29,7 +29,9 @@ public class Hit extends CombatState{
         rai.image = rai.hit;
         rai.setImage(rai.image);
         int a = rai.getCount();
-        if (a >= 100){
+        if (a >= 10){
+            a = 0;
+            rai.setCount(a);
             this.nextState("Block");
         }
         else{
@@ -44,8 +46,8 @@ public class Hit extends CombatState{
         //the next state should only be block it will act as a behaviour for rai
         //and an added feature to allow the player to gain momentum when fighting 
         //against him
-        if(s.equals("Block") && previousState instanceof Hit){
-            gameFigure.cState = new Block(gameFigure);
+        if(s.equals("Block")){
+            gameFigure.cState = new Block(this.gameFigure);
         }
         else {}
     }

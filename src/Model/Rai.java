@@ -24,15 +24,15 @@ import javax.swing.JOptionPane;
  * @author matlock
  */
 public class Rai extends Enemy {
-    public int c = 0; // used as a display count for placeholders only
+    public int c; // used as a display count for placeholders only
     
     public Rai(double x, double y, double size) {
         super(x, y, size);
         super.mState = new Neutral(this);
         super.cState = new Default(this);
         this.health = 120;
-        
-        
+        //System.out.println("mState = " + super.mState);
+        //System.out.println("cState = " + super.cState);
         String imagePath = System.getProperty("user.dir");
         String separator = System.getProperty("file.separator");
         super.attack1 = getImage(imagePath + separator + "images" + separator
@@ -52,11 +52,13 @@ public class Rai extends Enemy {
     }
     // the following count functions are only used for the placeholders until animation
     // is implemented.
+    
     public int getCount(){
         return this.c;
     }
+    
     public void setCount(int i){
-        c = i;
+        this.c = i;
     }
     
     @Override
@@ -115,13 +117,9 @@ public class Rai extends Enemy {
 
     @Override
     public void update() {
-        System.out.println("Rai.mState = " + mState + ",   Rai.cState = " + cState);
-        if (cState instanceof Default){
-            mState.execute();
-        }
-        else{
-            cState.execute();
-        }
+        //System.out.println("Rai.mState = " + mState + ",   Rai.cState = " + cState);
+        mState.execute();
+        cState.execute();
     }
 
     @Override

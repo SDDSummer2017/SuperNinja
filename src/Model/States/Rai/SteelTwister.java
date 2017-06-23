@@ -33,7 +33,10 @@ public class SteelTwister extends CombatState{
         rai.setImage(rai.image);
         Nen n = Main.gameData.marine;
         int a = rai.getCount();
-        if (a >= 100){
+        System.out.println("Rai.c = " + a);
+        if (a >= 10){
+            a = 0;
+            rai.setCount(a);
             this.nextState("Default");
         }
         else{
@@ -44,8 +47,8 @@ public class SteelTwister extends CombatState{
 
     @Override
     public void nextState(String s) {
-        if(s.equals("Default") && previousState instanceof SteelTwister){
-            gameFigure.cState = new Default(gameFigure);
+        if(s.equals("Default")){
+            gameFigure.cState = new Default(this.gameFigure);
         }
     }
     

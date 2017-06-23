@@ -31,26 +31,26 @@ public class Movement extends MotionState{
         //alters the movement state to minimize the chance of errors
         Nen n = Main.gameData.marine;
         //if(combatState instanceof Default){
-            Rai rai = (Rai) this.gameFigure;
-            rai.image = rai.movement;
-            rai.setImage(rai.image);
-            if (n.x < gameFigure.x){
-                rai.x -= 10;
-            }
-            else if(n.x >= gameFigure.x + gameFigure.size){ 
-                rai.x += 10;
-            }
+        Rai rai = (Rai) this.gameFigure;
+        rai.image = rai.movement;
+        rai.setImage(rai.image);
+        if (n.x < gameFigure.x){
+            gameFigure.x -= 5;
         }
-        //else{
-        //    this.nextState("Neutral");
-        //}
-    //}
+        else if(n.x >= gameFigure.x + gameFigure.size){ 
+            gameFigure.x += 5;
+        }
+        if(gameFigure.cState instanceof Block || gameFigure.cState instanceof Hit || gameFigure.cState instanceof ViperStrike){
+            this.nextState("Neutral");
+        }
+    }
 
     @Override
     public void nextState(String s) {
-         if(s.equals("Neutral") && previousState instanceof Movement){
-            gameFigure.mState = new Neutral(gameFigure);
+         if(s.equals("Neutral")){
+            gameFigure.mState = new Neutral(this.gameFigure);
         }
+         else{}
     }
     
 }

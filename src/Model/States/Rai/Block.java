@@ -31,7 +31,9 @@ public class Block extends CombatState{
         rai.setImage(rai.image);
         gameFigure.mState = new Neutral(gameFigure);
         int a = rai.getCount();
-        if (a >= 100){
+        if (a >= 10){
+            a = 0;
+            rai.setCount(a);
             this.nextState("Default");
         }
         else{
@@ -44,8 +46,8 @@ public class Block extends CombatState{
     public void nextState(String s) {
         //only next state for combat is the default state which will again signal to 
         //the motion state that it can enter into the next state and retain focus
-        if(s.equals("Default") && previousState instanceof Block){
-            gameFigure.cState = new Default(gameFigure);
+        if(s.equals("Default")){
+            gameFigure.cState = new Default(this.gameFigure);
         }
         else {}
     }

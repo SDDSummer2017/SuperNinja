@@ -28,15 +28,15 @@ public class Neutral extends MotionState{
         Rai rai = (Rai) this.gameFigure;
         rai.image = rai.neutral;
         rai.setImage(rai.image);
-        if (gameFigure.cState instanceof Default){
+        if (this.gameFigure.cState instanceof Default){
             this.nextState("Movement");
         }
     }
 
     @Override
     public void nextState(String s) {
-        if(s.equals("Movement") && previousState instanceof Neutral){
-            gameFigure.mState = new Neutral(gameFigure);
+        if(s.equals("Movement")){
+            this.gameFigure.mState = new Movement(this.gameFigure);
         }
     }
     
