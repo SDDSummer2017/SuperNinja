@@ -49,17 +49,15 @@ public class GameData {
         gameThread = new Thread(Main.animator);
         
         marine = new Nen(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - 90, 90);
+        this.addMutalisk(SIZE);
        
     }
 
     public void addMutalisk(int n) {
-//        Random r = new Random();
-//         synchronized (enemys) {
-//            for (int i = 0; i < n; i++) {
-//                enemys.add(new Mutalisk(r.nextInt(GamePanel.PWIDTH),
-//                        r.nextInt(GamePanel.PHEIGHT), SIZE));
-//            }
-//        }
+        synchronized (enemys) {
+            enemys.add(new Rai((GamePanel.PWIDTH), GamePanel.PHEIGHT - 90, 100));
+            enemys.add(new Rai(0, GamePanel.PHEIGHT - 90, 100));
+        }
     }
     
     public void addBoss(){

@@ -25,3 +25,8 @@ nbproject/build-impl.xml
 build/classes/Model/States/Nen/LightAttack.class
 *.class
 *.class
+*.class
+*.class
+build/classes/View/GamePanel.class
+*.class
+*.class
