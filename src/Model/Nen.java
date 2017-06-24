@@ -19,11 +19,20 @@ public class Nen extends GameFigure {
     private final Image launcherImage;
     private int jumpHeight = 0;
     private int dy = -7;
+     
     public boolean jump, movingLeft, movingRight;
     private final SoundHandler soundHandler = new SoundHandler("");
     public Nen(int x, int y, int size) {
         super(x, y, size);
         this.health = 100;
+<<<<<<< HEAD
+=======
+        
+        
+        cState = new NeutralCombat(this);
+        mState = new NeutralMotion(this);
+        
+>>>>>>> refs/remotes/origin/StateImplementation
         
         ArrayList<Observer> observers = new ArrayList<Observer>();
         mState = new NeutralMotion(this, observers);
@@ -50,7 +59,7 @@ public class Nen extends GameFigure {
         g.setColor(Color.green);
         g.fillRect(3, GamePanel.PHEIGHT - (int) this.health - 2, 10, (int) this.health);
     }
-
+    
     @Override
     public void update() {
         
@@ -58,11 +67,19 @@ public class Nen extends GameFigure {
 //            mState.execute();
 //        else
 //            cState.execute();
+<<<<<<< HEAD
   
         
         mState.execute();
         cState.execute();
         
+=======
+        if(cState instanceof NeutralCombat)
+            mState.execute();
+        else
+            cState.execute();
+        gravity();
+>>>>>>> refs/remotes/origin/StateImplementation
 //        if (movingLeft) {
 //            translate(-7, 0);
 //        }
@@ -99,6 +116,12 @@ public class Nen extends GameFigure {
 //        super.y += dy;
 //    }
 
+    public void gravity(){
+        if(y <= 450)
+           y += 5; 
+        else
+            airborn = false;
+    }
     public void resetMarine() {
         this.health = 100;
         jump = movingLeft = movingRight = false;

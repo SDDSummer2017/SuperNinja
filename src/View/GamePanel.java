@@ -60,7 +60,11 @@ public class GamePanel extends JPanel {
                 b.render(graphics);
             }
         }
-
+        
+        synchronized (Main.gameData.allies){
+            for(GameFigure a : Main.gameData.allies)
+                a.render(graphics);
+        }
     }
 
     // use active rendering to put the buffered image on-screen

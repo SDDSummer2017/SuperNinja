@@ -22,3 +22,6 @@ nbproject/*
 nbproject/private/private.properties
 nbproject/build-impl.xml
 *.properties
+build/classes/Model/States/Nen/LightAttack.class
+*.class
+*.class
