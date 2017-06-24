@@ -39,7 +39,7 @@ public class Move extends MotionState {
             gameFigure.mState = new NeutralMotion(gameFigure, observers);
         else if(s.equals("Jump" ) && combatState instanceof NeutralCombat)
             gameFigure.mState = new Jump(gameFigure, observers);
-        this.notifyObservers();
+    
     }
     
 }

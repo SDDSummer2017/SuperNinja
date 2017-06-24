@@ -27,9 +27,11 @@ public class NeutralMotion extends MotionState {
     public void nextState(String s){
         if(s.equals("Move") && gameFigure.cState instanceof NeutralCombat)
            gameFigure.mState = new Move(gameFigure, observers);
-        if(s.equals("Jump") && gameFigure.cState instanceof NeutralCombat)
+        if(s.equals("Jump") && gameFigure.cState instanceof NeutralCombat){
            gameFigure.mState = new Jump(gameFigure, observers);
-        
+          
+        }
+       gameFigure.mState.notifyObservers();
         
         
     }

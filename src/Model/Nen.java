@@ -25,14 +25,6 @@ public class Nen extends GameFigure {
     public Nen(int x, int y, int size) {
         super(x, y, size);
         this.health = 100;
-<<<<<<< HEAD
-=======
-        
-        
-        cState = new NeutralCombat(this);
-        mState = new NeutralMotion(this);
-        
->>>>>>> refs/remotes/origin/StateImplementation
         
         ArrayList<Observer> observers = new ArrayList<Observer>();
         mState = new NeutralMotion(this, observers);
@@ -67,19 +59,12 @@ public class Nen extends GameFigure {
 //            mState.execute();
 //        else
 //            cState.execute();
-<<<<<<< HEAD
-  
-        
-        mState.execute();
-        cState.execute();
-        
-=======
-        if(cState instanceof NeutralCombat)
+         if(cState instanceof NeutralCombat)
             mState.execute();
         else
             cState.execute();
         gravity();
->>>>>>> refs/remotes/origin/StateImplementation
+ 
 //        if (movingLeft) {
 //            translate(-7, 0);
 //        }

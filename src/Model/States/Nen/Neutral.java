@@ -27,16 +27,8 @@ public class Neutral extends State {
     @Override
     public void nextState(String keyInput) {
         
-        
-//                
-//        if(keyInput.equals("Move")){
-//        
-//        }else if(keyInput.equals("Hit"))
-//        {
-//            
-//        }else if(keyInput.equals("Atttack"))
-//        { 
-//        }
+           
+ 
     }
 
 }

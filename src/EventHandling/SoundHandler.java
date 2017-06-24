@@ -7,7 +7,9 @@ package EventHandling;
 
 import Model.GameFigure;
 import Model.States.State;
+import java.io.File;
 import java.net.URL;
+import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
   
@@ -21,6 +23,7 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
     
     public SoundHandler(String resourcePath) {
         super(resourcePath);
+        JFXPanel fxPanel = new JFXPanel();
     }
 
     
@@ -34,12 +37,34 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
 
     @Override
     public void onNotify(State state) {
-         System.out.println("An object has changed state, and now we are going to play a sound.");
+         System.out.println("An object has entered the: " + state.getClass().toString() + " state: playing a sound");
+         
+         if(state.getClass() == Model.States.Nen.Move.class){
+         this.playSound("SoundEffects/Footsteps.WAV");
+         }
+         
+         if(state.getClass() == Model.States.Nen.Jump.class){
+         this.playSound("SoundEffects/Ninja Jump 1.WAV");}
+         
+         if(state.getClass() == Model.States.Nen.LightAttack.class){
+         this.playSound("SoundEffects/ninja_whoosh.mp3");}
+         
+         if(state.getClass() == Model.States.Nen.NeutralCombat.class){
+         this.playSound("SoundEffects/Breath.WAV");}
+         
+         
+    
     }
 
     @Override
     public void onNotify(String string) {
-        System.out.print(string);
+        System.out.println(string);
+        
+        if("landed".equals(string))
+        {
+            this.playSound("SoundEffects/ninja_damage.mp3");
+        }
+        
     }
 
     
@@ -49,9 +74,10 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
     {
         
     // cl is the ClassLoader for the current class, ie. CurrentClass.class.getClassLoader();
-        URL file = SoundHandler.class.getResource(sound);
-        final Media media = new Media(file.toString());
+     
+        final Media media = new Media(new File(sound).toURI().toString());
         final MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setVolume(0.2);
         mediaPlayer.play();
 }
 

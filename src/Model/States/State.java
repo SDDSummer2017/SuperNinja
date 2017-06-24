@@ -25,6 +25,7 @@ public abstract class State implements Subject {
     {
         this.gameFigure = gameFigure;
         this.observers  = observers; 
+      
     }
     
      @Override 
@@ -46,6 +47,16 @@ public abstract class State implements Subject {
         {
             ((StateObserver)observers.get(i)).onNotify(this);
         }
+    }
+    
+    @Override
+    public void notifyObservers(String event)
+    {
+        for(int i = 0; i < observers.size(); i++)
+        {
+             observers.get(i).onNotify(event);
+        }
+        
     }
     
     public abstract void execute();

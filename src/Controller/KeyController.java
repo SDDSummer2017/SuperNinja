@@ -13,14 +13,18 @@ public class KeyController implements KeyListener {
     public void keyPressed(KeyEvent e) {   
         switch (e.getKeyCode()){
             case  KeyEvent.VK_LEFT:
-                nen.isFacingRight = false;
+                    nen.isFacingRight = false;
                 
-                nen.mState.nextState("Move");
+               if(nen.mState.getClass() != Move.class && nen.mState.getClass() != Jump.class)
+                {
+                     nen.mState.nextState("Move");
+                }
+                
                 break;
             case KeyEvent.VK_RIGHT:
                 nen.isFacingRight = true;
                
-                if(nen.mState.getClass() != Move.class)
+                if(nen.mState.getClass() != Move.class && nen.mState.getClass() != Jump.class)
                 {
                      nen.mState.nextState("Move");
                 }
@@ -32,6 +36,14 @@ public class KeyController implements KeyListener {
                 }
                
                 break;
+                
+            case KeyEvent.VK_F:
+                if(nen.cState.getClass() != Model.States.Nen.LightAttack.class)
+                {
+                     nen.cState.nextState("LightAttack");
+                }
+               
+                break;    
         }
     }
 
