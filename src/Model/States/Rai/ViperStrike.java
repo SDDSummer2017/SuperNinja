@@ -7,10 +7,12 @@ package Model.States.Rai;
 
 import Controller.Main;
 import Controller.TimerListener;
+import EventHandling.Observer;
 import Model.GameFigure;
 import Model.Nen;
 import Model.Rai;
 import Model.States.CombatState;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,8 +22,8 @@ public class ViperStrike extends CombatState {
 
     public TimerListener t;
     
-    public ViperStrike(GameFigure gameFigure) {
-        super(gameFigure);
+    public ViperStrike(GameFigure gameFigure, ArrayList<Observer> observers) {
+        super(gameFigure, observers);
         motionState = gameFigure.mState;
         previousState = gameFigure.cState;
         int a = 0;
@@ -70,20 +72,20 @@ public class ViperStrike extends CombatState {
             a++;
             rai.setCount(a);
         }
-        gameFigure.mState = new Neutral(this.gameFigure);
+        gameFigure.mState = new Neutral(this.gameFigure, observers);
     }
 
     @Override
     public void nextState(String s) {
         System.out.println("Next input is " + s);
         if(s.equals("SteelTwister")){
-            gameFigure.cState = new SteelTwister(this.gameFigure);
+            gameFigure.cState = new SteelTwister(this.gameFigure, observers);
         }
         else if(s.equals("Hit")){
-            gameFigure.cState = new Hit(this.gameFigure);
+            gameFigure.cState = new Hit(this.gameFigure, observers);
         }
         else if(s.equals("Default")){
-            gameFigure.cState = new Default(this.gameFigure);
+            gameFigure.cState = new Default(this.gameFigure, observers);
         }
         /* attackBlocked will be implemented when nen Block state is implemented
         else if(s.equals("AttackBlocked") && previousState instanceof ViperStrike){

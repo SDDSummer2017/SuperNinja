@@ -6,10 +6,12 @@
 package Model.States.Rai;
 
 import Controller.Main;
+import EventHandling.Observer;
 import Model.GameFigure;
 import Model.Nen;
 import Model.Rai;
 import Model.States.CombatState;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,8 +19,8 @@ import Model.States.CombatState;
  */
 public class SteelTwister extends CombatState{
 
-    public SteelTwister(GameFigure gameFigure) {
-        super(gameFigure);
+    public SteelTwister(GameFigure gameFigure, ArrayList<Observer> observers) {
+        super(gameFigure, observers);
         motionState = gameFigure.mState;
         previousState = gameFigure.cState;
     }
@@ -48,7 +50,7 @@ public class SteelTwister extends CombatState{
     @Override
     public void nextState(String s) {
         if(s.equals("Default")){
-            gameFigure.cState = new Default(this.gameFigure);
+            gameFigure.cState = new Default(this.gameFigure, observers);
         }
     }
     

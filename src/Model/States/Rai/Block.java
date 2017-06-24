@@ -5,9 +5,11 @@
  */
 package Model.States.Rai;
 
+import EventHandling.Observer;
 import Model.GameFigure;
 import Model.Rai;
 import Model.States.CombatState;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,9 +17,9 @@ import Model.States.CombatState;
  */
 public class Block extends CombatState{
 
-    public Block(GameFigure gameFigure) {
+    public Block(GameFigure gameFigure, ArrayList<Observer> observers) {
         //previous state was hit the current state that rai is in should be block
-        super(gameFigure);
+        super(gameFigure, observers);
         motionState = gameFigure.mState;
         previousState = gameFigure.cState;
     }
@@ -29,7 +31,7 @@ public class Block extends CombatState{
         Rai rai = (Rai) this.gameFigure;
         rai.image = rai.block;
         rai.setImage(rai.image);
-        gameFigure.mState = new Neutral(gameFigure);
+        gameFigure.mState = new Neutral(gameFigure, this.observers);
         int a = rai.getCount();
         if (a >= 10){
             a = 0;
@@ -47,7 +49,7 @@ public class Block extends CombatState{
         //only next state for combat is the default state which will again signal to 
         //the motion state that it can enter into the next state and retain focus
         if(s.equals("Default")){
-            gameFigure.cState = new Default(this.gameFigure);
+            gameFigure.cState = new Default(this.gameFigure, observers);
         }
         else {}
     }

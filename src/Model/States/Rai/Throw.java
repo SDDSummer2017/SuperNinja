@@ -6,10 +6,12 @@
 package Model.States.Rai;
 
 import Controller.Main;
+import EventHandling.Observer;
 import Model.GameFigure;
 import Model.Nen;
 import Model.Rai;
 import Model.States.CombatState;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,8 +19,8 @@ import Model.States.CombatState;
  */
 public class Throw extends CombatState{
 
-    public Throw(GameFigure gameFigure) {
-        super(gameFigure);
+    public Throw(GameFigure gameFigure, ArrayList<Observer> observers) {
+        super(gameFigure, observers);
         motionState = gameFigure.mState;
         previousState = gameFigure.cState;
     }
@@ -39,13 +41,13 @@ public class Throw extends CombatState{
             a++;
             rai.setCount(a);
         }
-        gameFigure.mState = new Neutral(gameFigure);
+        gameFigure.mState = new Neutral(gameFigure, observers);
     }
 
     @Override
     public void nextState(String s) {
         if(s.equals("Default")){
-            gameFigure.cState = new Default(this.gameFigure);
+            gameFigure.cState = new Default(this.gameFigure, observers);
         }
     }
     

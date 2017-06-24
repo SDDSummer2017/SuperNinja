@@ -6,11 +6,13 @@
 package Model.States.Rai;
 
 import Controller.Main;
+import EventHandling.Observer;
 import Model.GameData;
 import Model.GameFigure;
 import Model.Nen;
 import Model.Rai;
 import Model.States.CombatState;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,8 +20,8 @@ import Model.States.CombatState;
  */
 public class Default extends CombatState{
 
-    public Default(GameFigure gameFigure) {
-        super(gameFigure);
+    public Default(GameFigure gameFigure, ArrayList<Observer> observers) {
+        super(gameFigure, observers);
         motionState = gameFigure.mState;
         previousState = gameFigure.cState;
     }
@@ -50,13 +52,13 @@ public class Default extends CombatState{
         //the Default state leads to 4 of the additional states which have other states branch off
         //System.out.println("Rai.state = " + gameFigure.cState);
         if(s.equals("Hit")){
-            gameFigure.cState = new Hit(this.gameFigure);
+            gameFigure.cState = new Hit(this.gameFigure, observers);
         }
         else if(s.equals("Throw")){
-            gameFigure.cState = new Throw(this.gameFigure);
+            gameFigure.cState = new Throw(this.gameFigure, observers);
         }
         else if(s.equals("ViperStrike")){
-            gameFigure.cState = new ViperStrike(this.gameFigure);
+            gameFigure.cState = new ViperStrike(this.gameFigure, observers);
         }
         else{}
         /* not yet testable and therefore will be implemented later 

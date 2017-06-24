@@ -15,7 +15,7 @@ public class KeyController implements KeyListener {
             case  KeyEvent.VK_LEFT:
                     nen.isFacingRight = false;
                 
-               if(nen.mState.getClass() != Move.class && nen.mState.getClass() != Jump.class)
+               if(nen.mState.getClass() != Move.class)
                 {
                      nen.mState.nextState("Move");
                 }
@@ -24,7 +24,7 @@ public class KeyController implements KeyListener {
             case KeyEvent.VK_RIGHT:
                 nen.isFacingRight = true;
                
-                if(nen.mState.getClass() != Move.class && nen.mState.getClass() != Jump.class)
+                if(nen.mState.getClass() != Move.class)
                 {
                      nen.mState.nextState("Move");
                 }

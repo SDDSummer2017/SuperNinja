@@ -5,6 +5,7 @@
  */
 package Model;
 
+import EventHandling.Observer;
 import Model.States.CombatState;
 import Model.States.MotionState;
 import Model.States.Rai.Default;
@@ -16,6 +17,7 @@ import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
@@ -28,8 +30,10 @@ public class Rai extends Enemy {
     
     public Rai(double x, double y, double size) {
         super(x, y, size);
-        super.mState = new Neutral(this);
-        super.cState = new Default(this);
+        
+        ArrayList<Observer> observers = new ArrayList<>();
+        super.mState = new Neutral(this, observers);
+        super.cState = new Default(this, observers);
         this.health = 120;
         //System.out.println("mState = " + super.mState);
         //System.out.println("cState = " + super.cState);

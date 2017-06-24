@@ -6,10 +6,12 @@
 package Model.States.Rai;
 
 import Controller.Main;
+import EventHandling.Observer;
 import Model.GameFigure;
 import Model.Nen;
 import Model.Rai;
 import Model.States.MotionState;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,8 +19,8 @@ import Model.States.MotionState;
  */
 public class Neutral extends MotionState{
 
-    public Neutral(GameFigure gameFigure) {
-        super(gameFigure);
+    public Neutral(GameFigure gameFigure, ArrayList<Observer> observers)  {
+        super(gameFigure, observers);
         previousState = gameFigure.mState;
         combatState = gameFigure.cState;
     }
@@ -36,7 +38,7 @@ public class Neutral extends MotionState{
     @Override
     public void nextState(String s) {
         if(s.equals("Movement")){
-            this.gameFigure.mState = new Movement(this.gameFigure);
+            this.gameFigure.mState = new Movement(this.gameFigure, observers);
         }
     }
     

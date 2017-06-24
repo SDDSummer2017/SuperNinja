@@ -5,9 +5,11 @@
  */
 package Model.States.Rai;
 
+import EventHandling.Observer;
 import Model.GameFigure;
 import Model.Rai;
 import Model.States.CombatState;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,8 +17,8 @@ import Model.States.CombatState;
  */
 public class Hit extends CombatState{
 
-    public Hit(GameFigure gameFigure) {
-        super(gameFigure);
+    public Hit(GameFigure gameFigure, ArrayList<Observer> observers) {
+        super(gameFigure, observers);
         motionState = gameFigure.mState;
         previousState = gameFigure.cState;
     }
@@ -38,7 +40,7 @@ public class Hit extends CombatState{
             a++;
             rai.setCount(a);
         }
-        gameFigure.mState = new Neutral(gameFigure);
+        gameFigure.mState = new Neutral(gameFigure, observers);
     }
 
     @Override
@@ -47,7 +49,7 @@ public class Hit extends CombatState{
         //and an added feature to allow the player to gain momentum when fighting 
         //against him
         if(s.equals("Block")){
-            gameFigure.cState = new Block(this.gameFigure);
+            gameFigure.cState = new Block(this.gameFigure, observers);
         }
         else {}
     }
