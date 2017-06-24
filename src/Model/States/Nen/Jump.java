@@ -62,7 +62,9 @@ public class Jump extends MotionState {
             gameFigure.mState = new NeutralMotion(gameFigure, observers);
              gameFigure.mState.notifyObservers("landed");
         }
+      if(!s.equals("Move")){
         gameFigure.mState.notifyObservers();
+      }
         
     }
     

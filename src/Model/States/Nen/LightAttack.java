@@ -59,49 +59,5 @@ public class LightAttack extends CombatState {
        
        gameFigure.cState.notifyObservers();
     }
-
-//    public LightAttack(GameFigure gameFigure) {
-//        super(gameFigure);
-//        gameFigure.damage = 50;
-//        gameFigure.animation = "LightAttack1";
-//    }
-//
-//    @Override
-//    public void execute() {
-//        
-//      
-//        
-//    }
-//    if(initX >= 100)
-//        nextState("NeutralState");
-//       nextState("");
-//
-//    @Override
-//    public void nextState(String s) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
-//    }
-//    
-//    @Override  
-//    public void translate(int dx, int dy) {
-//        if (gameFigure.x <= 0 && dx < 0) {
-//            dx = 0;
-//        }
-//        if (((gameFigure.x + gameFigure.size) >= GamePanel.PWIDTH) && (dx > 0)) {
-//            dx = 0;
-//        }
-//        gameFigure.x += dx;
-//        gameFigure.y += dy;
-//    }
-//
-//    @Override
-//    public void nextState(String s) {
-////        
-////         if(s.equals("Attack2") || comboWIndow)
-////               gameFigure.setState(new Attack3(gameFigure));
-////         else if(s.equals("NeautralState"))
-////             gameFigure.state = new NeautralState;
-//    }
-//    
 }
  

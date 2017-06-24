@@ -49,6 +49,8 @@ public class GameData {
         gameThread = new Thread(Main.animator);
         
         marine = new Nen(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - 90, 90);
+        //enemys.add(new Rai(GamePanel.PWIDTH, GamePanel.PHEIGHT -90, 100));
+        
         this.addMutalisk(SIZE);
        
     }
@@ -137,7 +139,7 @@ public class GameData {
         deadBullets.clear();
         deadEnemys.clear();
         int bulletCount = bullets.size();
-        MainWindow.message.setText("Bullets:" + bulletCount + mutaTimer.isRunning());
+//        MainWindow.message.setText("Bullets:" + bulletCount + mutaTimer.isRunning());
         checkGameCondition();
     }
 }

@@ -12,6 +12,9 @@ public class KeyController implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {   
         switch (e.getKeyCode()){
+            
+            case KeyEvent.VK_9:
+                 
             case  KeyEvent.VK_LEFT:
                     nen.isFacingRight = false;
                 

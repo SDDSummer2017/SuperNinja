@@ -21,6 +21,7 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
     //Must find resource path. This may change later if we impliment a flywieght pattern, in which case the resource paths may 
     //may reference an in-memory location. 
     
+    
     public SoundHandler(String resourcePath) {
         super(resourcePath);
         JFXPanel fxPanel = new JFXPanel();
@@ -40,7 +41,7 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
          System.out.println("An object has entered the: " + state.getClass().toString() + " state: playing a sound");
          
          if(state.getClass() == Model.States.Nen.Move.class){
-         this.playSound("SoundEffects/Footsteps.WAV");
+         this.playSound("SoundEffects/walk.MP3");
          }
          
          if(state.getClass() == Model.States.Nen.Jump.class){
@@ -50,7 +51,8 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
          this.playSound("SoundEffects/ninja_whoosh.mp3");}
          
          if(state.getClass() == Model.States.Nen.NeutralCombat.class){
-         this.playSound("SoundEffects/Breath.WAV");}
+         //this.playSound("SoundEffects/Breath.WAV");
+         }
          
          
     
