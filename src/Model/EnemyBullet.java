@@ -47,9 +47,9 @@ public class EnemyBullet extends GameFigure {
         
         super.x = currentLocation.x;
         super.y = currentLocation.y;
-        if (this.getCollisionBox().intersects(Main.gameData.marine.getCollisionBox())){
+        if (this.getCollisionBox().intersects(Main.gameData.nen.getCollisionBox())){
             super.hit = true;
-            Main.gameData.marine.health -= damage;
+            Main.gameData.nen.health -= damage;
         }
     }
         

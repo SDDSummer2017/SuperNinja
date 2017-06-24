@@ -54,7 +54,7 @@ public class HitBox extends GameFigure {
 
     @Override
     public Rectangle2D.Double getCollisionBox() {
-       return (Rectangle2D.Double)collisionBox;
+       return collisionBox;
     }
     
     

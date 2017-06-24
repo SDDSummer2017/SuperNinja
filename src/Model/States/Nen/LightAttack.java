@@ -19,33 +19,40 @@ public class LightAttack extends CombatState {
     private static final long DURATION = 500; 
     HitBox hitBox;
     private int midX;
-    private int midRange = 150;
-    private int lowRange = 300;
+    private final int MID_TIME = 150;
+    private final int HIGH_TIME = 300;
+    private final boolean IS_FACING_RIGHT;
     public LightAttack(GameFigure gameFigure) {
         super(gameFigure);
         gameFigure.damage = 10;
-        hitBox =  new HitBox(gameFigure.x + (gameFigure.size/2), gameFigure.y, 75, 10);
-       
-       // hitBox =  new AttackHitBox(gameFigure.x + (gameFigure.size/2), gameFigure.y + (gameFigure.size/2));
-        
+        hitBox =  new HitBox(gameFigure.x + (gameFigure.size/2), gameFigure.y, 75, 10); 
+        IS_FACING_RIGHT = gameFigure.isFacingRight;
         Main.gameData.addAlly(hitBox);
-    }
 
+    }
     @Override
-    public void execute() {   
-       
+    public void execute() {    
         if(System.currentTimeMillis() - initTime >= DURATION)
         {
             Main.gameData.removeAlly(hitBox);
             nextState("NeutralCombat");
         }
-        else if(System.currentTimeMillis() - initTime  >= midRange && System.currentTimeMillis() - initTime <= lowRange) 
-            hitBox.translate(gameFigure.x + (gameFigure.size/2) + 20, gameFigure.y + 30);  
-        else if(System.currentTimeMillis()  - initTime > lowRange) 
-            hitBox.translate(gameFigure.x + (gameFigure.size/2), gameFigure.y + 60);  
-        else
-            hitBox.translate(gameFigure.x + (gameFigure.size/2), gameFigure.y);
         
+        //Attack right
+        if(IS_FACING_RIGHT)
+            if(System.currentTimeMillis() - initTime  >= MID_TIME && System.currentTimeMillis() - initTime <= HIGH_TIME) 
+                hitBox.translate(gameFigure.x + (gameFigure.size/2) + 20, gameFigure.y + 30);  
+            else if(System.currentTimeMillis()  - initTime > HIGH_TIME) 
+                hitBox.translate(gameFigure.x + (gameFigure.size/2), gameFigure.y + 60);  
+            else
+                hitBox.translate(gameFigure.x + (gameFigure.size/2), gameFigure.y);
+        else
+            if(System.currentTimeMillis() - initTime  >= MID_TIME && System.currentTimeMillis() - initTime <= HIGH_TIME) 
+                hitBox.translate(gameFigure.x - 95 + (gameFigure.size/2), gameFigure.y + 30);  
+            else if(System.currentTimeMillis()  - initTime > HIGH_TIME) 
+                hitBox.translate(gameFigure.x - 75 + (gameFigure.size/2), gameFigure.y + 60);  
+            else
+                hitBox.translate(gameFigure.x - 75 + (gameFigure.size/2), gameFigure.y);
     }
 
     @Override
@@ -55,48 +62,4 @@ public class LightAttack extends CombatState {
            gameFigure.cState = new NeutralCombat(gameFigure);
        }
     }
-
-//    public LightAttack(GameFigure gameFigure) {
-//        super(gameFigure);
-//        gameFigure.damage = 50;
-//        gameFigure.animation = "LightAttack1";
-//    }
-//
-//    @Override
-//    public void execute() {
-//        
-//      
-//        
-//    }
-//    if(initX >= 100)
-//        nextState("NeutralState");
-//       nextState("");
-//
-//    @Override
-//    public void nextState(String s) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
-//    }
-//    
-//    @Override  
-//    public void translate(int dx, int dy) {
-//        if (gameFigure.x <= 0 && dx < 0) {
-//            dx = 0;
-//        }
-//        if (((gameFigure.x + gameFigure.size) >= GamePanel.PWIDTH) && (dx > 0)) {
-//            dx = 0;
-//        }
-//        gameFigure.x += dx;
-//        gameFigure.y += dy;
-//    }
-//
-//    @Override
-//    public void nextState(String s) {
-////        
-////         if(s.equals("Attack2") || comboWIndow)
-////               gameFigure.setState(new Attack3(gameFigure));
-////         else if(s.equals("NeautralState"))
-////             gameFigure.state = new NeautralState;
-//    }
-//    
 }

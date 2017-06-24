@@ -17,13 +17,16 @@ public class Jump extends MotionState {
 
     private boolean isMoving = false;
     private boolean jumpMade;
-    private final int JUMP_LIMIT = 100;
+    private final int JUMP_LIMIT = 200;
     private int jumpHeight = 1;
-    private int dy = 15;
+    private int dy = 20;
+    
     public Jump(GameFigure gameFigure) {
         super(gameFigure);
         gameFigure.airborn = true;
-    }
+        if(previousState instanceof Move)
+            isMoving = true;
+    } 
 
     @Override
     public void execute() {

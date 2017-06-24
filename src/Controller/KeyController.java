@@ -6,7 +6,7 @@ import Model.Nen;
 
 
 public class KeyController implements KeyListener {
-    Nen nen = Main.gameData.marine;
+    Nen nen = Main.gameData.nen;
     @Override
     public void keyPressed(KeyEvent e) {   
         switch (e.getKeyCode()){
@@ -26,6 +26,9 @@ public class KeyController implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
+        if(e.getKeyChar() == 'f' || e.getKeyChar() == 'F')
+                nen.cState.nextState("LightAttack");
+        
     }
 
     @Override

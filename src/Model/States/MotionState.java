@@ -16,5 +16,7 @@ public abstract class MotionState extends State {
     
     public MotionState(GameFigure gameFigure) {
         super(gameFigure);
+        previousState = gameFigure.mState;
+        combatState = gameFigure.cState;
     }
 }
