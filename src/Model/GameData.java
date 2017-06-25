@@ -2,6 +2,7 @@ package Model;
 
 import Controller.Main;
 import Controller.TimerListener;
+import Model.States.Rai.Block;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,9 +22,9 @@ public class GameData {
     
     public final List<GameFigure> deadBullets;
     public final Nen nen;
- 
+    private Rai rai;
     public Timer enemyTimer, bossTimer;
- 
+    public long time = 0;
     public TimerListener timerListener;
     public Thread gameThread;
     public Boss boss;
@@ -57,9 +58,9 @@ public class GameData {
 
         nen = new Nen(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - nenSize, nenSize);
 
-       
-              enemys.add(new Rai((GamePanel.PWIDTH), GamePanel.PHEIGHT - 90, 100));
-            enemys.add(new Rai(0, GamePanel.PHEIGHT - 90, 100));
+       rai = new Rai((GamePanel.PWIDTH), GamePanel.PHEIGHT - 90, 100);
+              enemys.add(rai);
+           // enemys.add(new Rai(0, GamePanel.PHEIGHT - 90, 100));
     }
 
 
@@ -106,6 +107,7 @@ public class GameData {
     }
 
     public void checkGameCondition(){
+        
         if(enemys.isEmpty() && !enemyTimer.isRunning() && !bossSpawned){
             bossSpawned = true;
             addBoss();
@@ -128,7 +130,15 @@ public class GameData {
 
     public void update() {
        
-
+//        if(System.currentTimeMillis() - time >= 1000)
+//        {
+//            time = System.currentTimeMillis();
+//            System.out.println("NEN: "  + "X: "  + nen.x + " Y:" + nen.y);
+//            System.out.println("RAI: "  + "X: "  + rai.x + " Y:" + rai.y);
+//            double dis = rai.x - nen.x;
+//            System.out.println("DISTANCE: "  + "X: " + dis);
+//        }
+        
         nen.update();
         
         synchronized (bullets) {
@@ -154,8 +164,11 @@ public class GameData {
                     for(GameFigure enemy : enemys)
                     if(ally.getCollisionBox().intersects(enemy.getCollisionBox()))
                     {
-                        enemy.health -= 10;
-                        System.out.println("HEALTH: "  + enemy.health);
+                       // System.out.println("Health: " + enemy.health);
+                        if(enemy.cState instanceof Block == false)
+                            enemy.health -= 5;
+                        //System.out.println("HEALTH: "  + enemy.health);
+                        enemy.cState.nextState("Hit");
                         if(enemy.health <= 0)
                             deadEnemys.add(enemy);
                     }

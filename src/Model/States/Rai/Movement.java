@@ -39,9 +39,13 @@ public class Movement extends MotionState{
         if (n.x < gameFigure.x){
             gameFigure.x -= 5;
         }
-        else if(n.x >= gameFigure.x + gameFigure.size){ 
+        else if(n.x > gameFigure.x){ 
             gameFigure.x += 5;
         }
+        //Matlocks was causing the model to get stuck and not move or attack.
+//        else if(n.x >= gameFigure.x + gameFigure.size){ 
+//            gameFigure.x += 5;
+//        }
         if(gameFigure.cState instanceof Block || gameFigure.cState instanceof Hit || gameFigure.cState instanceof ViperStrike){
             this.nextState("Neutral");
         }
