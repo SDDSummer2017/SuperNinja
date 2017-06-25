@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import View.GamePanel;
 import EventHandling.SoundHandler; 
+import Model.States.Nen.Move;
 import java.util.ArrayList;
 public class Nen extends GameFigure {
    
@@ -20,9 +21,6 @@ public class Nen extends GameFigure {
     private final Image[] moveRightAnimation, moveLeftAnimation;
     private int jumpHeight = 0;
     private int dy = -7;
-
-     
-   
     private final SoundHandler soundHandler = new SoundHandler("");
 
     private int frameIndex;
@@ -64,16 +62,20 @@ public class Nen extends GameFigure {
     @Override
     public void render(Graphics g) {
         
-                
-        if(movingRight){
-            g.drawImage(moveRightAnimation[frameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-            //If we've reached the end of the animation reset frameCounter to zero, otherwise increment it.
-            frameIndex = (frameIndex == animationLength-1) ? 0 : frameIndex + 1;           
-        }else if (movingLeft){
-            g.drawImage(moveLeftAnimation[frameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-            frameIndex = (frameIndex == animationLength-1) ? 0 : frameIndex + 1;   
+        if(mState instanceof Move)
+        {
+            if(isFacingRight){
+                g.drawImage(moveRightAnimation[frameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+                //If we've reached the end of the animation reset frameCounter to zero, otherwise increment it.
+                frameIndex = (frameIndex == animationLength-1) ? 0 : frameIndex + 1;           
+            }else 
+            {
+                g.drawImage(moveLeftAnimation[frameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+                frameIndex = (frameIndex == animationLength-1) ? 0 : frameIndex + 1;   
+            }
         }
-        else{
+        else
+        {
             g.drawImage(launcherImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             //If they are standing still we need to reset the frameCounter
             frameIndex = 0;
@@ -99,7 +101,7 @@ public class Nen extends GameFigure {
  
     public void gravity(){
         if(y <= 450)
-           y += 8; 
+           y += GRAVITY; 
         else
             airborn = false;
     }

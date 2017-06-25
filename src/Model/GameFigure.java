@@ -20,6 +20,7 @@ public abstract class GameFigure implements Collision {
     public MotionState mState;
     public boolean airborn;
     public Point2D.Double location;
+    public static final int GRAVITY = 8;
     public boolean hit;
  
     public GameFigure(double x, double y, double size) {

@@ -34,7 +34,7 @@ public class Jump extends MotionState {
         }else if(jumpMade && !gameFigure.airborn)
             nextState("JumpMade"); 
  
-        jumpHeight += dy;
+        jumpHeight += dy - gameFigure.GRAVITY;
         
         if(isMoving)
             move();
