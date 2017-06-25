@@ -53,10 +53,15 @@ public class Jump extends MotionState {
             isMoving = true;
         else if(s.equals("NeutralMotion"))
             isMoving = false;
-        if(s.equals("JumpMade") && isMoving)
+        if(s.equals("JumpMade") && isMoving){
             gameFigure.mState = new Move(gameFigure, observers);
-        else if(s.equals("JumpMade"))
+            this.notifyObservers("landed");
+        }
+        else if(s.equals("JumpMade")){
             gameFigure.mState = new NeutralMotion(gameFigure, observers);
+            this.notifyObservers("landed");
+        }
+            
     }
     
 }

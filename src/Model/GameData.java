@@ -6,11 +6,9 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import javax.swing.Timer;
 import View.GamePanel;
 import View.MainWindow;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 public class GameData {
 
@@ -47,7 +45,7 @@ public class GameData {
         
         gameThread = new Thread(Main.animator);
         
-        nen = new Nen(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - 90, 90);
+       nen = new Nen(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - 90, 90);
        enemys.add(new Dummy(300, 400, 5));
        enemys.add(new Dummy(500, 400, 5));
        enemys.add(new Dummy(0, 300, 5));

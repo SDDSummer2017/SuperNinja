@@ -39,19 +39,19 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
     public void onNotify(State state) {
          System.out.println("An object has entered the: " + state.getClass().toString() + " state: playing a sound");
          
-         if(state.getClass() == Model.States.Nen.Move.class){
-         this.playSound("SoundEffects/Footsteps.WAV");
-         }
-         
+//         if(state.getClass() == Model.States.Nen.Move.class){
+//         this.playSound("SoundEffects/Footsteps.WAV");
+//         }
+//         
          if(state.getClass() == Model.States.Nen.Jump.class){
          this.playSound("SoundEffects/Ninja Jump 1.WAV");}
          
          if(state.getClass() == Model.States.Nen.LightAttack.class){
          this.playSound("SoundEffects/ninja_whoosh.mp3");}
-         
-         if(state.getClass() == Model.States.Nen.NeutralCombat.class){
-         this.playSound("SoundEffects/Breath.WAV");}
-         
+//         
+//         if(state.getClass() == Model.States.Nen.NeutralCombat.class){
+//         this.playSound("SoundEffects/Breath.WAV");}
+//         
          
     
     }
