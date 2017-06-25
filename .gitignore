@@ -32,3 +32,5 @@ build/classes/View/GamePanel.class
 *.class
 *.class
 *.class
+build/built-jar.properties
+*.properties

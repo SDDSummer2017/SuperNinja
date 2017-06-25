@@ -8,7 +8,10 @@ import Model.States.Nen.Move;
 
 
 public class KeyController implements KeyListener {
+ 
     Nen nen = Main.gameData.nen;
+ 
+   
     @Override
     public void keyPressed(KeyEvent e) {   
         switch (e.getKeyCode()){

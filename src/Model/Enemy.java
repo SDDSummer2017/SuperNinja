@@ -10,6 +10,7 @@ import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
 import View.GamePanel;
+import static java.lang.Math.random;
 
 public abstract class Enemy extends GameFigure {
 
@@ -41,9 +42,21 @@ public abstract class Enemy extends GameFigure {
 
     public void setMState(MotionState state){}
     
+ 
     public void setCState(CombatState state){}
-    
-    public void setIndex(int i){}
+ 
+    public void shoot(){
+        double targetX = Main.gameData.nen.x + Main.gameData.nen.size/2;
+        double targetY = Main.gameData.nen.y;
+        Random random = new Random();
+        if(random.nextBoolean())
+            Main.gameData.addEnemyBullet(super.x + super.size/2, super.y + super.size, targetX, targetY, Color.red);
+ 
+    } 
+    public void setIndex(int i)
+    {
+       this.index = i; 
+    }
     
     public int getIndex(){return 0;}
     

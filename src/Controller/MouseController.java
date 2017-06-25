@@ -28,11 +28,13 @@ public class MouseController implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent me) {
-//        targetX = me.getX();
-//        targetY = me.getY();
-//        originX = Main.gameData.marine.x + Main.gameData.marine.size/2;
-//        originY = Main.gameData.marine.y + Main.gameData.marine.size/2;
-//        Main.gameData.addMarineBullet(originX, originY, targetX, targetY, Color.yellow);
+ 
+        targetX = me.getX();
+        targetY = me.getY();
+        originX = Main.gameData.nen.x + Main.gameData.nen.size/2;
+        originY = Main.gameData.nen.y + Main.gameData.nen.size/2;
+        Main.gameData.addNenBullet(originX, originY, targetX, targetY, Color.yellow);
+ 
     }
 
 }
