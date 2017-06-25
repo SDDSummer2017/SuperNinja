@@ -14,17 +14,18 @@ import javax.swing.JOptionPane;
 import View.GamePanel;
 import EventHandling.SoundHandler; 
 import Model.States.Nen.Move;
+import Model.States.Nen.Jump;
 import java.util.ArrayList;
 public class Nen extends GameFigure {
    
     private final Image launcherImage;
-    private final Image[] moveRightAnimation, moveLeftAnimation, idleAnimation;
+    private final Image[] moveRightAnimation, moveLeftAnimation, idleAnimation, jumpAnimation;
     private int jumpHeight = 0;
     private int dy = -7;
     private final SoundHandler soundHandler = new SoundHandler("");
 
-    private int moveFrameIndex, idleFrameIndex, idleFrameDelayCount;
-    private final int moveAnimationLength, idleAnimationLength;
+    private int moveFrameIndex, idleFrameIndex, idleFrameDelayCount, jumpFrameIndex;
+    private final int moveAnimationLength, idleAnimationLength, jumpAnimationLength;
     public boolean jump, movingLeft, movingRight;
     
     public Nen(int x, int y, int size) {
@@ -45,14 +46,18 @@ public class Nen extends GameFigure {
         launcherImage = getImage(imagePath + separator + "images" + separator
                 + "Nen.png");
         
-        moveFrameIndex = 0;
-        idleFrameIndex = 0;
         idleFrameDelayCount = 0;
+        idleFrameIndex = 0;
+        moveFrameIndex = 0;
+        jumpFrameIndex = 0;
         moveAnimationLength = 7;
         idleAnimationLength = 3;
+        jumpAnimationLength = 3;
         moveRightAnimation = new Image[moveAnimationLength]; 
         moveLeftAnimation = new Image[moveAnimationLength]; 
         idleAnimation = new Image[idleAnimationLength]; 
+        jumpAnimation = new Image[jumpAnimationLength];
+        //Build Animation Arrays
         for(int i=0;i<moveAnimationLength;i++){
             moveRightAnimation[i] = getImage(imagePath + separator + "images" + separator
                 + "NenRight" + i + ".jpg");
@@ -64,6 +69,10 @@ public class Nen extends GameFigure {
             idleAnimation[i] = getImage(imagePath + separator + "images" + separator
                 + "Ren_Standing_Animation_" + i + ".png");
         }
+        for(int i=0;i<jumpAnimationLength;i++){
+            jumpAnimation[i] = getImage(imagePath + separator + "images" + separator
+                + "Ren_Jump_Animation_" + i + ".png");
+        }
         
     }
 
@@ -74,6 +83,8 @@ public class Nen extends GameFigure {
         {
             //If we are moving, reset the idle animtion frame index
             idleFrameIndex = 0;
+            jumpFrameIndex = 0;
+            idleFrameDelayCount = 0;
             if(isFacingRight){
                 g.drawImage(moveRightAnimation[moveFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
                 //If we've reached the end of the animation reset frameCounter to zero, otherwise increment it.
@@ -84,11 +95,18 @@ public class Nen extends GameFigure {
                 moveFrameIndex = (moveFrameIndex == moveAnimationLength-1) ? 0 : moveFrameIndex + 1;   
             }
         }
+        else if(mState instanceof Jump){
+            moveFrameIndex = 0;
+            idleFrameIndex = 0;
+            idleFrameDelayCount = 0;
+            g.drawImage(jumpAnimation[jumpFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            jumpFrameIndex = (jumpFrameIndex == jumpAnimationLength-1) ? 0 : jumpFrameIndex + 1;
+        }
         else
         {
             //If they are standing still we need to reset the frameCounter
             moveFrameIndex = 0;               
-            
+            jumpFrameIndex = 0;
             g.drawImage(idleAnimation[idleFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             
             if (idleFrameDelayCount == 3){
