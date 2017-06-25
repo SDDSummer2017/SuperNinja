@@ -30,7 +30,7 @@ public class Throw extends CombatState{
         Rai rai = (Rai) this.gameFigure;
         rai.image = rai.attack1;
         rai.setImage(rai.image);
-        Nen n = Main.gameData.marine;
+        Nen n = Main.gameData.nen;
         int a = rai.getCount();
         if (a >= 10){
             a = 0;

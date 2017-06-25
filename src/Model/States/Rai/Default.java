@@ -30,7 +30,7 @@ public class Default extends CombatState{
     public void execute() {
         //in the event that the combat state is in default setting then the movement
         //state should have priority and will dictate the animation sequence
-        Nen n = Main.gameData.marine;
+        Nen n = Main.gameData.nen;
         
         if(n.x < gameFigure.x + 125 && n.x > gameFigure.x){
             this.nextState("Throw");

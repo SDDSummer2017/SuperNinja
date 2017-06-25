@@ -27,7 +27,7 @@ public class Static extends MotionState{
 
     @Override
     public void execute() {
-        Nen n = Main.gameData.marine;
+        Nen n = Main.gameData.nen;
         Rai rai = (Rai) this.gameFigure;
         rai.image = rai.movement;
         rai.setImage(rai.image);

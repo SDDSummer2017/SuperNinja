@@ -16,15 +16,10 @@ public abstract class MotionState extends State  {
     protected MotionState previousState;
     protected CombatState combatState;
     
-<<<<<<< HEAD
     public MotionState(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
-=======
-    public MotionState(GameFigure gameFigure) {
-        super(gameFigure);
         previousState = gameFigure.mState;
         combatState = gameFigure.cState;
->>>>>>> refs/remotes/origin/StateImplementation
     }
     
    

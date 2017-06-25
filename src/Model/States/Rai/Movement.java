@@ -31,7 +31,7 @@ public class Movement extends MotionState{
         // this state is rais' first attack in his sequence chain
          //changes the images of the gamefigure depending on which state we are currently in 
         //alters the movement state to minimize the chance of errors
-        Nen n = Main.gameData.marine;
+        Nen n = Main.gameData.nen;
         //if(combatState instanceof Default){
         Rai rai = (Rai) this.gameFigure;
         rai.image = rai.movement;

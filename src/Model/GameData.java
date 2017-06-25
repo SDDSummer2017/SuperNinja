@@ -47,19 +47,12 @@ public class GameData {
         
         gameThread = new Thread(Main.animator);
         
-<<<<<<< HEAD
-        marine = new Nen(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - 90, 90);
-        //enemys.add(new Rai(GamePanel.PWIDTH, GamePanel.PHEIGHT -90, 100));
-        
-        this.addMutalisk(SIZE);
-       
-=======
         nen = new Nen(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - 90, 90);
        enemys.add(new Dummy(300, 400, 5));
        enemys.add(new Dummy(500, 400, 5));
        enemys.add(new Dummy(0, 300, 5));
        enemys.add(new Dummy(250, 250, 5)); 
->>>>>>> refs/remotes/origin/StateImplementation
+ 
     }
 
     public void addMutalisk(int n) {
@@ -159,7 +152,7 @@ public class GameData {
         deadBullets.clear();
         deadEnemys.clear();
         int bulletCount = bullets.size();
-//        MainWindow.message.setText("Bullets:" + bulletCount + mutaTimer.isRunning());
+        MainWindow.message.setText("Bullets:" + bulletCount + mutaTimer.isRunning());
         checkGameCondition();
     }
 }

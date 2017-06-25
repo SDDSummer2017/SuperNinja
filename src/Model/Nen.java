@@ -54,62 +54,14 @@ public class Nen extends GameFigure {
     
     @Override
     public void update() {
-<<<<<<< HEAD
-        
-//        if(cState instance of NS)
-//            mState.execute();
-//        else
-//            cState.execute();
-         if(cState instanceof NeutralCombat)
-=======
  
         if(cState instanceof NeutralCombat)
->>>>>>> refs/remotes/origin/StateImplementation
             mState.execute();
         else
             cState.execute();
         gravity();
-<<<<<<< HEAD
- 
-//        if (movingLeft) {
-//            translate(-7, 0);
-//        }
-//        if (movingRight) {
-//            translate(7, 0);
-//        }
-//        if (jump) {
-//            jump();
-//        }
     }
 
-//    public void jump() {
-//        jumpHeight += dy;
-//        if (jumpHeight <= -100) {
-//            dy = 7;
-//        }
-//        if (jumpHeight == 0) {
-//            jump = false;
-//            dy = -7;
-//            super.y = GamePanel.PHEIGHT - super.size;
-//            return;
-//        }
-//        super.y += dy;
-//    }
-//
-//    public void translate(int dx, int dy) {
-//        if (super.x <= 0 && dx < 0) {
-//            dx = 0;
-//        }
-//        if (((super.x + super.size) >= GamePanel.PWIDTH) && (dx > 0)) {
-//            dx = 0;
-//        }
-//        super.x += dx;
-//        super.y += dy;
-//    }
-=======
->>>>>>> refs/remotes/origin/StateImplementation
-
-    }
  
     public void gravity(){
         if(y <= 450)

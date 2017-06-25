@@ -1,5 +1,5 @@
-<<<<<<< HEAD
- /*
+
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -22,73 +22,11 @@ public class LightAttack extends CombatState {
     private static final long DURATION = 500; 
     HitBox hitBox;
     private int midX;
-    private int midRange = 150;
-    private int lowRange = 300;
-    public LightAttack(GameFigure gameFigure, ArrayList<Observer> observers) {
-        super(gameFigure, observers);
-        gameFigure.damage = 10;
-        hitBox =  new HitBox(gameFigure.x + (gameFigure.size/2), gameFigure.y, 75, 10);
-       
-       // hitBox =  new AttackHitBox(gameFigure.x + (gameFigure.size/2), gameFigure.y + (gameFigure.size/2));
-        
-        Main.gameData.addAlly(hitBox);
-    }
-
-    @Override
-    public void execute() {   
-       
-        if(System.currentTimeMillis() - initTime >= DURATION)
-        {
-            Main.gameData.removeAlly(hitBox);
-            nextState("NeutralCombat");
-        }
-        else if(System.currentTimeMillis() - initTime  >= midRange && System.currentTimeMillis() - initTime <= lowRange) 
-            hitBox.translate(gameFigure.x + (gameFigure.size/2) + 20, gameFigure.y + 30);  
-        else if(System.currentTimeMillis()  - initTime > lowRange) 
-            hitBox.translate(gameFigure.x + (gameFigure.size/2), gameFigure.y + 60);  
-        else
-            hitBox.translate(gameFigure.x + (gameFigure.size/2), gameFigure.y);
-        
-    }
-
-    @Override
-    public void nextState(String s) {
-       if(s.equals("NeutralCombat"))
-       {
-           gameFigure.cState = new NeutralCombat(gameFigure, this.observers);
-       }
-       
-       gameFigure.cState.notifyObservers();
-    }
-}
- 
-=======
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Model.States.Nen;
-
-import Controller.Main;
-import Model.HitBox;
-import Model.GameFigure;
-import Model.States.CombatState;
- 
-
-/**
- *
- * @author Garrett A. Clement
- */
-public class LightAttack extends CombatState {
-    private static final long DURATION = 500; 
-    HitBox hitBox;
-    private int midX;
     private final int MID_TIME = 150;
     private final int HIGH_TIME = 300;
     private final boolean IS_FACING_RIGHT;
-    public LightAttack(GameFigure gameFigure) {
-        super(gameFigure);
+    public LightAttack(GameFigure gameFigure, ArrayList<Observer> observers) {
+        super(gameFigure, observers);
         gameFigure.damage = 10;
         hitBox =  new HitBox(gameFigure.x + (gameFigure.size/2), gameFigure.y, 75, 10); 
         IS_FACING_RIGHT = gameFigure.isFacingRight;
@@ -124,8 +62,7 @@ public class LightAttack extends CombatState {
     public void nextState(String s) {
        if(s.equals("NeutralCombat"))
        {
-           gameFigure.cState = new NeutralCombat(gameFigure);
+           gameFigure.cState = new NeutralCombat(gameFigure, observers);
        }
     }
 }
->>>>>>> refs/remotes/origin/StateImplementation

@@ -38,7 +38,7 @@ public class ViperStrike extends CombatState {
         Rai rai = (Rai) this.gameFigure;
         rai.image = rai.attack1;
         rai.setImage(rai.image);
-        Nen n = Main.gameData.marine;
+        Nen n = Main.gameData.nen;
         int a = rai.getCount();
         
         /*        if (a >= 100 && (((n.x + n.size) <= gameFigure.x) && (n.x + n.size >= gameFigure.x - gameFigure.size / 2))
