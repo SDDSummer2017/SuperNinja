@@ -18,13 +18,13 @@ import java.util.ArrayList;
 public class Nen extends GameFigure {
    
     private final Image launcherImage;
-    private final Image[] moveRightAnimation, moveLeftAnimation;
+    private final Image[] moveRightAnimation, moveLeftAnimation, idleAnimation;
     private int jumpHeight = 0;
     private int dy = -7;
     private final SoundHandler soundHandler = new SoundHandler("");
 
-    private int frameIndex;
-    private final int animationLength;
+    private int moveFrameIndex, idleFrameIndex, idleFrameDelayCount;
+    private final int moveAnimationLength, idleAnimationLength;
     public boolean jump, movingLeft, movingRight;
     
     public Nen(int x, int y, int size) {
@@ -45,16 +45,24 @@ public class Nen extends GameFigure {
         launcherImage = getImage(imagePath + separator + "images" + separator
                 + "Nen.png");
         
-        frameIndex = 0;
-        animationLength = 7;
-        moveRightAnimation = new Image[animationLength]; 
-        moveLeftAnimation = new Image[animationLength]; 
-        for(int i=0;i<moveRightAnimation.length;i++){
+        moveFrameIndex = 0;
+        idleFrameIndex = 0;
+        idleFrameDelayCount = 0;
+        moveAnimationLength = 7;
+        idleAnimationLength = 3;
+        moveRightAnimation = new Image[moveAnimationLength]; 
+        moveLeftAnimation = new Image[moveAnimationLength]; 
+        idleAnimation = new Image[idleAnimationLength]; 
+        for(int i=0;i<moveAnimationLength;i++){
             moveRightAnimation[i] = getImage(imagePath + separator + "images" + separator
                 + "NenRight" + i + ".jpg");
             
             moveLeftAnimation[i] = getImage(imagePath + separator + "images" + separator
                 + "NenLeft" + i + ".jpg");
+        }
+        for(int i=0;i<idleAnimationLength;i++){
+            idleAnimation[i] = getImage(imagePath + separator + "images" + separator
+                + "Ren_Standing_Animation_" + i + ".png");
         }
         
     }
@@ -64,21 +72,32 @@ public class Nen extends GameFigure {
         
         if(mState instanceof Move)
         {
+            //If we are moving, reset the idle animtion frame index
+            idleFrameIndex = 0;
             if(isFacingRight){
-                g.drawImage(moveRightAnimation[frameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+                g.drawImage(moveRightAnimation[moveFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
                 //If we've reached the end of the animation reset frameCounter to zero, otherwise increment it.
-                frameIndex = (frameIndex == animationLength-1) ? 0 : frameIndex + 1;           
+                moveFrameIndex = (moveFrameIndex == moveAnimationLength-1) ? 0 : moveFrameIndex + 1;           
             }else 
             {
-                g.drawImage(moveLeftAnimation[frameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-                frameIndex = (frameIndex == animationLength-1) ? 0 : frameIndex + 1;   
+                g.drawImage(moveLeftAnimation[moveFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+                moveFrameIndex = (moveFrameIndex == moveAnimationLength-1) ? 0 : moveFrameIndex + 1;   
             }
         }
         else
         {
-            g.drawImage(launcherImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             //If they are standing still we need to reset the frameCounter
-            frameIndex = 0;
+            moveFrameIndex = 0;               
+            
+            g.drawImage(idleAnimation[idleFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            
+            if (idleFrameDelayCount == 3){
+                idleFrameIndex = (idleFrameIndex == idleAnimationLength-1) ? 0 : idleFrameIndex + 1; 
+                idleFrameDelayCount = 0;
+            }else{
+                idleFrameDelayCount++;
+            }
+        
         }
 
         g.setColor(Color.red);

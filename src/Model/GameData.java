@@ -28,7 +28,7 @@ public class GameData {
     public Thread gameThread;
     public Boss boss;
     private boolean bossSpawned = false;
-    private final int nenSize = 300;
+    private final int nenSize = 75;
 
     public void setBossSpawned(boolean bossSpawned) {
         this.bossSpawned = bossSpawned;
