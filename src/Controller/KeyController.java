@@ -3,37 +3,68 @@ package Controller;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import Model.Nen;
+import Model.States.Nen.Jump;
+import Model.States.Nen.Move;
 
 
 public class KeyController implements KeyListener {
-    Nen marine = Main.gameData.marine;
+ 
+    Nen nen = Main.gameData.nen;
+ 
+   
     @Override
     public void keyPressed(KeyEvent e) {   
         switch (e.getKeyCode()){
             case  KeyEvent.VK_LEFT:
-                marine.movingLeft = true;
+                    nen.isFacingRight = false;
+                
+               if(nen.mState.getClass() != Move.class)
+                {
+                     nen.mState.nextState("Move");
+                }
+                
                 break;
             case KeyEvent.VK_RIGHT:
-                marine.movingRight = true;
+                nen.isFacingRight = true;
+               
+                if(nen.mState.getClass() != Move.class)
+                {
+                     nen.mState.nextState("Move");
+                }
                 break;
             case KeyEvent.VK_UP:
-                marine.jump = true;
+                if(nen.mState.getClass() != Jump.class)
+                {
+                     nen.mState.nextState("Jump");
+                }
+               
                 break;
+                
+            case KeyEvent.VK_F:
+                if(nen.cState.getClass() != Model.States.Nen.LightAttack.class)
+                {
+                     nen.cState.nextState("LightAttack");
+                }
+               
+                break;    
         }
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
+        if(e.getKeyChar() == 'f' || e.getKeyChar() == 'F')
+                nen.cState.nextState("LightAttack");
+        
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()){
             case  KeyEvent.VK_LEFT:
-                marine.movingLeft = false;
+                nen.mState.nextState("NeutralMotion");
                 break;
             case KeyEvent.VK_RIGHT:
-                marine.movingRight = false;
+                nen.mState.nextState("NeutralMotion");
                 break;        
         }
     }

@@ -13,12 +13,14 @@ public class ButtonListener implements ActionListener {
         if (ae.getSource() == StartWindow.startButton) {     
             
             Main.gameData.gameThread.start();
-            Main.gameData.mutaTimer.start();
+            Main.gameData.enemyTimer.start();
             Main.startWindow.setVisible(false);
         } 
         else if(ae.getSource() == GameOverWindow.restartButton){      
             Main.gameOverWindow.setVisible(false);
-            Main.gameData.marine.resetMarine();
+ 
+            Main.gameData.nen.resetNen();
+ 
             
             Main.gameData.setBossSpawned(false);
             //Main.gameData.boss.resetHealth();
@@ -26,7 +28,7 @@ public class ButtonListener implements ActionListener {
             Main.gameData.timerListener.mutaCount = 0;
             Main.gameData.gameThread = new Thread(Main.animator);
             Main.gameData.gameThread.start();
-            Main.gameData.mutaTimer.restart();
+            Main.gameData.enemyTimer.restart();
             
         }
    

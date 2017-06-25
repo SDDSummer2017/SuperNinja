@@ -1,87 +1,85 @@
 package Model;
 
 import Controller.Main;
+import Model.States.CombatState;
+import Model.States.MotionState;
+import Model.States.State;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
-import static Model.Nen.getImage;
 import View.GamePanel;
+import static java.lang.Math.random;
 
-public class Enemy extends GameFigure {
+public abstract class Enemy extends GameFigure {
 
-    private final Image mutaliskImage;
-    private int dx;
-    private int dy;
-    private int updateCount = 0;
-    private final Random random;
-
-
-    public Enemy(int x, int y, int size) {
-        super(x, y, size);
-        this.health = 50;
-        this.random = new Random();
-        String imagePath = System.getProperty("user.dir");
-        String separator = System.getProperty("file.separator");
-        mutaliskImage = getImage(imagePath + separator + "images" + separator
-                + "Enemy.jpg");
-
-    }
+    public State mstate;
+    public State cstate;
     
+    public Image attack1;
+    public Image attack2;
+    public Image block;
+    public Image hit;
+    public Image movement;
+    public Image neutral;
+    public Image is_Thrown;
+    public Image throwImage;
+    public Image staticImage;
+    
+    public int dx;
+    public int dy;
+    public int updateCount = 0;
+    public int index;
+    public int moveState;
+    public int comState;
+    public Image image;
+
+    public Enemy(double x, double y, double size) {
+        super(x, y, size);
+        image = null;
+    }
+
+    public void setMState(MotionState state){}
+    
+ 
+    public void setCState(CombatState state){}
+ 
     public void shoot(){
-        double targetX = Main.gameData.marine.x + Main.gameData.marine.size/2;
-        double targetY = Main.gameData.marine.y;
+        double targetX = Main.gameData.nen.x + Main.gameData.nen.size/2;
+        double targetY = Main.gameData.nen.y;
+        Random random = new Random();
         if(random.nextBoolean())
             Main.gameData.addEnemyBullet(super.x + super.size/2, super.y + super.size, targetX, targetY, Color.red);
-    
+ 
+    } 
+    public void setIndex(int i)
+    {
+       this.index = i; 
     }
     
+    public int getIndex(){return 0;}
+    
+    public int getX(){return 0;}
+    
+    public int getY(){return 0;}
+    
+    public MotionState getMState(){return null;}
+    
+    public CombatState getCState(){return null;}
+    
+    public void setImage(Image i){}
+    
+    public static Image getImage(String fileName){return null;}
+ 
     @Override
-    public void render(Graphics g) {
-        g.drawImage(mutaliskImage, (int)super.x, (int)super.y, (int)super.size, (int)super.size, null);
-        
-        g.setColor(Color.red);
-        g.fillRect((int)x, (int)y, (int)super.size, 2); 
-        
-        g.setColor(Color.green);
-        g.fillRect((int)x, (int)y, (int)health, 2);       
-        
-    }
+    public void render(Graphics g) {}
 
     @Override
-    public void update() {
-        // Random movement 
-        this.updateCount++;
-        if(this.updateCount == 15){
-            shoot();
-            dx = (random.nextBoolean()) ? 2:-2;
-            dy = (random.nextBoolean()) ? 2:-2;
-            this.updateCount = 0;
-        }
-        super.x += dx;
-        super.y += dy;
-
-        if (super.x + size > GamePanel.PWIDTH) {
-            dx = -dx;
-            super.x = GamePanel.PWIDTH - size;
-        } else if (super.x - size < 0) {
-            dx = -dx;
-            super.x = size;
-        }
-
-        if (super.y + size > GamePanel.PHEIGHT - 120) {
-            dy = -dy;
-            super.y = GamePanel.PHEIGHT - 120 - size;
-        } else if (super.y - size < 0) {
-            dy = -dy;
-            super.y = size;
-        }
-    }
+    public void update() {}
 
     @Override
     public Rectangle2D.Double getCollisionBox() {
         return new Rectangle2D.Double(super.x, super.y, super.size, super.size);
     }
-    
 }

@@ -1,4 +1,5 @@
 
+
 package View;
 
 import Controller.ButtonListener;
@@ -43,10 +44,11 @@ public class StartWindow extends JFrame {
         gameRulesTextArea.setBorder(new TitledBorder(new EtchedBorder(), "Rules"));
       
         Container pane = getContentPane();
-        pane.add(gameControlsTextArea, "North");
-        pane.add(gameRulesTextArea, "Center");
+       // pane.add(gameControlsTextArea, "North");
+       // pane.add(gameRulesTextArea, "Center");
         pane.add(startButton, "South");
         
     }
     
 }
+ 
