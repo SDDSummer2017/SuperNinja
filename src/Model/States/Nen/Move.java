@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class Move extends MotionState {
 
     CombatState combatState; 
+     
     
     public Move(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers) ;
@@ -30,6 +31,12 @@ public class Move extends MotionState {
             gameFigure.x += 10;
        else
             gameFigure.x -= 10;  
+        
+       if(System.currentTimeMillis() - time >= 500 )
+       {
+           this.notifyObservers();
+           time = System.currentTimeMillis();
+       }
     }
  
     @Override
@@ -39,6 +46,8 @@ public class Move extends MotionState {
             gameFigure.mState = new NeutralMotion(gameFigure, observers);
         else if(s.equals("Jump" ) && combatState instanceof NeutralCombat)
             gameFigure.mState = new Jump(gameFigure, observers);
+        
+        
     
     }
     

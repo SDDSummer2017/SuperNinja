@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public abstract class MotionState extends State  {
     protected MotionState previousState;
     protected CombatState combatState;
+    protected long time = System.currentTimeMillis(); 
     
     public MotionState(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);

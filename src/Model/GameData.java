@@ -49,8 +49,10 @@ public class GameData {
        enemys.add(new Dummy(300, 400, 5));
        enemys.add(new Dummy(500, 400, 5));
        enemys.add(new Dummy(0, 300, 5));
-       enemys.add(new Dummy(250, 250, 5)); 
- 
+       enemys.add(new Dummy(250, 250, 5));
+       
+              enemys.add(new Rai((GamePanel.PWIDTH), GamePanel.PHEIGHT - 90, 100));
+            enemys.add(new Rai(0, GamePanel.PHEIGHT - 90, 100));
     }
 
     public void addMutalisk(int n) {
