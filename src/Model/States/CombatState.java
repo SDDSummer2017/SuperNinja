@@ -22,5 +22,7 @@ public abstract class CombatState extends State {
     public CombatState(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure,observers);
         initTime = System.currentTimeMillis();
+        previousState = gameFigure.cState;
+        motionState = gameFigure.mState;
     }
 }

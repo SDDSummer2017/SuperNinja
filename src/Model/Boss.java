@@ -48,8 +48,8 @@ public class Boss extends GameFigure {
     }
     
     public void shoot(){
-        double targetX = Main.gameData.marine.x + Main.gameData.marine.size/2;
-        double targetY = Main.gameData.marine.y;
+        double targetX = Main.gameData.nen.x + Main.gameData.nen.size/2;
+        double targetY = Main.gameData.nen.y;
         
         if(random.nextBoolean())
         Main.gameData.addEnemyBullet(super.x, super.y + this.bossHeight/2, targetX, targetY, Color.red);

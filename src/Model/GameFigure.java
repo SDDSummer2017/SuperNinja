@@ -5,6 +5,7 @@ import Model.States.MotionState;
 import java.awt.Graphics;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 public abstract class GameFigure implements Collision {
 
@@ -13,7 +14,7 @@ public abstract class GameFigure implements Collision {
     public double size;
     public double health;
     public double damage;
-    public Shape collisionBox;
+    public Rectangle2D.Double collisionBox;
     public boolean isFacingRight;
     public CombatState cState;
     public MotionState mState;

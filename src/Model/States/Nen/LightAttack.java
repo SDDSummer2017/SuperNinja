@@ -1,3 +1,4 @@
+<<<<<<< HEAD
  /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -61,3 +62,70 @@ public class LightAttack extends CombatState {
     }
 }
  
+=======
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Model.States.Nen;
+
+import Controller.Main;
+import Model.HitBox;
+import Model.GameFigure;
+import Model.States.CombatState;
+ 
+
+/**
+ *
+ * @author Garrett A. Clement
+ */
+public class LightAttack extends CombatState {
+    private static final long DURATION = 500; 
+    HitBox hitBox;
+    private int midX;
+    private final int MID_TIME = 150;
+    private final int HIGH_TIME = 300;
+    private final boolean IS_FACING_RIGHT;
+    public LightAttack(GameFigure gameFigure) {
+        super(gameFigure);
+        gameFigure.damage = 10;
+        hitBox =  new HitBox(gameFigure.x + (gameFigure.size/2), gameFigure.y, 75, 10); 
+        IS_FACING_RIGHT = gameFigure.isFacingRight;
+        Main.gameData.addAlly(hitBox);
+
+    }
+    @Override
+    public void execute() {    
+        if(System.currentTimeMillis() - initTime >= DURATION)
+        {
+            Main.gameData.removeAlly(hitBox);
+            nextState("NeutralCombat");
+        }
+        
+        //Attack right
+        if(IS_FACING_RIGHT)
+            if(System.currentTimeMillis() - initTime  >= MID_TIME && System.currentTimeMillis() - initTime <= HIGH_TIME) 
+                hitBox.translate(gameFigure.x + (gameFigure.size/2) + 20, gameFigure.y + 30);  
+            else if(System.currentTimeMillis()  - initTime > HIGH_TIME) 
+                hitBox.translate(gameFigure.x + (gameFigure.size/2), gameFigure.y + 60);  
+            else
+                hitBox.translate(gameFigure.x + (gameFigure.size/2), gameFigure.y);
+        else
+            if(System.currentTimeMillis() - initTime  >= MID_TIME && System.currentTimeMillis() - initTime <= HIGH_TIME) 
+                hitBox.translate(gameFigure.x - 95 + (gameFigure.size/2), gameFigure.y + 30);  
+            else if(System.currentTimeMillis()  - initTime > HIGH_TIME) 
+                hitBox.translate(gameFigure.x - 75 + (gameFigure.size/2), gameFigure.y + 60);  
+            else
+                hitBox.translate(gameFigure.x - 75 + (gameFigure.size/2), gameFigure.y);
+    }
+
+    @Override
+    public void nextState(String s) {
+       if(s.equals("NeutralCombat"))
+       {
+           gameFigure.cState = new NeutralCombat(gameFigure);
+       }
+    }
+}
+>>>>>>> refs/remotes/origin/StateImplementation

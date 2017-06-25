@@ -21,7 +21,7 @@ public class GameData {
     public final List<GameFigure> allies;
     
     public final List<GameFigure> deadBullets;
-    public final Nen marine;
+    public final Nen nen;
     public Timer mutaTimer, bossTimer;
     public TimerListener timerListener;
     public Thread gameThread;
@@ -38,7 +38,6 @@ public class GameData {
         bullets = Collections.synchronizedList(new ArrayList<GameFigure>());
         deadBullets = Collections.synchronizedList(new ArrayList<GameFigure>());
         allies = Collections.synchronizedList(new ArrayList<GameFigure>());
-        
         timerListener = new TimerListener();
         mutaTimer = new Timer(5000, timerListener);
         mutaTimer.setInitialDelay(3000);
@@ -48,11 +47,19 @@ public class GameData {
         
         gameThread = new Thread(Main.animator);
         
+<<<<<<< HEAD
         marine = new Nen(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - 90, 90);
         //enemys.add(new Rai(GamePanel.PWIDTH, GamePanel.PHEIGHT -90, 100));
         
         this.addMutalisk(SIZE);
        
+=======
+        nen = new Nen(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - 90, 90);
+       enemys.add(new Dummy(300, 400, 5));
+       enemys.add(new Dummy(500, 400, 5));
+       enemys.add(new Dummy(0, 300, 5));
+       enemys.add(new Dummy(250, 250, 5)); 
+>>>>>>> refs/remotes/origin/StateImplementation
     }
 
     public void addMutalisk(int n) {
@@ -98,7 +105,7 @@ public class GameData {
             addBoss();
             mutaTimer.restart();
         }
-        if (marine.health <= 0){
+        if (nen.health <= 0){
             Main.animator.running = false;
             Main.gameOverWindow.setOutcomeText("loose");
             Main.gameOverWindow.setVisible(true);
@@ -113,9 +120,8 @@ public class GameData {
     }
     
     
-    public void update() {
-       
-        marine.update();
+    public void update() { 
+        nen.update();
         
         synchronized (bullets) {
             for (GameFigure b : bullets) {
@@ -130,10 +136,24 @@ public class GameData {
         synchronized (enemys) {
             for (GameFigure f : enemys) {
                 f.update();
-                if(f.health <=0)deadEnemys.add(f);
+                if(f.health <=0)deadEnemys.add(f); 
             }
         }
-      
+        
+        synchronized (enemys){
+            synchronized (allies){
+                for(GameFigure ally : allies)
+                    for(GameFigure enemy : enemys)
+                    if(ally.getCollisionBox().intersects(enemy.getCollisionBox()))
+                    {
+                        enemy.health -= 10;
+                        System.out.println("HEALTH: "  + enemy.health);
+                        if(enemy.health <= 0)
+                            deadEnemys.add(enemy);
+                    }
+            }
+        }
+  
         enemys.removeAll(deadEnemys);
         bullets.removeAll(deadBullets);
         deadBullets.clear();

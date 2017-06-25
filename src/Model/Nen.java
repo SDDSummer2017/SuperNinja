@@ -54,16 +54,22 @@ public class Nen extends GameFigure {
     
     @Override
     public void update() {
+<<<<<<< HEAD
         
 //        if(cState instance of NS)
 //            mState.execute();
 //        else
 //            cState.execute();
          if(cState instanceof NeutralCombat)
+=======
+ 
+        if(cState instanceof NeutralCombat)
+>>>>>>> refs/remotes/origin/StateImplementation
             mState.execute();
         else
             cState.execute();
         gravity();
+<<<<<<< HEAD
  
 //        if (movingLeft) {
 //            translate(-7, 0);
@@ -100,10 +106,14 @@ public class Nen extends GameFigure {
 //        super.x += dx;
 //        super.y += dy;
 //    }
+=======
+>>>>>>> refs/remotes/origin/StateImplementation
 
+    }
+ 
     public void gravity(){
         if(y <= 450)
-           y += 5; 
+           y += 8; 
         else
             airborn = false;
     }
