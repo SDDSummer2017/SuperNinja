@@ -18,18 +18,22 @@ import Model.States.Nen.Jump;
 import java.util.ArrayList;
 public class Nen extends GameFigure {
    
-    private final Image launcherImage;
-    private final Image[] moveRightAnimation, moveLeftAnimation, idleAnimation, jumpAnimation;
     private int jumpHeight = 0;
     private int dy = -7;
     private final SoundHandler soundHandler = new SoundHandler("");
 
-    private int moveFrameIndex, idleFrameIndex, idleFrameDelayCount, jumpFrameIndex;
-    private final int moveAnimationLength, idleAnimationLength, jumpAnimationLength;
-    public boolean jump, movingLeft, movingRight;
+//    private int moveFrameIndex, idleFrameIndex, idleFrameDelayCount, jumpFrameIndex;
+//    private final int moveAnimationLength, idleAnimationLength, jumpAnimationLength;
+//    public boolean jump, movingLeft, movingRight;
+//    private final Image staticImage;
+//    private final Image[] moveRightAnimation, moveLeftAnimation, idleAnimation, jumpAnimation;
     
     public Nen(int x, int y, int size) {
-        super(x, y, size);
+        super(x, y, size,
+                7,  //move animation length
+                3,  //idle animation length
+                3,  //jump animation length
+                "Nen"); //name for animation image file path
         this.health = 100;
         
         ArrayList<Observer> observers = new ArrayList<Observer>();
@@ -43,36 +47,35 @@ public class Nen extends GameFigure {
         // separator: Windows '\', Linux '/'
         String separator = System.getProperty("file.separator");
 
-        launcherImage = getImage(imagePath + separator + "images" + separator
+        staticImage = GameFigure.getImage(imagePath + separator + "images" + separator
                 + "Nen.png");
-        
-        idleFrameDelayCount = 0;
-        idleFrameIndex = 0;
-        moveFrameIndex = 0;
-        jumpFrameIndex = 0;
-        moveAnimationLength = 7;
-        idleAnimationLength = 3;
-        jumpAnimationLength = 3;
-        moveRightAnimation = new Image[moveAnimationLength]; 
-        moveLeftAnimation = new Image[moveAnimationLength]; 
-        idleAnimation = new Image[idleAnimationLength]; 
-        jumpAnimation = new Image[jumpAnimationLength];
-        //Build Animation Arrays
-        for(int i=0;i<moveAnimationLength;i++){
-            moveRightAnimation[i] = getImage(imagePath + separator + "images" + separator
-                + "NenRight" + i + ".jpg");
-            
-            moveLeftAnimation[i] = getImage(imagePath + separator + "images" + separator
-                + "NenLeft" + i + ".jpg");
-        }
-        for(int i=0;i<idleAnimationLength;i++){
-            idleAnimation[i] = getImage(imagePath + separator + "images" + separator
-                + "Ren_Standing_Animation_" + i + ".png");
-        }
-        for(int i=0;i<jumpAnimationLength;i++){
-            jumpAnimation[i] = getImage(imagePath + separator + "images" + separator
-                + "Ren_Jump_Animation_" + i + ".png");
-        }
+//        idleFrameDelayCount = 0;
+//        idleFrameIndex = 0;
+//        moveFrameIndex = 0;
+//        jumpFrameIndex = 0;
+//        moveAnimationLength = 7;
+//        idleAnimationLength = 3;
+//        jumpAnimationLength = 3;
+//        moveRightAnimation = new Image[moveAnimationLength]; 
+//        moveLeftAnimation = new Image[moveAnimationLength]; 
+//        idleAnimation = new Image[idleAnimationLength]; 
+//        jumpAnimation = new Image[jumpAnimationLength];
+//        //Build Animation Arrays
+//        for(int i=0;i<moveAnimationLength;i++){
+//            moveRightAnimation[i] = getImage(imagePath + separator + "images" + separator
+//                + "NenRight" + i + ".jpg");
+//            
+//            moveLeftAnimation[i] = getImage(imagePath + separator + "images" + separator
+//                + "NenLeft" + i + ".jpg");
+//        }
+//        for(int i=0;i<idleAnimationLength;i++){
+//            idleAnimation[i] = getImage(imagePath + separator + "images" + separator
+//                + "Ren_Standing_Animation_" + i + ".png");
+//        }
+//        for(int i=0;i<jumpAnimationLength;i++){
+//            jumpAnimation[i] = getImage(imagePath + separator + "images" + separator
+//                + "Ren_Jump_Animation_" + i + ".png");
+//        }
         
     }
 
@@ -88,11 +91,11 @@ public class Nen extends GameFigure {
             if(isFacingRight){
                 g.drawImage(moveRightAnimation[moveFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
                 //If we've reached the end of the animation reset frameCounter to zero, otherwise increment it.
-                moveFrameIndex = (moveFrameIndex == moveAnimationLength-1) ? 0 : moveFrameIndex + 1;           
+                moveFrameIndex = (moveFrameIndex == moveRightAnimation.length-1) ? 0 : moveFrameIndex + 1;           
             }else 
             {
                 g.drawImage(moveLeftAnimation[moveFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-                moveFrameIndex = (moveFrameIndex == moveAnimationLength-1) ? 0 : moveFrameIndex + 1;   
+                moveFrameIndex = (moveFrameIndex == moveLeftAnimation.length-1) ? 0 : moveFrameIndex + 1;   
             }
         }
         else if(mState instanceof Jump){
@@ -100,7 +103,7 @@ public class Nen extends GameFigure {
             idleFrameIndex = 0;
             idleFrameDelayCount = 0;
             g.drawImage(jumpAnimation[jumpFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-            jumpFrameIndex = (jumpFrameIndex == jumpAnimationLength-1) ? 0 : jumpFrameIndex + 1;
+            jumpFrameIndex = (jumpFrameIndex == jumpAnimation.length-1) ? 0 : jumpFrameIndex + 1;
         }
         else
         {
@@ -110,7 +113,7 @@ public class Nen extends GameFigure {
             g.drawImage(idleAnimation[idleFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             
             if (idleFrameDelayCount == 3){
-                idleFrameIndex = (idleFrameIndex == idleAnimationLength-1) ? 0 : idleFrameIndex + 1; 
+                idleFrameIndex = (idleFrameIndex == idleAnimation.length-1) ? 0 : idleFrameIndex + 1; 
                 idleFrameDelayCount = 0;
             }else{
                 idleFrameDelayCount++;
@@ -166,16 +169,6 @@ public class Nen extends GameFigure {
         super.x = GamePanel.PWIDTH/2;
     }
 
-    public static Image getImage(String fileName) {
-        Image image = null;
-        try {
-            image = ImageIO.read(new File(fileName));
-        } catch (IOException ioe) {
-            System.out.println("Error: Cannot open image:" + fileName);
-            JOptionPane.showMessageDialog(null, "Error: Cannot open image:" + fileName);
-        }
-        return image;
-    }
 
     @Override
     public String toString() {
