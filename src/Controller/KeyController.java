@@ -7,8 +7,8 @@ import Model.States.Nen.Jump;
 import Model.States.Nen.Move;
 
 
-public class KeyController implements KeyListener {
- 
+public class KeyController implements KeyListener { 
+    
     Nen nen = Main.gameData.nen;
  
    
