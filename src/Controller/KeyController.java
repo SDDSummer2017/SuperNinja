@@ -5,10 +5,10 @@ import java.awt.event.KeyListener;
 import Model.Nen;
 import Model.States.Nen.Jump;
 import Model.States.Nen.Move;
-
-
+ 
+    //Merge worked 
 public class KeyController implements KeyListener { 
-    
+     
     Nen nen = Main.gameData.nen;
  
    
