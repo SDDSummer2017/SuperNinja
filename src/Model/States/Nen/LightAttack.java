@@ -19,11 +19,12 @@ import java.util.ArrayList;
  * @author Garrett A. Clement
  */
 public class LightAttack extends CombatState {
-    private static final long DURATION = 500; 
+     
     HitBox hitBox;
     private int midX;
-    private final int MID_TIME = 150;
-    private final int HIGH_TIME = 300;
+    private static final long DURATION = 500;
+    private static final int MID_TIME = 150;
+    private static final int HIGH_TIME = 300; 
     private final boolean IS_FACING_RIGHT;
     public LightAttack(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
@@ -43,8 +44,10 @@ public class LightAttack extends CombatState {
         
         //Attack right
         if(IS_FACING_RIGHT)
-            if(System.currentTimeMillis() - initTime  >= MID_TIME && System.currentTimeMillis() - initTime <= HIGH_TIME) 
+            if(System.currentTimeMillis() - initTime  >= MID_TIME && System.currentTimeMillis() - initTime <= HIGH_TIME)
+            {
                 hitBox.translate(gameFigure.x + (gameFigure.size/2) + 20, gameFigure.y + 30);  
+            }
             else if(System.currentTimeMillis()  - initTime > HIGH_TIME) 
                 hitBox.translate(gameFigure.x + (gameFigure.size/2), gameFigure.y + 60);  
             else
@@ -61,8 +64,11 @@ public class LightAttack extends CombatState {
     @Override
     public void nextState(String s) {
        if(s.equals("NeutralCombat"))
-       {
            gameFigure.cState = new NeutralCombat(gameFigure, observers);
+       else if(s.equals("LightAttack") && System.currentTimeMillis() - initTime  >= MID_TIME && System.currentTimeMillis() - initTime <= HIGH_TIME)
+       {
+           gameFigure.cState = new Whirlwind(gameFigure, observers);
+           Main.gameData.removeAlly(hitBox);
        }
     }
 }
