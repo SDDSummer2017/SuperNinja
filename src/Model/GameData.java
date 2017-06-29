@@ -60,13 +60,14 @@ public class GameData implements Subject  {
        
        allies.add(new Platform(250, 250, 5));
        //enemys.add(new Dummy(250, 250, 5));
-
+        
         nen = new Nen(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - nenSize, nenSize);
 
        rai = new Rai((GamePanel.PWIDTH), GamePanel.PHEIGHT - 90, 100);
               enemys.add(rai);
            // enemys.add(new Rai(0, GamePanel.PHEIGHT - 90, 100));
-           
+       rai.cState.registerObserver(new SoundHandler(""));
+       rai.mState.registerObserver(new SoundHandler(""));
            
        //Get event handlers for game logic. 
        observers = new ArrayList<>(); 

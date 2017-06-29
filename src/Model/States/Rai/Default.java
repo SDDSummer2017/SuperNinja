@@ -68,6 +68,7 @@ public class Default extends CombatState{
         }
         else if(s.equals("ViperStrike")){
             gameFigure.cState = new ViperStrike(this.gameFigure, observers);
+            gameFigure.cState.notifyObservers();
         }
         else{}
         /* not yet testable and therefore will be implemented later 

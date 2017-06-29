@@ -6,6 +6,7 @@
 package EventHandling;
 
 import Model.GameFigure;
+import Model.States.Rai.ViperStrike;
 import Model.States.State;
 import java.io.File;
 import java.net.URL;
@@ -39,7 +40,7 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
     public void onNotify(State state) {
         // System.out.println("An object has entered the: " + state.getClass().toString() + " state: playing a sound");
          
-         if(state.getClass() == Model.States.Nen.Move.class){
+         if( state instanceof Model.States.Rai.Movement || state instanceof Model.States.Nen.Move){
          this.playSound("SoundEffects/walk.mp3");
          }
          
@@ -48,6 +49,12 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
          
          if(state.getClass() == Model.States.Nen.LightAttack.class){
          this.playSound("SoundEffects/ninja_whoosh.mp3");}
+         
+         if(state instanceof ViperStrike)
+         {
+             System.out.println("Playing katana noise");
+             this.playSound("SoundEffects/ninja_katana_level_03.mp3");
+         }
 //         
 //         if(state.getClass() == Model.States.Nen.NeutralCombat.class){
 //         this.playSound("SoundEffects/Breath.WAV");}
