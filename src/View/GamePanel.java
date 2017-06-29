@@ -14,12 +14,14 @@ public class GamePanel extends JPanel {
 
     public static final int PWIDTH = 1000; // size of the game panel
     public static final int PHEIGHT = 540;
-
+//    public Camera camera = new Camera();
+    
 
     // off screen rendering
     private Graphics graphics;
     private Image doubleBufferImage = null;
     private Image bgImage;
+   
 
     public GamePanel() {
         setBackground(Color.blue);

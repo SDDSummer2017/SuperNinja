@@ -5,8 +5,10 @@ import Model.States.MotionState;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Shape;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.AffineTransformOp;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -78,23 +80,24 @@ public abstract class GameFigure implements Collision {
         String separator = System.getProperty("file.separator");
         //Move Animations
         for(int i=0;i<moveRightAnimation.length;i++){
-            moveRightAnimation[i] = getImage(imagePath + separator + "images" + separator
-                + name + "_Right" + i + ".jpg");
+            moveRightAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Run_Right" + separator
+                + "Run__00" + i + ".png");
             
-            moveLeftAnimation[i] = getImage(imagePath + separator + "images" + separator
-                + name + "_Left" + i + ".jpg");
+            moveLeftAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Run_Left" + separator
+                + "Run__00" + i + ".png");
         }
         //Idle Animation 
         for(int i=0;i<idleAnimation.length;i++){
-            idleAnimation[i] = getImage(imagePath + separator + "images" + separator
-                + name + "_Idle" + i + ".png");
+            idleAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Idle" + separator
+                + "Idle__00" + i + ".png");
         }
         //Jump Animation
         for(int i=0;i<jumpAnimation.length;i++){
-            jumpAnimation[i] = getImage(imagePath + separator + "images" + separator
-                + name + "_Jump" + i + ".png");
+            jumpAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Jump" + separator
+                + "Jump__00" + i + ".png");
         }
     }
+    
     public static Image getImage(String fileName) {
         Image image = null;
         try {

@@ -44,23 +44,23 @@ public class GameData {
         timerListener = new TimerListener();
         enemyTimer = new Timer(5000, timerListener);
         enemyTimer.setInitialDelay(3000);
-        
+
         bossTimer = new Timer(3000, timerListener);
         bossTimer.setRepeats(false);
-        
+
         gameThread = new Thread(Main.animator);
         
 
-       enemys.add(new Dummy(300, 400, 5));
-       enemys.add(new Dummy(500, 400, 5));
-       enemys.add(new Dummy(0, 300, 5));
-       enemys.add(new Dummy(250, 250, 5));
+//        enemys.add(new Dummy(300, 400, 5));
+//        enemys.add(new Dummy(500, 400, 5));
+//        enemys.add(new Dummy(0, 300, 5));
+//        enemys.add(new Dummy(250, 250, 5));
 
         nen = new Nen(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - nenSize, nenSize);
 
-       rai = new Rai((GamePanel.PWIDTH), GamePanel.PHEIGHT - 90, 100);
-              enemys.add(rai);
-           // enemys.add(new Rai(0, GamePanel.PHEIGHT - 90, 100));
+//        rai = new Rai((GamePanel.PWIDTH), GamePanel.PHEIGHT - 90, 100);
+//        enemys.add(rai);
+        // enemys.add(new Rai(0, GamePanel.PHEIGHT - 90, 100));
     }
 
 
