@@ -1,14 +1,16 @@
 package Controller;
 
+import Model.Dummy;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import Model.Nen;
 import Model.States.Nen.Jump;
 import Model.States.Nen.Move;
+import java.util.Random;
 
 
 public class KeyController implements KeyListener {
- 
+    //It worked
     Nen nen = Main.gameData.nen;
  
    
@@ -37,8 +39,16 @@ public class KeyController implements KeyListener {
                 {
                      nen.mState.nextState("Jump");
                 }
-               
                 break;
+            case KeyEvent.VK_S:
+                synchronized(Main.gameData.bullets)
+                {
+                    Random rand = new Random();
+
+                    int  n = rand.nextInt(500) + 1;
+                    Main.gameData.bullets.add(new Dummy(n, n, 25)); 
+                }
+                    
                 
             case KeyEvent.VK_F:
                 if(nen.cState.getClass() != Model.States.Nen.LightAttack.class)
