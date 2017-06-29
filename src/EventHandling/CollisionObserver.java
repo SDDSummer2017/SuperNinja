@@ -11,6 +11,6 @@ import Model.GameFigure;
  *
  * @author abilb
  */
-public interface CollisionObserver {
+public interface CollisionObserver extends Observer {
     public void onNotify(GameFigure gameFigureOne, GameFigure gameFigureTwo); 
 }

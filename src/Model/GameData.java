@@ -2,7 +2,13 @@ package Model;
 
 import Controller.Main;
 import Controller.TimerListener;
+import EventHandling.TerrainHandler;
+import EventHandling.CollisionObserver;
+import EventHandling.Observer;
+import EventHandling.SoundHandler;
+import EventHandling.Subject;
 import Model.States.Rai.Block;
+import Model.Terrain.Platform;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,14 +18,14 @@ import View.GamePanel;
 import View.MainWindow;
 import java.util.Random;
 
-public class GameData {
+public class GameData implements Subject  {
 
     private final int SIZE = 50;
     public final List<GameFigure> enemys;
     public final List<GameFigure> deadEnemys;
     public final List<GameFigure> bullets;
     public final List<GameFigure> allies;
-    
+    public final List<Observer> observers;
     public final List<GameFigure> deadBullets;
     public final Nen nen;
     private Rai rai;
@@ -51,16 +57,22 @@ public class GameData {
         gameThread = new Thread(Main.animator);
         
 
-       enemys.add(new Dummy(300, 400, 5));
-       enemys.add(new Dummy(500, 400, 5));
-       enemys.add(new Dummy(0, 300, 5));
-       enemys.add(new Dummy(250, 250, 5));
+       
+       allies.add(new Platform(250, 250, 5));
+       //enemys.add(new Dummy(250, 250, 5));
 
         nen = new Nen(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - nenSize, nenSize);
 
        rai = new Rai((GamePanel.PWIDTH), GamePanel.PHEIGHT - 90, 100);
               enemys.add(rai);
            // enemys.add(new Rai(0, GamePanel.PHEIGHT - 90, 100));
+           
+           
+       //Get event handlers for game logic. 
+       observers = new ArrayList<>(); 
+       
+       observers.add(new SoundHandler("")); 
+       observers.add((Observer) new TerrainHandler());
     }
 
 
@@ -182,6 +194,36 @@ public class GameData {
         int bulletCount = bullets.size();
         MainWindow.message.setText("Bullets:" + bulletCount + enemyTimer.isRunning());
         checkGameCondition();
+    }
+
+    @Override
+    public void registerObserver(Observer observer) {
+        observers.add(observer); 
+    }
+
+    @Override
+    public void deregisterObserver(Observer observer) {
+        observers.remove(observer); 
+    }
+
+    @Override
+    public void notifyObservers() {
+        
+    }
+
+    public void notityObservers(GameFigure gameFigure1, GameFigure gameFigure2) 
+    {
+         for(Observer o : observers)
+         {
+             if( o instanceof CollisionObserver){
+                    ((CollisionObserver) o).onNotify(gameFigure1, gameFigure2);
+             }
+         }
+    }
+    
+    @Override
+    public void notifyObservers(String event) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
       
