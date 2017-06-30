@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model.Terrain;
+package Level;
 
 import java.awt.Image;
 
@@ -24,5 +24,5 @@ public class TileModel {
         return this.tileImage;
     }
     
-    
+   
 }

@@ -29,7 +29,7 @@ public class Animator implements Runnable {
             }
         }
 
-        Main.gameData.enemys.clear();
+        Main.gameData.enemies.clear();
         Main.gameData.bullets.clear();
     }
 }

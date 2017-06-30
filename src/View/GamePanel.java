@@ -46,11 +46,9 @@ public class GamePanel extends JPanel {
         //Render Background
         graphics.drawImage(bgImage , 0, 0, GamePanel.PWIDTH, GamePanel.PHEIGHT, null);
         Main.gameData.nen.render(graphics);
-        //Redner the enemys
-        synchronized (Main.gameData.enemys) {
-            for (GameFigure f : Main.gameData.enemys) {
-                f.render(graphics);
-            }
+        //Redner the enemies
+        synchronized (Main.gameData) {
+           Main.gameData.render(graphics);
         }
         //Render the bullets
         synchronized (Main.gameData.bullets) {
@@ -58,11 +56,7 @@ public class GamePanel extends JPanel {
                 b.render(graphics);
             }
         }
-        
-        synchronized (Main.gameData.allies){
-            for(GameFigure a : Main.gameData.allies)
-                a.render(graphics);
-        }
+     
     }
 
     // use active rendering to put the buffered image on-screen

@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model.Terrain;
+package Level;
 
+import Model.Renderable;
 import java.awt.Graphics;
 
 /**
  *
  * @author abilb
  */
-public class Tile   {
+public class Tile implements Renderable   {
     
     //The tile model is intended to impliment the proxy pattern and the Flyweight Pattern.
     //If an animated tile image is there, then the animation plays. 

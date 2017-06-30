@@ -2,13 +2,17 @@ package Model;
 
 import Controller.Main;
 import Controller.TimerListener;
-import EventHandling.TerrainHandler;
+import EventHandling.PhysicsHandler;
 import EventHandling.CollisionObserver;
 import EventHandling.Observer;
 import EventHandling.SoundHandler;
 import EventHandling.Subject;
+import Level.Level;
+import Level.NinjaVillage;
 import Model.States.Rai.Block;
-import Model.Terrain.Platform;
+import Level.Platform;
+import Physics.Acceleration;
+import Physics.Force;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,16 +20,18 @@ import java.util.List;
 import javax.swing.Timer;
 import View.GamePanel;
 import View.MainWindow;
+import java.awt.Graphics;
 import java.util.Random;
 
-public class GameData implements Subject  {
+public class GameData implements Subject, Updateable, Renderable  {
 
+    private final int FORCE_OF_GRAVITY = 5; 
     private final int SIZE = 50;
-    public final List<GameFigure> enemys;
+    public final List<GameFigure> enemies;
     public final List<GameFigure> deadEnemys;
     public final List<GameFigure> bullets;
     public final List<GameFigure> allies;
-    public final List<Observer> observers;
+    public ArrayList<Observer> observers;
     public final List<GameFigure> deadBullets;
     public final Nen nen;
     private Rai rai;
@@ -33,16 +39,13 @@ public class GameData implements Subject  {
     public long time = 0;
     public TimerListener timerListener;
     public Thread gameThread;
-    public Boss boss;
-    private boolean bossSpawned = false;
     private final int nenSize = 75;
-
-    public void setBossSpawned(boolean bossSpawned) {
-        this.bossSpawned = bossSpawned;
-    }
+    private Level level; 
+    private Force gravity;
 
     public GameData() {
-        enemys = Collections.synchronizedList(new ArrayList<GameFigure>());
+        gravity = new  Force(9, new Acceleration(0, .49));
+        enemies = Collections.synchronizedList(new ArrayList<GameFigure>());
         deadEnemys = Collections.synchronizedList(new ArrayList<GameFigure>());
         bullets = Collections.synchronizedList(new ArrayList<GameFigure>());
         deadBullets = Collections.synchronizedList(new ArrayList<GameFigure>());
@@ -50,50 +53,32 @@ public class GameData implements Subject  {
         timerListener = new TimerListener();
         enemyTimer = new Timer(5000, timerListener);
         enemyTimer.setInitialDelay(3000);
-        
-        bossTimer = new Timer(3000, timerListener);
-        bossTimer.setRepeats(false);
-        
         gameThread = new Thread(Main.animator);
-        
+        level = new NinjaVillage(); 
 
        
-       allies.add(new Platform(250, 250, 5));
+       
        //enemys.add(new Dummy(250, 250, 5));
         
         nen = new Nen(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - nenSize, nenSize);
-
-       rai = new Rai((GamePanel.PWIDTH), GamePanel.PHEIGHT - 90, 100);
-              enemys.add(rai);
-           // enemys.add(new Rai(0, GamePanel.PHEIGHT - 90, 100));
-       rai.cState.registerObserver(new SoundHandler(""));
-       rai.mState.registerObserver(new SoundHandler(""));
-           
-       //Get event handlers for game logic. 
-       observers = new ArrayList<>(); 
-       
-       observers.add(new SoundHandler("")); 
-       observers.add((Observer) new TerrainHandler());
+        observers = new ArrayList<Observer>(); 
+        this.registerObserver(new PhysicsHandler());
+    
     }
 
 
     public void addEnemy(int n) {
         Random r = new Random();
-         synchronized (enemys) {
+         synchronized (enemies) {
             for (int i = 0; i < n; i++) {
-                enemys.add(new Rai(r.nextInt(GamePanel.PWIDTH),
+                enemies.add(new Rai(r.nextInt(GamePanel.PWIDTH),
                         r.nextInt(GamePanel.PHEIGHT), SIZE));
             }
 
         }
     }
     
-    public void addBoss(){
-        synchronized (enemys){
-            boss = new Boss(30, 30, 250, 115);
-            enemys.add(boss);
-        }
-    }
+ 
     public void addNenBullet(double x1, double y1, double x2, double y2, Color color) {
         synchronized (bullets) {
                 bullets.add(new Shuriken(x1, y1, x2, y2, color));
@@ -119,40 +104,19 @@ public class GameData implements Subject  {
         }
     }
 
-    public void checkGameCondition(){
-        
-        if(enemys.isEmpty() && !enemyTimer.isRunning() && !bossSpawned){
-            bossSpawned = true;
-            addBoss();
-            enemyTimer.restart();
-        }
-        if (nen.health <= 0){
-            Main.animator.running = false;
-            Main.gameOverWindow.setOutcomeText("loose");
-            Main.gameOverWindow.setVisible(true);
-        }
-        if ((boss != null) && (boss.health <= 0)){
-            Main.animator.running = false;
-            boss = null;
-            Main.gameOverWindow.setOutcomeText("win");
-            Main.gameOverWindow.setVisible(true);
-        }
-            
-    }
-    
+     
+     
 
     public void update() {
-       
-//        if(System.currentTimeMillis() - time >= 1000)
-//        {
-//            time = System.currentTimeMillis();
-//            System.out.println("NEN: "  + "X: "  + nen.x + " Y:" + nen.y);
-//            System.out.println("RAI: "  + "X: "  + rai.x + " Y:" + rai.y);
-//            double dis = rai.x - nen.x;
-//            System.out.println("DISTANCE: "  + "X: " + dis);
-//        }
         
-        nen.update();
+        if(nen.forces.contains(gravity) == false)
+        {
+            nen.forces.add(gravity);
+        }
+        
+        
+        
+        level.update();
         
         synchronized (bullets) {
             for (GameFigure b : bullets) {
@@ -164,17 +128,17 @@ public class GameData implements Subject  {
                         || b.y <0)deadBullets.add(b);
             }
         }       
-        synchronized (enemys) {
-            for (GameFigure f : enemys) {
-                f.update();
+        synchronized (level.enemies) {
+            for (GameFigure f : enemies) {
+              
                 if(f.health <=0)deadEnemys.add(f); 
             }
         }
         
-        synchronized (enemys){
+        synchronized (enemies){
             synchronized (allies){
                 for(GameFigure ally : allies)
-                    for(GameFigure enemy : enemys)
+                    for(GameFigure enemy : enemies)
                     if(ally.getCollisionBox().intersects(enemy.getCollisionBox()))
                     {
                        // System.out.println("Health: " + enemy.health);
@@ -186,15 +150,43 @@ public class GameData implements Subject  {
                             deadEnemys.add(enemy);
                     }
             }
+            
+            synchronized (allies){
+                for(GameFigure ally : allies)
+                    for(GameFigure enemy : enemies)
+                    if(ally.getCollisionBox().intersects(enemy.getCollisionBox()))
+                    {
+                       // System.out.println("Health: " + enemy.health);
+                        if(enemy.cState instanceof Block == false)
+                            enemy.health -= 5;
+                        //System.out.println("HEALTH: "  + enemy.health);
+                        enemy.cState.nextState("Hit");
+                        if(enemy.health <= 0)
+                            deadEnemys.add(enemy);
+                    }
+            }
+            
+           
+            
+            synchronized (nen){
+                
+                    for(GameFigure terrain : level.terrain)
+                    if(nen.getCollisionBox().intersects(terrain.getCollisionBox()))
+                    {
+                        this.notityObservers(terrain, nen);
+                         
+                    }
+            }
+            
+               nen.calculatePhysics();
         }
   
-        enemys.removeAll(deadEnemys);
+        enemies.removeAll(deadEnemys);
         bullets.removeAll(deadBullets);
         deadBullets.clear();
         deadEnemys.clear();
         int bulletCount = bullets.size();
-        MainWindow.message.setText("Bullets:" + bulletCount + enemyTimer.isRunning());
-        checkGameCondition();
+        nen.update();
     }
 
     @Override
@@ -210,7 +202,7 @@ public class GameData implements Subject  {
     @Override
     public void notifyObservers() {
         
-    }
+    }   
 
     public void notityObservers(GameFigure gameFigure1, GameFigure gameFigure2) 
     {
@@ -225,6 +217,11 @@ public class GameData implements Subject  {
     @Override
     public void notifyObservers(String event) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void render(Graphics g) {
+        level.render(g);
     }
 }
       

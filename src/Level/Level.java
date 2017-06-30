@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model.Terrain;
+package Level;
 
 import Model.GameFigure;
 import Model.Renderable;
 import Model.Updateable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -18,10 +19,10 @@ public abstract class Level implements Renderable, Updateable {
     int width; 
     int height; 
     //TODO: 2d Array of Tiles 
-    ArrayList<Tile> tiles; 
-    ArrayList<GameFigure> terrain; 
-    ArrayList<GameFigure> allies; 
-    ArrayList<GameFigure> enemies; 
+    public List<Tile> tiles; 
+    public List<GameFigure> terrain; 
+    public List<GameFigure> allies; 
+    public List<GameFigure> enemies; 
     
     
 }

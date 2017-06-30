@@ -2,10 +2,14 @@ package Model;
 
 import Model.States.CombatState;
 import Model.States.MotionState;
+import Physics.Acceleration;
+import Physics.Force;
+import Physics.Velocity;
 import java.awt.Graphics;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 public abstract class GameFigure implements Collision, Renderable, Updateable {
 
@@ -22,7 +26,10 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     public Point2D.Double location;
     public static final int GRAVITY = 8;
     public boolean hit;
- 
+    protected double mass; 
+    public Acceleration acceleration;
+    public Velocity velocity; 
+    public ArrayList<Force> forces;
     public GameFigure(double x, double y, double size) {
         this.hit = false;
         this.x = x;
@@ -35,13 +42,31 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         return location;
     }
 
-    
-     
-    public interface Renderable {
-     public abstract void render(Graphics g);
+    public void calculatePhysics()
+    {
+        
+       //ApplyForce
+       for(Force f : forces)
+       {
+        velocity.dx += f.dvx();
+        velocity.dy += f.dvy(); 
+       }
+      
+       
+        
+       
+       
+       //Apply Velocity
+       x += velocity.dx; 
+       y += velocity.dy; 
+       
     }
+     
+    
 
 
-    public abstract void update();
+    
 
+    
+    
 }

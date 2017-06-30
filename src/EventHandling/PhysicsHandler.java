@@ -7,18 +7,22 @@ package EventHandling;
 
 import Model.GameFigure;
 import Model.Nen;
-import Model.Terrain.Platform;
-import Model.Terrain.Trap;
+import Level.Platform;
+import Level.Trap;
+import Physics.Acceleration;
+import Physics.Force;
 
 /**
  *
  * @author abilb
  */
-public class TerrainHandler implements CollisionObserver {
+public class PhysicsHandler implements CollisionObserver {
 
+      Force antigravity = new Force(9, new Acceleration(0, -.49));
+    
     @Override
     public void onNotify(GameFigure gameFigureOne, GameFigure gameFigureTwo) {
-         
+         System.out.println("We are in the PhysicsHandler");
         //player effected functionality
         if(gameFigureOne instanceof Nen || gameFigureTwo instanceof Nen)
         {
@@ -30,12 +34,24 @@ public class TerrainHandler implements CollisionObserver {
             
             if(gameFigureOne instanceof Platform || gameFigureTwo instanceof Platform)
             {
-                if(gameFigureOne instanceof Nen)
+                
+                if(gameFigureTwo instanceof Nen)
                 {
-                    ((Nen) gameFigureOne).airborn = false; 
+                    
+                     
+                   
+                     
+                     if(!((Nen) gameFigureTwo).forces.contains(antigravity))
+                     {
+                         ((Nen) gameFigureTwo).forces.add(antigravity);
+                          System.out.println("Adding antigravity");
+                     
+                     }
+                        
+                     
                 }
-                {
-                    ((Nen) gameFigureTwo).airborn = false; 
+                { 
+                    
                 }      
             }
         }

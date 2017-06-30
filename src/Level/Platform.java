@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model.Terrain;
+package Level;
 
 import Model.GameFigure;
 import java.awt.Color;
@@ -17,9 +17,10 @@ import java.awt.geom.Rectangle2D;
  */
 public class Platform extends GameFigure{
       private final Rectangle2D.Double collisionBox;
-    public Platform(double x, double y, double size) {
-        super(x, y, size);
-         collisionBox = new Rectangle2D.Double(x, y, 100, 100);
+    public Platform(double x, double y) {
+        super(x, y, 128);
+         collisionBox = new Rectangle2D.Double(x, y, 128, 128);
+           
     }
 
     @Override

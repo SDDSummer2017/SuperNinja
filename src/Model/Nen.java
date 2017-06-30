@@ -15,6 +15,7 @@ import View.GamePanel;
 import EventHandling.SoundHandler; 
 import Model.States.Nen.Move;
 import Model.States.Nen.Jump;
+import Physics.Velocity;
 import java.util.ArrayList;
 public class Nen extends GameFigure {
    
@@ -23,7 +24,7 @@ public class Nen extends GameFigure {
     private int jumpHeight = 0;
     private int dy = -7;
     private final SoundHandler soundHandler = new SoundHandler("");
-
+    
     private int moveFrameIndex, idleFrameIndex, idleFrameDelayCount, jumpFrameIndex;
     private final int moveAnimationLength, idleAnimationLength, jumpAnimationLength;
     public boolean jump, movingLeft, movingRight;
@@ -31,7 +32,11 @@ public class Nen extends GameFigure {
     public Nen(int x, int y, int size) {
         super(x, y, size);
         this.health = 100;
-        
+        mass = 60; 
+        velocity = new Velocity();
+        velocity.dx = 0;
+        velocity.dy = 0;
+        forces = new ArrayList<>();
         ArrayList<Observer> observers = new ArrayList<Observer>();
         mState = new NeutralMotion(this, observers);
         cState = new NeutralCombat(this, observers);
@@ -132,7 +137,8 @@ public class Nen extends GameFigure {
             mState.execute();
         else
             cState.execute();
-        gravity();
+        //gravity();
+        
     }
 
  
