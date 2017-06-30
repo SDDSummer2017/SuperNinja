@@ -8,13 +8,17 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JPanel;
 import Model.GameFigure;
+import view.Camera;
 import static Model.Nen.getImage;
 
 public class GamePanel extends JPanel {
 
-    public static final int PWIDTH = 1000; // size of the game panel
-    public static final int PHEIGHT = 540;
-//    public Camera camera = new Camera();
+    public static final int CAMERA_WIDTH = 1000;
+    public static final int CAMERA_HEIGHT = 540;
+    
+    public static final int WORLD_WIDTH = 10000;
+    public static final int WORLD_HEIGHT = 540;
+    public Camera camera;
     
 
     // off screen rendering
@@ -25,11 +29,12 @@ public class GamePanel extends JPanel {
 
     public GamePanel() {
         setBackground(Color.blue);
-        setPreferredSize(new Dimension(PWIDTH, PHEIGHT));
+        setPreferredSize(new Dimension(CAMERA_WIDTH, CAMERA_HEIGHT));
         String imagePath = System.getProperty("user.dir");
         String separator = System.getProperty("file.separator");
         bgImage = getImage(imagePath + separator + "images" + separator
                 + "Background.jpg");
+        camera = new Camera(WORLD_WIDTH, WORLD_HEIGHT, CAMERA_WIDTH, CAMERA_HEIGHT);
     }
 
     /*
@@ -37,7 +42,7 @@ public class GamePanel extends JPanel {
     */
     public void gameRender() {
         if (doubleBufferImage == null) {
-            doubleBufferImage = createImage(PWIDTH, PHEIGHT);
+            doubleBufferImage = createImage(CAMERA_WIDTH, CAMERA_HEIGHT);
             if (doubleBufferImage == null) {
                 System.out.println("dbImage is null");
                 return;
@@ -45,8 +50,11 @@ public class GamePanel extends JPanel {
                 graphics = doubleBufferImage.getGraphics();
             }
         }
+        camera.update(CAMERA_WIDTH, CAMERA_HEIGHT);
+        graphics.translate(-camera.camX + camera.offsetHelperX,-camera.camY + camera.offsetHelperY);
+        graphics.clearRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
         //Render Background
-        graphics.drawImage(bgImage , 0, 0, GamePanel.PWIDTH, GamePanel.PHEIGHT, null);
+        graphics.drawImage(bgImage , 0, 0, GamePanel.CAMERA_WIDTH, GamePanel.CAMERA_HEIGHT, null);
         Main.gameData.nen.render(graphics);
         //Redner the enemys
         synchronized (Main.gameData.enemys) {

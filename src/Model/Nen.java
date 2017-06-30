@@ -5,16 +5,12 @@ import Model.States.Nen.NeutralCombat;
 import Model.States.Nen.NeutralMotion;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.geom.Rectangle2D;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 import View.GamePanel;
 import EventHandling.SoundHandler; 
 import Model.States.Nen.Move;
 import Model.States.Nen.Jump;
+import Model.States.Nen.LightAttack;
 import java.util.ArrayList;
 public class Nen extends GameFigure {
    
@@ -27,6 +23,8 @@ public class Nen extends GameFigure {
                 10,  //move animation length
                 10,  //idle animation length
                 10,  //jump animation length
+                10,  //attack right
+                10,  //attack left
                 "Nen"); //name for animation image file path
         this.health = 100;
         
@@ -50,12 +48,21 @@ public class Nen extends GameFigure {
     @Override
     public void render(Graphics g) {
         
-        if(mState instanceof Move)
+        if(cState instanceof LightAttack){
+            moveFrameIndex = 0;
+            idleFrameIndex = 0;
+            idleFrameDelayCount = 0;
+            jumpFrameIndex = 0;
+            g.drawImage(attackRightAnimation[attackFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            attackFrameIndex = (attackFrameIndex == attackRightAnimation.length-1) ? 0 : attackFrameIndex + 1;
+        }
+        else if(mState instanceof Move)
         {
             //If we are moving, reset the idle animtion frame index
             idleFrameIndex = 0;
             jumpFrameIndex = 0;
             idleFrameDelayCount = 0;
+            attackFrameIndex = 0;
             if(isFacingRight){
                 g.drawImage(moveRightAnimation[moveFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
                 //If we've reached the end of the animation reset frameCounter to zero, otherwise increment it.
@@ -70,6 +77,7 @@ public class Nen extends GameFigure {
             moveFrameIndex = 0;
             idleFrameIndex = 0;
             idleFrameDelayCount = 0;
+            attackFrameIndex = 0;
             g.drawImage(jumpAnimation[jumpFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             jumpFrameIndex = (jumpFrameIndex == jumpAnimation.length-1) ? 0 : jumpFrameIndex + 1;
         }
@@ -77,7 +85,8 @@ public class Nen extends GameFigure {
         {
             //If they are standing still we need to reset the frameCounter
             moveFrameIndex = 0;               
-            jumpFrameIndex = 0;  
+            jumpFrameIndex = 0;
+            attackFrameIndex = 0;
             g.drawImage(idleAnimation[idleFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             
             if (idleFrameDelayCount == 1){
@@ -90,10 +99,10 @@ public class Nen extends GameFigure {
         }
 
         g.setColor(Color.red);
-        g.fillRect(3, GamePanel.PHEIGHT - 102, 10, 100);
+        g.fillRect(3, GamePanel.CAMERA_HEIGHT - 102, 10, 100);
 
         g.setColor(Color.green);
-        g.fillRect(3, GamePanel.PHEIGHT - (int) this.health - 2, 10, (int) this.health);
+        g.fillRect(3, GamePanel.CAMERA_HEIGHT - (int) this.health - 2, 10, (int) this.health);
     }
     
     @Override
@@ -119,7 +128,7 @@ public class Nen extends GameFigure {
         if (super.x <= 0 && dx < 0) {
             dx = 0;
         }
-        if (((super.x + super.size) >= GamePanel.PWIDTH) && (dx > 0)) {
+        if (((super.x + super.size) >= GamePanel.CAMERA_WIDTH) && (dx > 0)) {
             dx = 0;
         }
         super.x += dx;
@@ -133,8 +142,8 @@ public class Nen extends GameFigure {
         jumpHeight = 0;
         jump = false;
         dy = -7;
-        super.y = GamePanel.PHEIGHT - super.size;
-        super.x = GamePanel.PWIDTH/2;
+        super.y = GamePanel.CAMERA_HEIGHT - super.size;
+        super.x = GamePanel.CAMERA_WIDTH/2;
     }
 
 

@@ -5,9 +5,8 @@
  */
 package view;
 
-import javax.swing.JPanel;
+import Controller.Main;
 import Model.GameFigure;
-import Model.Nen;
 
  
 public class Camera  {
@@ -25,9 +24,9 @@ public class Camera  {
     public int camY; 
     GameFigure Nen;
             
-    public Camera(int worldSizeX, int worldSizeY, int viewportSizeX, int viewportSizeY,  Nen nen)
+    public Camera(int worldSizeX, int worldSizeY, int viewportSizeX, int viewportSizeY)
     {
-        this.Nen = nen; 
+        this.Nen = Main.gameData.nen;
 
         this.offsetMaxX = worldSizeX - viewportSizeX;
         this.offsetMaxY = worldSizeY - viewportSizeY;

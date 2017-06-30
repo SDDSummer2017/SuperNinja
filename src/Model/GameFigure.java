@@ -31,11 +31,10 @@ public abstract class GameFigure implements Collision {
     public boolean hit;
     
     //Animation Attributes
-    public int moveFrameIndex, idleFrameIndex, idleFrameDelayCount, jumpFrameIndex;
+    public int moveFrameIndex, idleFrameIndex, jumpFrameIndex, attackFrameIndex, idleFrameDelayCount;
     public boolean jump, movingLeft, movingRight ;
     public Image staticImage;
-    public final Image[] moveRightAnimation, moveLeftAnimation, idleAnimation, jumpAnimation;
-    private final int moveAnimationLength, idleAnimationLength, jumpAnimationLength;
+    public final Image[] moveRightAnimation, moveLeftAnimation, idleAnimation, jumpAnimation, attackRightAnimation, attackLeftAnimation;
 
  
     //Static game figure constructor (no animation)
@@ -45,34 +44,34 @@ public abstract class GameFigure implements Collision {
         this.y = y;
         this.size = size;
         this.location = new Point2D.Double(x - (size/2), y-(size/2));
+        
         this.moveFrameIndex = this.idleFrameIndex = this.idleFrameDelayCount = this.jumpFrameIndex = 0;
-        this.moveAnimationLength = this.idleAnimationLength = this.jumpAnimationLength = 0;
         this.moveLeftAnimation =  null;
+        this.attackLeftAnimation = null;
         this.moveRightAnimation = null;
+        this.attackRightAnimation = null;
         this.idleAnimation = null;
         this.jumpAnimation = null;
         this.staticImage = null;
         
     }
     //Animation game figure constructor (backwards compatibility
-    public GameFigure(double x, double y, double size, int mLength, int iLength, int jLength, String name) {
+    public GameFigure(double x, double y, double size, int mLength, int iLength, int jLength, int arLength, int alLength, String name) {
         this.hit = false;
         this.x = x;
         this.y = y;
         this.size = size;
         this.location = new Point2D.Double(x - (size/2), y-(size/2));
         
-        this.moveAnimationLength = mLength;
-        this.idleAnimationLength = iLength;
-        this.jumpAnimationLength = jLength;
         this.moveLeftAnimation =  new Image[mLength];
         this.moveRightAnimation = new Image[mLength];
+        this.attackLeftAnimation = new Image[arLength];
+        this.attackRightAnimation = new Image[alLength];
         this.idleAnimation = new Image[iLength];
         this.jumpAnimation = new Image[jLength];
         this.staticImage = null;
         
         this.loadAnimations(name);
-        this.staticImage = null;
     }
     //Prviate so that it can be called from constructor
     private void loadAnimations(String name){
@@ -95,6 +94,11 @@ public abstract class GameFigure implements Collision {
         for(int i=0;i<jumpAnimation.length;i++){
             jumpAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Jump" + separator
                 + "Jump__00" + i + ".png");
+        }
+        //Attack Right Animation
+        for(int i=0;i<attackRightAnimation.length;i++){
+            attackRightAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Attack_Right" + separator
+                + "Attack__00" + i + ".png");
         }
     }
     
