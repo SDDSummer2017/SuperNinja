@@ -63,9 +63,7 @@ public class Terro extends Enemy{
         super.staticImage = getImage(imagePath + separator + "images" + separator
                 + "TerroStatic.png");
     }
-    
-    // the following count functions are only used for the placeholders until animation
-    // is implemented.
+    //the following delayCount functions are used to delay the actions of Terro for attack
     public int getDelayCount(){
         return this.countDelay;
     }
@@ -77,7 +75,7 @@ public class Terro extends Enemy{
     public void setDirection(boolean a){
         this.direction = a;
     }
-    
+    // the following count functions are used to delay Terro for movement
     public int getCount(){
         return this.c;
     }

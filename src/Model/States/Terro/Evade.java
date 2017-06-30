@@ -20,10 +20,13 @@ public class Evade extends MotionState{
     /* goal Have Terro jump onto the edge of the screen as though it were a wall and jump again off the imaginary edge
        so that theoretically his jump will be higher than Nen in a single jump terro should land 120 pixels away from the edge
     */
-    public boolean onWall;
-    public boolean left;
-    public double q;
-    public int a;
+    private boolean onWall;
+    private boolean left;
+    private double q;
+    private int a;
+    private int dy = 20;
+    private int jumpHeight;
+    
     
     public Evade(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
@@ -32,6 +35,7 @@ public class Evade extends MotionState{
         onWall = false;
         left = false;        
         a = 0;
+        gameFigure.airborn = true;
     }
 
     @Override
@@ -45,7 +49,7 @@ public class Evade extends MotionState{
             a = ter.getCount();
             if(a > 0){
                 if(a < 6){
-                    this.gameFigure.y -= 20;
+                    this.gameFigure.y -= dy;
                     a++;
                     ter.setCount(a);
                 }
@@ -59,7 +63,7 @@ public class Evade extends MotionState{
                 if(gameFigure.x + 10 >= GamePanel.PWIDTH){
                     q = Math.abs(GamePanel.PWIDTH - gameFigure.x); 
                     this.gameFigure.x += q;
-                    this.gameFigure.y -= 20;
+                    this.gameFigure.y -= dy;
                     left = false;
                     a++;
                     ter.setCount(a);
@@ -69,7 +73,7 @@ public class Evade extends MotionState{
                     left = true;
                     q = gameFigure.x;
                     this.gameFigure.x -= q;
-                    this.gameFigure.y -= 20;
+                    this.gameFigure.y -= dy;
                     a++;
                     ter.setCount(a);
                 }
@@ -85,7 +89,7 @@ public class Evade extends MotionState{
                     ter.setCount(a);
                 }
                 else{
-                    this.gameFigure.y -= 10;
+                    this.gameFigure.y -= dy;
                     this.gameFigure.x -= 10;
                     a++;
                     ter.setCount(a);
@@ -100,7 +104,7 @@ public class Evade extends MotionState{
                 }
                 else{
                     this.gameFigure.x += 10;
-                    this.gameFigure.y -= 10;
+                    this.gameFigure.y -= dy;
                     a = ter.c++;
                     ter.setCount(a);
                 }
