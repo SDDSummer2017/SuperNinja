@@ -7,7 +7,7 @@ import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-public abstract class GameFigure implements Collision {
+public abstract class GameFigure implements Collision, Renderable, Updateable {
 
     public double x; // for a faster access
     public double y;
@@ -36,7 +36,11 @@ public abstract class GameFigure implements Collision {
     }
 
     
-    public abstract void render(Graphics g);
+     
+    public interface Renderable {
+     public abstract void render(Graphics g);
+    }
+
 
     public abstract void update();
 

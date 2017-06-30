@@ -6,16 +6,19 @@
 package Model.Terrain;
 
 import Model.GameFigure;
+import Model.Renderable;
+import Model.Updateable;
 import java.util.ArrayList;
 
 /**
  *
  * @author abilb
  */
-public class Level {
+public abstract class Level implements Renderable, Updateable {
     int width; 
     int height; 
-    //TODO: 2d Array of Tiles
+    //TODO: 2d Array of Tiles 
+    ArrayList<Tile> tiles; 
     ArrayList<GameFigure> terrain; 
     ArrayList<GameFigure> allies; 
     ArrayList<GameFigure> enemies; 
