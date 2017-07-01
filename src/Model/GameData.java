@@ -48,7 +48,7 @@ public class GameData implements Subject, Updateable, Renderable  {
     Rectangle2D cb; 
     private final Force rfriction;
     public GameData() {
-        lfriction = new Force(.05, new Acceleration(0, 1)); 
+        lfriction = new Force(.05, new Acceleration(0, -1)); 
         rfriction = new Force(.05, new Acceleration(0, 1)); 
         gravity = new  Force(9, new Acceleration(0, .49));
         enemies = Collections.synchronizedList(new ArrayList<GameFigure>());
@@ -118,8 +118,18 @@ public class GameData implements Subject, Updateable, Renderable  {
         
         nen.forces.clear();
         nen.forces.add(gravity);
-        nen.forces.add(lfriction);
-        nen.forces.add(rfriction);
+        
+        if(nen.velocity.dx > 0)
+        {
+                 nen.forces.add(lfriction);
+        }
+        else if(nen.velocity.dx < 0)
+        {
+                  nen.forces.add(rfriction);
+        }
+        
+   
+  
         
         
        
