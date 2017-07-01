@@ -2,68 +2,53 @@ package Model;
 
 import Controller.Main;
 import Controller.TimerListener;
-import Model.States.Rai.Block;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.Timer;
-import View.GamePanel;
+import View.GamePanel; 
 import View.MainWindow;
 import java.util.Random;
 
 public class GameData {
 
     private final int SIZE = 50;
-    public final List<GameFigure> enemys;
-    public final List<GameFigure> deadEnemys;
-    public final List<GameFigure> bullets;
-    public final List<GameFigure> allies;
-    
-    public final List<GameFigure> deadBullets;
+    public final List<GameFigure> enemys; 
+    public final List<GameFigure> allies; 
     public final Nen nen;
-    private Rai rai;
+ 
     public Timer enemyTimer, bossTimer;
-    public long time = 0;
+ 
     public TimerListener timerListener;
-    public Thread gameThread;
-    public Boss boss;
-    private boolean bossSpawned = false;
+    public Thread gameThread; 
     private final int nenSize = 75;
-
-    public void setBossSpawned(boolean bossSpawned) {
-        this.bossSpawned = bossSpawned;
-    }
-
+ 
     public GameData() {
-        enemys = Collections.synchronizedList(new ArrayList<GameFigure>());
-        deadEnemys = Collections.synchronizedList(new ArrayList<GameFigure>());
-        bullets = Collections.synchronizedList(new ArrayList<GameFigure>());
-        deadBullets = Collections.synchronizedList(new ArrayList<GameFigure>());
+        enemys = Collections.synchronizedList(new ArrayList<GameFigure>()); 
         allies = Collections.synchronizedList(new ArrayList<GameFigure>());
         timerListener = new TimerListener();
         enemyTimer = new Timer(5000, timerListener);
         enemyTimer.setInitialDelay(3000);
-
+        
         bossTimer = new Timer(3000, timerListener);
         bossTimer.setRepeats(false);
-
+        
         gameThread = new Thread(Main.animator);
         
 
-//        enemys.add(new Dummy(300, 400, 5));
-//        enemys.add(new Dummy(500, 400, 5));
-//        enemys.add(new Dummy(0, 300, 5));
-//        enemys.add(new Dummy(250, 250, 5));
-
+        /*enemys.add(new Dummy(300, 400, 5));
+        enemys.add(new Dummy(500, 400, 5));
+        enemys.add(new Dummy(0, 300, 5));
+        enemys.add(new Dummy(250, 250, 5));*/
+        
         nen = new Nen(GamePanel.CAMERA_WIDTH / 2, GamePanel.CAMERA_HEIGHT - nenSize, nenSize);
 
-//        rai = new Rai((GamePanel.PWIDTH), GamePanel.PHEIGHT - 90, 100);
-//        enemys.add(rai);
-        // enemys.add(new Rai(0, GamePanel.PHEIGHT - 90, 100));
-    }
-
-
+       
+//              enemys.add(new Rai((GamePanel.PWIDTH), GamePanel.PHEIGHT - 90, 100));
+//            enemys.add(new Rai(0, GamePanel.PHEIGHT - 90, 100));
+    } 
+    
     public void addEnemy(int n) {
         Random r = new Random();
          synchronized (enemys) {
@@ -75,22 +60,9 @@ public class GameData {
         }
     }
     
-    public void addBoss(){
-        synchronized (enemys){
-            boss = new Boss(30, 30, 250, 115);
-            enemys.add(boss);
-        }
-    }
     public void addNenBullet(double x1, double y1, double x2, double y2, Color color) {
-        synchronized (bullets) {
-                bullets.add(new Shuriken(x1, y1, x2, y2, color));
-        }
-    }
-    
-    public void addEnemyBullet(double x1, double y1, double x2, double y2, Color color) {
-        synchronized (bullets) {
-                
-            bullets.add(new EnemyBullet(x1, y1, x2, y2, color));
+        synchronized (allies) {
+                allies.add(new Shuriken(x1, y1, x2, y2, color));
         }
     }
     
@@ -106,82 +78,20 @@ public class GameData {
         }
     }
 
-    public void checkGameCondition(){
-        
-        if(enemys.isEmpty() && !enemyTimer.isRunning() && !bossSpawned){
-            bossSpawned = true;
-            addBoss();
-            enemyTimer.restart();
-        }
-        if (nen.health <= 0){
-            Main.animator.running = false;
-            Main.gameOverWindow.setOutcomeText("loose");
-            Main.gameOverWindow.setVisible(true);
-        }
-        if ((boss != null) && (boss.health <= 0)){
-            Main.animator.running = false;
-            boss = null;
-            Main.gameOverWindow.setOutcomeText("win");
-            Main.gameOverWindow.setVisible(true);
-        }
-            
-    }
-    
-
-    public void update() {
-       
-//        if(System.currentTimeMillis() - time >= 1000)
-//        {
-//            time = System.currentTimeMillis();
-//            System.out.println("NEN: "  + "X: "  + nen.x + " Y:" + nen.y);
-//            System.out.println("RAI: "  + "X: "  + rai.x + " Y:" + rai.y);
-//            double dis = rai.x - nen.x;
-//            System.out.println("DISTANCE: "  + "X: " + dis);
-//        }
+    public void update() { 
         
         nen.update();
         
-        synchronized (bullets) {
-            for (GameFigure b : bullets) {
-                b.update();
-                if(b.hit==true 
-                        || b.x < 0
-                        || b.x > GamePanel.CAMERA_WIDTH
-                        || b.y > GamePanel.CAMERA_HEIGHT
-                        || b.y <0)deadBullets.add(b);
-            }
-        }       
         synchronized (enemys) {
             for (GameFigure f : enemys) {
-                f.update();
-                if(f.health <=0)deadEnemys.add(f); 
+                f.update(); 
             }
         }
         
-        synchronized (enemys){
-            synchronized (allies){
-                for(GameFigure ally : allies)
-                    for(GameFigure enemy : enemys)
-                    if(ally.getCollisionBox().intersects(enemy.getCollisionBox()))
-                    {
-                       // System.out.println("Health: " + enemy.health);
-                        if(enemy.cState instanceof Block == false)
-                            enemy.health -= 5;
-                        //System.out.println("HEALTH: "  + enemy.health);
-                        enemy.cState.nextState("Hit");
-                        if(enemy.health <= 0)
-                            deadEnemys.add(enemy);
-                    }
-            }
+        synchronized (allies) {
+            for (GameFigure a : allies)
+                a.update();
         }
-  
-        enemys.removeAll(deadEnemys);
-        bullets.removeAll(deadBullets);
-        deadBullets.clear();
-        deadEnemys.clear();
-        int bulletCount = bullets.size();
-        MainWindow.message.setText("Bullets:" + bulletCount + enemyTimer.isRunning());
-        checkGameCondition();
     }
 }
       

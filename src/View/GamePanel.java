@@ -1,6 +1,8 @@
 package View;
 
 import Controller.Main;
+import Controller.QuadTree;
+import Model.Collision;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -10,6 +12,9 @@ import javax.swing.JPanel;
 import Model.GameFigure;
 import view.Camera;
 import static Model.Nen.getImage;
+import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GamePanel extends JPanel {
 
@@ -25,7 +30,7 @@ public class GamePanel extends JPanel {
     private Graphics graphics;
     private Image doubleBufferImage = null;
     private Image bgImage;
-   
+    private QuadTree tree;
 
     public GamePanel() {
         setBackground(Color.blue);
@@ -35,6 +40,7 @@ public class GamePanel extends JPanel {
         bgImage = getImage(imagePath + separator + "images" + separator
                 + "Background.jpg");
         camera = new Camera(WORLD_WIDTH, WORLD_HEIGHT, CAMERA_WIDTH, CAMERA_HEIGHT);
+        tree = new QuadTree(7, 5, 0, 0, WORLD_WIDTH, WORLD_HEIGHT);
     }
 
     /*
@@ -61,18 +67,41 @@ public class GamePanel extends JPanel {
             for (GameFigure f : Main.gameData.enemys) {
                 f.render(graphics);
             }
-        }
-        //Render the bullets
-        synchronized (Main.gameData.bullets) {
-            for (GameFigure b : Main.gameData.bullets) {
-                b.render(graphics);
-            }
-        }
+        } 
         
         synchronized (Main.gameData.allies){
             for(GameFigure a : Main.gameData.allies)
                 a.render(graphics);
         }
+        
+               List<GameFigure> allies = Main.gameData.allies;
+        List<GameFigure> enemies = Main.gameData.enemys;
+        
+        
+        synchronized(allies)
+        {
+            synchronized(enemies)
+            {
+                for(GameFigure a : allies)
+                    tree.insert(a);
+                for(GameFigure e : enemies)
+                    tree.insert(e);
+                
+                ArrayList<Collision> list = null;
+                for(GameFigure a : allies)
+                {
+                    list = tree.getList(a);
+                    for(Collision obj : list)
+                        if(obj.hashCode() != a.hashCode() && a.getCollisionBox().intersects(obj.getCollisionBox()))
+                        {
+                            enemies.remove((GameFigure)obj);
+                        }
+                }
+                
+            }
+        }
+        tree.renderTree((Graphics2D)graphics);
+        tree.clear();
     }
 
     // use active rendering to put the buffered image on-screen

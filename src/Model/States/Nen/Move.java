@@ -15,22 +15,23 @@ import java.util.ArrayList;
  * @author Garrett A. Clement
  */
 public class Move extends MotionState {
+    private static final int MOVE_RATE = 10;
 
-    CombatState combatState; 
-     
-    
     public Move(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers) ;
+        time = System.currentTimeMillis();
         combatState = gameFigure.cState;
+       
     }
     
     @Override
     public void execute() 
     { 
-        if(gameFigure.isFacingRight)
-            gameFigure.x += 10;
+        
+       if(gameFigure.isFacingRight)
+            gameFigure.x += MOVE_RATE;
        else
-            gameFigure.x -= 10;  
+            gameFigure.x -= MOVE_RATE;  
         
        if(System.currentTimeMillis() - time >= 500 )
        {
@@ -38,6 +39,7 @@ public class Move extends MotionState {
            time = System.currentTimeMillis();
        }
     }
+    
  
     @Override
     public void nextState(String s) {
@@ -46,8 +48,6 @@ public class Move extends MotionState {
             gameFigure.mState = new NeutralMotion(gameFigure, observers);
         else if(s.equals("Jump" ) && combatState instanceof NeutralCombat)
             gameFigure.mState = new Jump(gameFigure, observers);
-        
-        
     
     }
     

@@ -5,12 +5,11 @@
  */
 package Model.States;
 
-import EventHandling.Observer;
+import EventHandling.Observer; 
 import EventHandling.Subject;
-import Model.GameFigure;
+import Model.GameFigure; 
 import java.util.ArrayList;
 import EventHandling.StateObserver;
-import Model.States.Rai.Default;
 
 /**
  *
@@ -24,7 +23,7 @@ public abstract class State implements Subject {
     {
         this.gameFigure = gameFigure;
         this.observers  = observers; 
-
+      
     }
     
      @Override 

@@ -7,7 +7,7 @@ package Model.States;
 
 import EventHandling.Observer;
 import Model.GameFigure;  
-import Model.States.Rai.Default;
+import Model.HitBox;
 import java.util.ArrayList;
 
 /**
@@ -19,13 +19,19 @@ public abstract class CombatState extends State {
     protected long comboWindow;
     protected CombatState previousState;
     protected MotionState motionState;
+    protected HitBox hitBox;
+    protected int direction;
     
     public CombatState(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure,observers);
-
-        
         initTime = System.currentTimeMillis();
         previousState = gameFigure.cState;
-        motionState = gameFigure.mState; 
+        motionState = gameFigure.mState;
+        
+        if(gameFigure.isFacingRight)
+            direction = 1;
+        else
+            direction = -1;
+        
     }
 }
