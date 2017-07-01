@@ -45,7 +45,7 @@ public class PhysicsHandler implements CollisionObserver {
                      
                      
                      
-                     if( ((Nen) gameFigureTwo).y  < ((Platform) gameFigureOne).y)
+                     if( ((Nen) gameFigureTwo).y  < ((Platform) gameFigureOne).y -64)
                         {
                                  
                         
@@ -74,17 +74,17 @@ public class PhysicsHandler implements CollisionObserver {
                         {
                                  
                         
-                              ((Nen) gameFigureTwo).velocity.dx = 0;
+                              ((Nen) gameFigureTwo).x -= 35;
                    
-                              ((Nen) gameFigureTwo).forces.add(new Force(1, new Acceleration(-5, 0)));
+                              
                         
                         }
-                     else if(gameFigureTwo.x > gameFigureOne.x + gameFigureOne.size)
-                     {
-                           ((Nen) gameFigureTwo).velocity.dx = 0;
+                        else if(gameFigureTwo.x < gameFigureOne.x + 128)
+                            {
+                           ((Nen) gameFigureTwo).x += 35;
                    
-                           ((Nen) gameFigureTwo).forces.add(new Force(9, new Acceleration(5, 0)));
-                     } 
+                           
+                            } 
                      
                      }
                      

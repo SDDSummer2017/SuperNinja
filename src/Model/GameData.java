@@ -176,7 +176,7 @@ public class GameData implements Subject, Updateable, Renderable  {
             
             synchronized (nen){
                     cb = nen.getCollisionBox();
-                    cb.setRect(cb.getX(), cb.getY() + nen.velocity.dy, cb.getHeight(), cb.getWidth());
+                    cb.setRect(cb.getX() + nen.velocity.dx, cb.getY() + nen.velocity.dy, cb.getHeight(), cb.getWidth());
                     for(GameFigure terrain : level.terrain)
                     
                     if(cb.intersects(terrain.getCollisionBox()))
