@@ -106,7 +106,7 @@ public class Nen extends GameFigure {
         {
             //If they are standing still we need to reset the frameCounter
             moveFrameIndex = 0;               
-            jumpFrameIndex = 0;
+            jumpFrameIndex = 0;  
             g.drawImage(idleAnimation[idleFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             
             if (idleFrameDelayCount == 3){

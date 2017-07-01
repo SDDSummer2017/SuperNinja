@@ -37,7 +37,7 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
 
     @Override
     public void onNotify(State state) {
-         System.out.println("An object has entered the: " + state.getClass().toString() + " state: playing a sound");
+        // System.out.println("An object has entered the: " + state.getClass().toString() + " state: playing a sound");
          
          if(state.getClass() == Model.States.Nen.Move.class){
          this.playSound("SoundEffects/walk.mp3");

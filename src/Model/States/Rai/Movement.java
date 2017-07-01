@@ -41,7 +41,6 @@ public class Movement extends MotionState{
         else if(n.x > gameFigure.x){ 
             gameFigure.x += 5;
         }
-        
         if(gameFigure.cState instanceof Block || gameFigure.cState instanceof Hit || gameFigure.cState instanceof ViperStrike){
             this.nextState("Neutral");
         }

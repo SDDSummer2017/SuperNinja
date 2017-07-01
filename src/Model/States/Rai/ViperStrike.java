@@ -54,19 +54,14 @@ public class ViperStrike extends CombatState {
         //System.out.println("GameFigure.cState = " + previousState);
         //System.out.println("GameFigure.mState = " + motionState);
         if(a >= 10){
-            //System.out.println("SteelTwister state called");
             a = 0;
             rai.setCount(a);
             nextState("SteelTwister");
-            //System.out.println("Next input is SteelTwister");
-            
         }
         else if(a >= 15){
-            //System.out.println("Default state called");
             a = 0;
             rai.setCount(a);
             nextState("Default");
-            //System.out.println("Next input is Default");
         }
         else{
             a++;
@@ -77,7 +72,6 @@ public class ViperStrike extends CombatState {
 
     @Override
     public void nextState(String s) {
-        //System.out.println("Next input is " + s);
         if(s.equals("SteelTwister")){
             gameFigure.cState = new SteelTwister(this.gameFigure, observers);
         }
