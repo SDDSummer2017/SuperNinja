@@ -1,6 +1,8 @@
 package View;
 
 import Controller.Main;
+import Controller.QuadTree; 
+import Model.Collision;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -9,9 +11,12 @@ import java.awt.Toolkit;
 import javax.swing.JPanel;
 import Model.GameFigure;
 import static Model.Nen.getImage;
+import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GamePanel extends JPanel {
-
+    QuadTree tree;
     public static final int PWIDTH = 1000; // size of the game panel
     public static final int PHEIGHT = 540;
 
@@ -28,6 +33,7 @@ public class GamePanel extends JPanel {
         String separator = System.getProperty("file.separator");
         bgImage = getImage(imagePath + separator + "images" + separator
                 + "Background.jpg");
+        tree = new QuadTree(5, 2, 0, 0, 500, 500); 
     }
 
     /*
@@ -52,19 +58,43 @@ public class GamePanel extends JPanel {
                 f.render(graphics);
             }
         }
-        //Render the bullets
-        synchronized (Main.gameData.bullets) {
-            for (GameFigure b : Main.gameData.bullets) {
-                b.render(graphics);
-            }
-        }
-        
+ 
         synchronized (Main.gameData.allies){
             for(GameFigure a : Main.gameData.allies)
                 a.render(graphics);
         }
+        
+        List<GameFigure> allies = Main.gameData.allies;
+        List<GameFigure> enemies = Main.gameData.enemys;
+        
+        
+        synchronized(allies)
+        {
+            synchronized(enemies)
+            {
+                for(GameFigure a : allies)
+                    tree.insert(a);
+                for(GameFigure e : enemies)
+                    tree.insert(e);
+                
+                ArrayList<Collision> list = null;
+                for(GameFigure a : allies)
+                {
+                    list = tree.getList(a);
+                    for(Collision obj : list)
+                        if(obj.hashCode() != a.hashCode() && a.getCollisionBox().intersects(obj.getCollisionBox()))
+                        {
+                            enemies.remove((GameFigure)obj);
+                        }
+                }
+                
+            }
+        }
+        tree.renderTree((Graphics2D)graphics);
+        tree.clear();
     }
 
+    
     // use active rendering to put the buffered image on-screen
     public void printScreen() {
         Graphics g;

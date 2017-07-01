@@ -3,14 +3,11 @@ package Model;
 import Controller.Main;
 import Model.States.CombatState;
 import Model.States.MotionState;
-import Model.States.State;
-import java.awt.Color;
+import Model.States.State; 
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
-import java.util.Random;
-import View.GamePanel;
-import static java.lang.Math.random;
+import java.util.Random; 
 
 public abstract class Enemy extends GameFigure {
 
@@ -49,8 +46,8 @@ public abstract class Enemy extends GameFigure {
         double targetX = Main.gameData.nen.x + Main.gameData.nen.size/2;
         double targetY = Main.gameData.nen.y;
         Random random = new Random();
-        if(random.nextBoolean())
-            Main.gameData.addEnemyBullet(super.x + super.size/2, super.y + super.size, targetX, targetY, Color.red);
+//        if(random.nextBoolean())
+//            Main.gameData.addEnemyBullet(super.x + super.size/2, super.y + super.size, targetX, targetY, Color.red);
  
     } 
     public void setIndex(int i)
