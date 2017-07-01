@@ -45,8 +45,8 @@ public class Evade extends MotionState{
         ter.setImage(ter.image);
         delayCount = ter.getDelayCount();
         //put Terro on the wall
+        a = ter.getCount();
         if(!onWall){
-            a = ter.getCount();
             if(a > 0){
                 if(a < 6){
                     this.gameFigure.y -= dy;
@@ -60,10 +60,11 @@ public class Evade extends MotionState{
                 }
             }
             else{
-                if(gameFigure.x + 10 >= GamePanel.PWIDTH){
-                    q = Math.abs(GamePanel.PWIDTH - gameFigure.x); 
-                    this.gameFigure.x += q;
-                    this.gameFigure.y -= dy;
+                if(gameFigure.x + 50 >= GamePanel.PWIDTH - 150){
+                    q = Math.abs(GamePanel.PWIDTH - gameFigure.x);
+                    //System.out.println("Distance from terro.x to gamePanel width " + q);
+                    this.gameFigure.x += q - 150;
+                    this.gameFigure.y -= 5 * dy;
                     left = false;
                     a++;
                     ter.setCount(a);
@@ -73,7 +74,7 @@ public class Evade extends MotionState{
                     left = true;
                     q = gameFigure.x;
                     this.gameFigure.x -= q;
-                    this.gameFigure.y -= dy;
+                    this.gameFigure.y -= 5 * dy;
                     a++;
                     ter.setCount(a);
                 }
@@ -83,29 +84,36 @@ public class Evade extends MotionState{
             a = ter.getCount();
             if(!left){
                 //means Terro is on the right side of the panel
-                if(a > 12){
-                    nextState("Neutral");
+                if(a >= 12){
+                    //System.out.println("Evade 1");
+                    gameFigure.airborn = true;
                     a = 0;
                     ter.setCount(a);
+                    nextState("Neutral");
                 }
                 else{
+                    //System.out.println("Evade 2");
                     this.gameFigure.y -= dy;
-                    this.gameFigure.x -= 10;
+                    this.gameFigure.x -= 35;
                     a++;
                     ter.setCount(a);
                 }
             }
             else{
                 //means that Terro is on the left side of the panel
-                if(a > 12){
-                    nextState("Neutral");
+                if(a >= 12){
+                    //System.out.println("Neutral called");
                     a = 0;
                     ter.setCount(a);
+                    gameFigure.airborn = true;
+                    nextState("Neutral");
+                    
                 }
                 else{
-                    this.gameFigure.x += 10;
+                    //System.out.println("a = " + a);
+                    this.gameFigure.x += 35;
                     this.gameFigure.y -= dy;
-                    a = ter.c++;
+                    a++;
                     ter.setCount(a);
                 }
             }

@@ -47,7 +47,7 @@ public class WindmillShuriken extends CombatState{
         
         gameFigure.y -= GRAVITY;
         a = ter.getCount();
-        if(a >= 20){
+        if(a >= 10){
             Main.gameData.addEnemyBullet(ter.x, ter.y, nenX, nenY, BLUE);
             nextState("Default");
         }

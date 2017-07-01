@@ -39,7 +39,7 @@ public class Default extends CombatState{
                     nextState("WindmillShuriken");
                 }
             }
-            else{
+            else if(!(ter.mState instanceof Evade)){
                 a = 0;
                 ter.setDelayCount(a);
                 nextState("Jump");

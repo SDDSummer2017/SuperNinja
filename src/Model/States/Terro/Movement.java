@@ -33,7 +33,7 @@ public class Movement extends MotionState{
         ter.image = ter.movement;
         ter.setImage(ter.image);
         boolean a;
-        a= ter.getDirection(); //false for left true for right
+        a = ter.getDirection(); //false for left true for right
         
         //add extra condition where the movement continues until it reaches the edge of the displayed window and 100pixels distance from Terro
         if (ter.airborn){}
@@ -45,46 +45,49 @@ public class Movement extends MotionState{
                 nextState("Evade");
                 ter.setDirection(false);
                 }*/
-                if (gameFigure.x + 10 >= GamePanel.PWIDTH - 150 && Math.abs(n.x - gameFigure.x) < 100){
-                //System.out.println("Take 1");
+                if (gameFigure.x + 50 >= GamePanel.PWIDTH - 150 && Math.abs(n.x - gameFigure.x + gameFigure.size) <= 50){
+                //System.out.println("Terro is heading Right");
+                    ter.setDirection(false);
                     nextState("Evade");
+                }
+                else if(gameFigure.x + 10 >= GamePanel.PWIDTH - 150){//point of inflection
+                    //System.out.println("Terro is heading Right");
+                    gameFigure.x -= 10;
                     ter.setDirection(false);
                 }
-                else if(gameFigure.x + 10 >= GamePanel.PWIDTH - 150 || Math.abs(n.x - gameFigure.x) < 100){
+                else if(Math.abs(n.x - gameFigure.x) <= 50){
                     gameFigure.x -= 10;
                     ter.setDirection(false);
                 }
                 else{
-                    //System.out.println("Take 3");
+                    //System.out.println("Terro is heading Right");
+                    //System.out.println("Math.abs(n.x - gameFigure.x) <= 100 : " + Math.abs(n.x - 50 - gameFigure.x));
                     gameFigure.x += 10;
                 }
             }
             else{
             //terro should be moving to the left
-            /*System.out.println("Direction = " + a);
-            System.out.println("Terro.x = " + gameFigure.x);
-            System.out.println("GamePanel.pWidth = " + GamePanel.PWIDTH);
-            System.out.println("Math.abs(n.x - gameFigure.x) = " + Math.abs(n.x - gameFigure.x));*/
-                if (gameFigure.x - 10 <= 50 && Math.abs(n.x - gameFigure.x) < 100){
-                    //System.out.println("Take 4");
-                    nextState("Evade");
+                if (gameFigure.x - 50 <= 150 && Math.abs(n.x - n.size - gameFigure.x + 50) <= 50){
                     ter.setDirection(true);
+                    nextState("Evade");
+                    //System.out.println("Terro is heading Left");
                 }
-                else if(gameFigure.x - 10 <= 50){
-                    //System.out.println("Take 5");
+                else if(gameFigure.x - 10 <= 20){
                     gameFigure.x += 10;
                     ter.setDirection(true);
+                    //System.out.println("Terro is heading Left");
                 }
-                else if(Math.abs(n.x - gameFigure.x) < 100){
+                else if(Math.abs(n.x - gameFigure.x + gameFigure.size) <= 50){ //point of inflection
                     gameFigure.x += 10;
                     ter.setDirection(true);
                 }
                 else{
-                    //System.out.println("Take 6");
+                    //System.out.println("Terro is heading Left");
                     gameFigure.x -= 10;
                 }
             }
         }
+        
             /*if (gameFigure.y >= 450){
             this.nextState("Neutral");
             }*/

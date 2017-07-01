@@ -17,10 +17,14 @@ import java.util.ArrayList;
  */
 public class Neutral extends MotionState{
 
+    int a; 
+    int q;
     public Neutral(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
         previousState = gameFigure.mState;
         combatState = gameFigure.cState;
+        a = 0;
+        q = 0;
     }
 
     @Override
@@ -28,11 +32,30 @@ public class Neutral extends MotionState{
         Terro ter = (Terro) this.gameFigure;
         ter.image = ter.neutral;
         ter.setImage(ter.image);
-        if(gameFigure.cState instanceof ShurikenThrow || gameFigure.cState instanceof Hit || gameFigure.cState instanceof WindmillShuriken){}
-        else{
-            this.nextState("Movement");
+        a = ter.getCount();
+        if (previousState instanceof Evade){
+            if (!ter.airborn){
+                a = 0;
+                ter.setCount(a);
+                this.nextState("Movement");
+            }
+            else{
+                q += ter.GRAVITY / 2;
+                gameFigure.y += q;
+                a++;
+                ter.setCount(a);
+                if(gameFigure.y >= 450){
+                    gameFigure.y = 450;
+                    ter.airborn = false;
+                }
+            }
         }
-        
+        else{
+            if(gameFigure.cState instanceof ShurikenThrow || gameFigure.cState instanceof Hit || gameFigure.cState instanceof WindmillShuriken){}
+            else{
+                this.nextState("Movement");
+            }
+        }
     }
 
     @Override
