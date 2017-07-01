@@ -41,7 +41,7 @@ public class Evade extends MotionState{
     @Override
     public void execute() {
         Terro ter = (Terro) this.gameFigure;
-        ter.image = ter.throwImage;
+        ter.image = ter.block;
         ter.setImage(ter.image);
         delayCount = ter.getDelayCount();
         //put Terro on the wall

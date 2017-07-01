@@ -58,8 +58,8 @@ public class GameData {
         nen = new Nen(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - nenSize, nenSize);
 
        
-              enemys.add(new Rai((GamePanel.PWIDTH), GamePanel.PHEIGHT - 90, 100));
-            enemys.add(new Rai(0, GamePanel.PHEIGHT - 90, 100));
+            enemys.add(new Terro((GamePanel.PWIDTH), GamePanel.PHEIGHT - 90, 100));
+            //enemys.add(new Terro(0, GamePanel.PHEIGHT - 90, 100));
     }
 
 
@@ -67,7 +67,7 @@ public class GameData {
         Random r = new Random();
          synchronized (enemys) {
             for (int i = 0; i < n; i++) {
-                enemys.add(new Rai(r.nextInt(GamePanel.PWIDTH),
+                enemys.add(new Terro(r.nextInt(GamePanel.PWIDTH),
                         r.nextInt(GamePanel.PHEIGHT), SIZE));
             }
 

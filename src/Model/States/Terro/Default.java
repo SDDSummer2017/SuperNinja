@@ -29,16 +29,19 @@ public class Default extends CombatState{
     @Override
     public void execute() {
         Terro ter = (Terro) this.gameFigure;
-        ter.image = ter.neutral;
-        ter.setImage(ter.throwImage);
+        
         a = ter.getDelayCount();
-        if(a >= 20){
+        if(a >= 60){
             if (gameFigure.mState instanceof Evade){
                 if(!ter.airborn){
+                    a = 0;
+                    ter.setDelayCount(a);
                     nextState("WindmillShuriken");
                 }
             }
             else{
+                a = 0;
+                ter.setDelayCount(a);
                 nextState("Jump");
             }
         }

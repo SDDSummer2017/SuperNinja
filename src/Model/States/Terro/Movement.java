@@ -32,44 +32,62 @@ public class Movement extends MotionState{
         Terro ter = (Terro) this.gameFigure;
         ter.image = ter.movement;
         ter.setImage(ter.image);
-        boolean a = ter.getDirection(); //false for left true for right
+        boolean a;
+        a= ter.getDirection(); //false for left true for right
         
         //add extra condition where the movement continues until it reaches the edge of the displayed window and 100pixels distance from Terro
-        if(a){
-            //Terro Moves to the Right
-            if (gameFigure.x + 10 >= GamePanel.PWIDTH && Math.abs(n.x - gameFigure.x) < 100){
-                nextState("Evade");
-                ter.setDirection(false);
-            }
-            else if(gameFigure.x + 10 >= GamePanel.PWIDTH){
-                gameFigure.x -= 10;
-                ter.setDirection(false);
-            }
-            else{
-                gameFigure.x += 10;
-            }
-        }
+        if (ter.airborn){}
         else{
-        //terro should be moving to the left
-            if (gameFigure.x - 10 <= 0 && Math.abs(n.x - gameFigure.x) < 100){
+            if(a){
+                //Terro Moves to the Right
+                /*if (gameFigure.x + 10 >= 850 && Math.abs(n.x - gameFigure.x) < 100){
+                System.out.println("Take 1");
                 nextState("Evade");
-                ter.setDirection(true);
-            }
-            else if(gameFigure.x - 10 >= 0){
-                gameFigure.x += 10;
-                ter.setDirection(true);
+                ter.setDirection(false);
+                }*/
+                if (gameFigure.x + 10 >= GamePanel.PWIDTH - 150 && Math.abs(n.x - gameFigure.x) < 100){
+                //System.out.println("Take 1");
+                    nextState("Evade");
+                    ter.setDirection(false);
+                }
+                else if(gameFigure.x + 10 >= GamePanel.PWIDTH - 150 || Math.abs(n.x - gameFigure.x) < 100){
+                    gameFigure.x -= 10;
+                    ter.setDirection(false);
+                }
+                else{
+                    //System.out.println("Take 3");
+                    gameFigure.x += 10;
+                }
             }
             else{
-                gameFigure.x -= 10;
+            //terro should be moving to the left
+            /*System.out.println("Direction = " + a);
+            System.out.println("Terro.x = " + gameFigure.x);
+            System.out.println("GamePanel.pWidth = " + GamePanel.PWIDTH);
+            System.out.println("Math.abs(n.x - gameFigure.x) = " + Math.abs(n.x - gameFigure.x));*/
+                if (gameFigure.x - 10 <= 50 && Math.abs(n.x - gameFigure.x) < 100){
+                    //System.out.println("Take 4");
+                    nextState("Evade");
+                    ter.setDirection(true);
+                }
+                else if(gameFigure.x - 10 <= 50){
+                    //System.out.println("Take 5");
+                    gameFigure.x += 10;
+                    ter.setDirection(true);
+                }
+                else if(Math.abs(n.x - gameFigure.x) < 100){
+                    gameFigure.x += 10;
+                    ter.setDirection(true);
+                }
+                else{
+                    //System.out.println("Take 6");
+                    gameFigure.x -= 10;
+                }
             }
         }
-
-        if(gameFigure.cState instanceof ShurikenThrow || gameFigure.cState instanceof Hit || gameFigure.cState instanceof WindmillShuriken){
-            if (gameFigure.y >= 450){
-                this.nextState("Neutral");
-            }
-            else{}
-        }
+            /*if (gameFigure.y >= 450){
+            this.nextState("Neutral");
+            }*/
     }
 
     @Override

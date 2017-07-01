@@ -27,8 +27,8 @@ public class Jump extends MotionState{
     @Override
     public void execute() {
         Terro ter = (Terro) this.gameFigure;
-        ter.image = ter.block;
-        ter.setImage(ter.throwImage);
+        ter.image = ter.throwImage;
+        ter.setImage(ter.image);
         
         if(gameFigure.y <= 300){
             nextState("Neutral");

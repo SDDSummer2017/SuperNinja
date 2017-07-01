@@ -14,6 +14,7 @@ import Model.Shuriken;
 import Model.States.CombatState;
 import Model.Terro;
 import static java.awt.Color.BLUE;
+import static java.awt.Color.RED;
 import java.util.ArrayList;
 
 /**
@@ -47,7 +48,7 @@ public class WindmillShuriken extends CombatState{
         gameFigure.y -= GRAVITY;
         a = ter.getCount();
         if(a >= 20){
-            Shuriken one = new Shuriken(ter.x, ter.y, nenX, nenY, BLUE);
+            Main.gameData.addEnemyBullet(ter.x, ter.y, nenX, nenY, BLUE);
             nextState("Default");
         }
         else{

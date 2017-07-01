@@ -28,9 +28,11 @@ public class Neutral extends MotionState{
         Terro ter = (Terro) this.gameFigure;
         ter.image = ter.neutral;
         ter.setImage(ter.image);
-        if (this.gameFigure.cState instanceof Model.States.Terro.Default){
+        if(gameFigure.cState instanceof ShurikenThrow || gameFigure.cState instanceof Hit || gameFigure.cState instanceof WindmillShuriken){}
+        else{
             this.nextState("Movement");
         }
+        
     }
 
     @Override

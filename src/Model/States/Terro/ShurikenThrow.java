@@ -44,15 +44,20 @@ public class ShurikenThrow extends CombatState{
         nenY = nen.y;
         
         
-        gameFigure.y -= GRAVITY;
+        //gameFigure.y -= GRAVITY;
         a = ter.getCount();
-        if(a >= 20){
-            Shuriken one = new Shuriken(ter.x, ter.y, nenX, nenY, RED);
-            Shuriken two = new Shuriken(ter.x, ter.y, nenX + 50, nenY, RED);
-            Shuriken three = new Shuriken(ter.x, ter.y, nenX - 50, nenY, RED);
+        if(a >= 10){
+            Main.gameData.addEnemyBullet(ter.x, ter.y, nenX, nenY, RED);
+            Main.gameData.addEnemyBullet(ter.x, ter.y, nenX + 50, nenY, RED);
+            Main.gameData.addEnemyBullet(ter.x, ter.y, nenX - 50, nenY, RED);
+            /*Shuriken two = new Shuriken(ter.x, ter.y, nenX + 50, nenY, RED);
+            Shuriken three = new Shuriken(ter.x, ter.y, nenX - 50, nenY, RED);*/
+            a = 0;
+            ter.setCount(a);
             nextState("Default");
         }
         else{
+            gameFigure.y -= GameFigure.GRAVITY;
             a++;
             ter.setCount(a);
         }

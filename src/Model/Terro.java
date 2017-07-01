@@ -64,8 +64,8 @@ public class Terro extends Enemy{
                 + "TerroNeutral.png");
         super.throwImage = getImage(imagePath + separator + "images" + separator
                 + "TerroJump.png");
-        super.staticImage = getImage(imagePath + separator + "images" + separator
-                + "TerroStatic.png");
+        //super.staticImage = getImage(imagePath + separator + "images" + separator
+        //        + "TerroStatic.png");
     }
     //the following delayCount functions are used to delay the actions of Terro for attack
     public int getDelayCount(){
@@ -147,8 +147,18 @@ public class Terro extends Enemy{
 
     @Override
     public void update() {
+        //System.out.println("Terro x location: " + super.x);
         mState.execute();
         cState.execute();
+        //System.out.println("MSTATE: " + mState + ", CSTATE: " + cState);
+        
+        /*if (direction){
+        super.x += 2;
+        }
+        
+        else{
+        super.x -= 2;
+        }*/
         
         if(this.y <= 450){
             this.y += GRAVITY;
