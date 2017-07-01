@@ -40,9 +40,11 @@ public class Nen extends GameFigure {
         ArrayList<Observer> observers = new ArrayList<Observer>();
         mState = new NeutralMotion(this, observers);
         cState = new NeutralCombat(this, observers);
-      
+       
+     
         mState.registerObserver(soundHandler);
         cState.registerObserver(soundHandler);
+ 
         movingRight = jump = movingLeft = false;
         String imagePath = System.getProperty("user.dir");
         // separator: Windows '\', Linux '/'

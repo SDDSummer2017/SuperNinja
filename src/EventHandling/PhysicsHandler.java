@@ -23,7 +23,7 @@ public class PhysicsHandler implements CollisionObserver {
 
     @Override
     public void onNotify(GameFigure gameFigureOne, GameFigure gameFigureTwo) {
-         System.out.println("We are in the PhysicsHandler");
+        // System.out.println("We are in the PhysicsHandler");
         //player effected functionality
         if(gameFigureOne instanceof Nen || gameFigureTwo instanceof Nen)
         {
@@ -57,7 +57,7 @@ public class PhysicsHandler implements CollisionObserver {
                              ((Nen) gameFigureTwo).forces.add(antigravity);
                          }
                          
-                          System.out.println("Adding antigravity");
+                          //System.out.println("Adding antigravity");
                             if(  ((Nen) gameFigureTwo).mState instanceof Jump && gameFigureTwo.airborn)
                                 {     
                                gameFigureTwo.airborn = false;
