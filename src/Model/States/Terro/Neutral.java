@@ -8,6 +8,7 @@ package Model.States.Terro;
 import EventHandling.Observer;
 import Model.GameFigure;
 import Model.States.MotionState;
+import Model.Terro;
 import java.util.ArrayList;
 
 /**
@@ -24,12 +25,26 @@ public class Neutral extends MotionState{
 
     @Override
     public void execute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Terro ter = (Terro) this.gameFigure;
+        ter.image = ter.neutral;
+        ter.setImage(ter.image);
+        if (this.gameFigure.cState instanceof Model.States.Terro.Default){
+            this.nextState("Movement");
+        }
     }
 
     @Override
     public void nextState(String s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        switch (s) {
+            case "Movement":
+                gameFigure.mState = new Movement(this.gameFigure, observers);
+                break;
+            case "Hit":
+                gameFigure.cState = new Hit(this.gameFigure, observers);
+                break;
+            default:
+                break;
+        }
     }
     
 }

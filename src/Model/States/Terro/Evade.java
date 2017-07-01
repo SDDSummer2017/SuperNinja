@@ -25,7 +25,7 @@ public class Evade extends MotionState{
     private double q;
     private int a;
     private int dy = 20;
-    private int jumpHeight;
+    private int delayCount;
     
     
     public Evade(GameFigure gameFigure, ArrayList<Observer> observers) {
@@ -41,9 +41,9 @@ public class Evade extends MotionState{
     @Override
     public void execute() {
         Terro ter = (Terro) this.gameFigure;
-        ter.image = ter.block;
+        ter.image = ter.throwImage;
         ter.setImage(ter.image);
-        
+        delayCount = ter.getDelayCount();
         //put Terro on the wall
         if(!onWall){
             a = ter.getCount();

@@ -8,6 +8,7 @@ package Model.States.Terro;
 import EventHandling.Observer;
 import Model.GameFigure;
 import Model.States.CombatState;
+import Model.Terro;
 import java.util.ArrayList;
 
 /**
@@ -16,20 +17,51 @@ import java.util.ArrayList;
  */
 public class Default extends CombatState{
 
+    int a;
+    
     public Default(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
         motionState = gameFigure.mState;
         previousState = gameFigure.cState;
+        a = 0;
     }
 
     @Override
     public void execute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Terro ter = (Terro) this.gameFigure;
+        ter.image = ter.neutral;
+        ter.setImage(ter.throwImage);
+        a = ter.getDelayCount();
+        if(a >= 20){
+            if (gameFigure.mState instanceof Evade){
+                if(!ter.airborn){
+                    nextState("WindmillShuriken");
+                }
+            }
+            else{
+                nextState("Jump");
+            }
+        }
+        else{
+            a++;
+            ter.setDelayCount(a);
+        }
     }
 
     @Override
     public void nextState(String s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        switch (s) {
+            case "Jump":
+                gameFigure.mState = new Jump(this.gameFigure, observers);
+                break;
+            case "Hit":
+                gameFigure.cState = new Hit(this.gameFigure, observers);
+                break;
+            case "WindmillShuriken":
+                gameFigure.cState = new WindmillShuriken(this.gameFigure, observers);
+                break;
+            default:
+                break;
+        }
     }
-    
 }

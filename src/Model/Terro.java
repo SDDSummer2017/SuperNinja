@@ -9,7 +9,10 @@ import EventHandling.Observer;
 import Model.States.CombatState;
 import Model.States.MotionState;
 import Model.States.Terro.Default;
+import Model.States.Terro.Jump;
 import Model.States.Terro.Neutral;
+import Model.States.Terro.ShurikenThrow;
+import Model.States.Terro.WindmillShuriken;
 import View.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -30,11 +33,12 @@ public class Terro extends Enemy{
    public int c; // used as a display count for placeholders only
    public boolean direction; //used in movement to toggle movement towards Nen or away
    public int countDelay; // used as a delay counter so Terro isnt constantly attacking 
+   ArrayList<Observer> observers = new ArrayList<>();
    
     public Terro(double x, double y, double size) {
         super(x, y, size);
         
-        ArrayList<Observer> observers = new ArrayList<>();
+        
         super.mState = new Neutral(this, observers);
         super.cState = new Default(this, observers);
         this.health = 80;
@@ -145,6 +149,13 @@ public class Terro extends Enemy{
     public void update() {
         mState.execute();
         cState.execute();
+        
+        if(this.y <= 450){
+            this.y += GRAVITY;
+        }
+        else{
+            airborn = false;
+        }
     }
 
     @Override

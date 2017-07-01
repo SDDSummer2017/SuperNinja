@@ -65,7 +65,10 @@ public class Movement extends MotionState{
         }
 
         if(gameFigure.cState instanceof ShurikenThrow || gameFigure.cState instanceof Hit || gameFigure.cState instanceof WindmillShuriken){
-            this.nextState("Neutral");
+            if (gameFigure.y >= 450){
+                this.nextState("Neutral");
+            }
+            else{}
         }
     }
 
