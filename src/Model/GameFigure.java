@@ -26,7 +26,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     public Point2D.Double location;
     public static final int GRAVITY = 8;
     public boolean hit;
-    protected double mass; 
+    public double mass; 
     public Acceleration acceleration;
     public Velocity velocity; 
     public ArrayList<Force> forces;
@@ -50,6 +50,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
        {
         velocity.dx += f.dvx();
         velocity.dy += f.dvy(); 
+        
        }
       
        

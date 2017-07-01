@@ -21,6 +21,8 @@ import javax.swing.Timer;
 import View.GamePanel;
 import View.MainWindow;
 import java.awt.Graphics;
+import java.awt.Polygon;
+import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
 public class GameData implements Subject, Updateable, Renderable  {
@@ -39,11 +41,15 @@ public class GameData implements Subject, Updateable, Renderable  {
     public long time = 0;
     public TimerListener timerListener;
     public Thread gameThread;
-    private final int nenSize = 75;
+    private final int nenSize = 70;
     private Level level; 
     private Force gravity;
-
+    private Force lfriction; 
+    Rectangle2D cb; 
+    private final Force rfriction;
     public GameData() {
+        lfriction = new Force(.05, new Acceleration(0, 1)); 
+        rfriction = new Force(.05, new Acceleration(0, 1)); 
         gravity = new  Force(9, new Acceleration(0, .49));
         enemies = Collections.synchronizedList(new ArrayList<GameFigure>());
         deadEnemys = Collections.synchronizedList(new ArrayList<GameFigure>());
@@ -55,12 +61,12 @@ public class GameData implements Subject, Updateable, Renderable  {
         enemyTimer.setInitialDelay(3000);
         gameThread = new Thread(Main.animator);
         level = new NinjaVillage(); 
-
+     
        
        
        //enemys.add(new Dummy(250, 250, 5));
         
-        nen = new Nen(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - nenSize, nenSize);
+        nen = new Nen(nenSize, nenSize, nenSize);
         observers = new ArrayList<Observer>(); 
         this.registerObserver(new PhysicsHandler());
     
@@ -107,16 +113,16 @@ public class GameData implements Subject, Updateable, Renderable  {
      
      
 
+    @Override
     public void update() {
         
-        if(nen.forces.contains(gravity) == false)
-        {
-            nen.forces.add(gravity);
-        }
+        nen.forces.clear();
+        nen.forces.add(gravity);
+        nen.forces.add(lfriction);
+        nen.forces.add(rfriction);
         
         
-        
-        level.update();
+       
         
         synchronized (bullets) {
             for (GameFigure b : bullets) {
@@ -169,16 +175,18 @@ public class GameData implements Subject, Updateable, Renderable  {
            
             
             synchronized (nen){
-                
+                    cb = nen.getCollisionBox();
+                    cb.setRect(cb.getX(), cb.getY() + nen.velocity.dy, cb.getHeight(), cb.getWidth());
                     for(GameFigure terrain : level.terrain)
-                    if(nen.getCollisionBox().intersects(terrain.getCollisionBox()))
+                    
+                    if(cb.intersects(terrain.getCollisionBox()))
                     {
                         this.notityObservers(terrain, nen);
                          
                     }
             }
             
-               nen.calculatePhysics();
+
         }
   
         enemies.removeAll(deadEnemys);
@@ -186,7 +194,12 @@ public class GameData implements Subject, Updateable, Renderable  {
         deadBullets.clear();
         deadEnemys.clear();
         int bulletCount = bullets.size();
+       
         nen.update();
+        level.update();
+        nen.calculatePhysics();
+        
+    
     }
 
     @Override
@@ -222,6 +235,10 @@ public class GameData implements Subject, Updateable, Renderable  {
     @Override
     public void render(Graphics g) {
         level.render(g);
+        Rectangle2D r = cb.getBounds2D();
+        
+        g.drawRect((int) r.getX(), (int) r.getY(), (int) r.getHeight(), (int) r.getWidth());
+        
     }
 }
       

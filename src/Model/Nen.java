@@ -40,7 +40,7 @@ public class Nen extends GameFigure {
         ArrayList<Observer> observers = new ArrayList<Observer>();
         mState = new NeutralMotion(this, observers);
         cState = new NeutralCombat(this, observers);
-        
+      
         mState.registerObserver(soundHandler);
         cState.registerObserver(soundHandler);
         movingRight = jump = movingLeft = false;
@@ -137,30 +137,14 @@ public class Nen extends GameFigure {
             mState.execute();
         else
             cState.execute();
-        //gravity();
+       
         
     }
 
  
-    public void gravity(){
-        if(y <= 450)
-           y += GRAVITY; 
-        else
-            airborn = false;
-    }
  
 
-    public void translate(int dx, int dy) {
-        if (super.x <= 0 && dx < 0) {
-            dx = 0;
-        }
-        if (((super.x + super.size) >= GamePanel.PWIDTH) && (dx > 0)) {
-            dx = 0;
-        }
-        super.x += dx;
-        super.y += dy;
-    }
-
+   
     public void resetNen() {
  
         this.health = 100;

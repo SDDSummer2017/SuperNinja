@@ -9,6 +9,7 @@ import Model.GameFigure;
 import Model.Nen;
 import Level.Platform;
 import Level.Trap;
+import Model.States.Nen.Jump;
 import Physics.Acceleration;
 import Physics.Force;
 
@@ -18,8 +19,8 @@ import Physics.Force;
  */
 public class PhysicsHandler implements CollisionObserver {
 
-      Force antigravity = new Force(9, new Acceleration(0, -.49));
-    
+    private Force antigravity = new Force(9, new Acceleration(0, -.49));
+
     @Override
     public void onNotify(GameFigure gameFigureOne, GameFigure gameFigureTwo) {
          System.out.println("We are in the PhysicsHandler");
@@ -32,21 +33,67 @@ public class PhysicsHandler implements CollisionObserver {
                 //Game Logic Here
             }
             
-            if(gameFigureOne instanceof Platform || gameFigureTwo instanceof Platform)
+            if(gameFigureOne instanceof Platform)
             {
                 
                 if(gameFigureTwo instanceof Nen)
                 {
-                    
-                     
+                        
+                    ((Nen) gameFigureTwo).velocity.dy = 0;
+                   
                    
                      
-                     if(!((Nen) gameFigureTwo).forces.contains(antigravity))
-                     {
-                         ((Nen) gameFigureTwo).forces.add(antigravity);
+                     
+                     
+                     if( ((Nen) gameFigureTwo).y  < ((Platform) gameFigureOne).y)
+                        {
+                                 
+                        
+                    
+//                         
+//                       
+                         if(!((Nen) gameFigureTwo).forces.contains(antigravity) )
+                         {
+                             ((Nen) gameFigureTwo).forces.add(antigravity);
+                         }
+                         
                           System.out.println("Adding antigravity");
+                            if(  ((Nen) gameFigureTwo).mState instanceof Jump && gameFigureTwo.airborn)
+                                {     
+                               gameFigureTwo.airborn = false;
+                               
+                               
+                              
+                                }
+                        
+                        
+                        }
+                     else
+                     {
+                         if(  gameFigureTwo.x < gameFigureOne.x)
+                        {
+                                 
+                        
+                              ((Nen) gameFigureTwo).velocity.dx = 0;
+                   
+                              ((Nen) gameFigureTwo).forces.add(new Force(1, new Acceleration(-5, 0)));
+                        
+                        }
+                     else if(gameFigureTwo.x > gameFigureOne.x + gameFigureOne.size)
+                     {
+                           ((Nen) gameFigureTwo).velocity.dx = 0;
+                   
+                           ((Nen) gameFigureTwo).forces.add(new Force(9, new Acceleration(5, 0)));
+                     } 
                      
                      }
+                     
+                         //Landing Force Calculation Here
+                         
+                         
+                        
+                     
+                      
                         
                      
                 }

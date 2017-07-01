@@ -59,8 +59,10 @@ public class NinjaVillage extends Level {
         for(int i = 0; i < 80; i++)
         {
             //Loading in floor tiles. 
-            this.terrain.add(new Platform(i * 128.0, (540.0 - 20.0)));
+            this.terrain.add(new Platform(i * 128.0, 535.0));
         }
+        
+        this.terrain.add(new Platform(256, 300));
         
         Rai rai = new Rai((GamePanel.PWIDTH), GamePanel.PHEIGHT - 90, 100);
               enemies.add(rai);
