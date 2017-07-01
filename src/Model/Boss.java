@@ -84,9 +84,9 @@ public class Boss extends GameFigure {
         
         super.x += dx;
         
-        if (super.x + size > GamePanel.PWIDTH) {
+        if (super.x + size > GamePanel.CAMERA_WIDTH) {
             dx = -dx;
-            super.x = GamePanel.PWIDTH - size;
+            super.x = GamePanel.CAMERA_WIDTH - size;
         } 
         else if (super.x - size < 0) {
             dx = -dx;

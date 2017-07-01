@@ -44,23 +44,23 @@ public class GameData {
         timerListener = new TimerListener();
         enemyTimer = new Timer(5000, timerListener);
         enemyTimer.setInitialDelay(3000);
-        
+
         bossTimer = new Timer(3000, timerListener);
         bossTimer.setRepeats(false);
-        
+
         gameThread = new Thread(Main.animator);
         
 
-        /*enemys.add(new Dummy(300, 400, 5));
-        enemys.add(new Dummy(500, 400, 5));
-        enemys.add(new Dummy(0, 300, 5));
-        enemys.add(new Dummy(250, 250, 5));*/
-        
-        nen = new Nen(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - nenSize, nenSize);
+//        enemys.add(new Dummy(300, 400, 5));
+//        enemys.add(new Dummy(500, 400, 5));
+//        enemys.add(new Dummy(0, 300, 5));
+//        enemys.add(new Dummy(250, 250, 5));
 
-       rai = new Rai((GamePanel.PWIDTH), GamePanel.PHEIGHT - 90, 100);
-              enemys.add(rai);
-           // enemys.add(new Rai(0, GamePanel.PHEIGHT - 90, 100));
+        nen = new Nen(GamePanel.CAMERA_WIDTH / 2, GamePanel.CAMERA_HEIGHT - nenSize, nenSize);
+
+//        rai = new Rai((GamePanel.PWIDTH), GamePanel.PHEIGHT - 90, 100);
+//        enemys.add(rai);
+        // enemys.add(new Rai(0, GamePanel.PHEIGHT - 90, 100));
     }
 
 
@@ -68,8 +68,8 @@ public class GameData {
         Random r = new Random();
          synchronized (enemys) {
             for (int i = 0; i < n; i++) {
-                enemys.add(new Rai(r.nextInt(GamePanel.PWIDTH),
-                        r.nextInt(GamePanel.PHEIGHT), SIZE));
+                enemys.add(new Rai(r.nextInt(GamePanel.CAMERA_WIDTH),
+                        r.nextInt(GamePanel.CAMERA_HEIGHT), SIZE));
             }
 
         }
@@ -146,8 +146,8 @@ public class GameData {
                 b.update();
                 if(b.hit==true 
                         || b.x < 0
-                        || b.x > GamePanel.PWIDTH
-                        || b.y > GamePanel.PHEIGHT
+                        || b.x > GamePanel.CAMERA_WIDTH
+                        || b.y > GamePanel.CAMERA_HEIGHT
                         || b.y <0)deadBullets.add(b);
             }
         }       
