@@ -46,13 +46,14 @@ public class Default extends CombatState{
         else if(Math.abs(n.x - gameFigure.x) > 25 && Math.abs(n.x - gameFigure.x) <= 50){
             this.nextState("ViperStrike");
         }
-        
-        /*if (((n.x + n.size) < gameFigure.x && (n.x + n.size) >= (gameFigure.x - 25)) || (n.x >= gameFigure.x + gameFigure.size) && (n.x <= gameFigure.x + 25)){
-        this.nextState("Throw");
+/*       
+        if (((n.x + n.size) < gameFigure.x && ((n.x + n.size) >= (gameFigure.x - 25))) || ((n.x >= gameFigure.x + gameFigure.size) && (n.x <= gameFigure.x + 25))){
+            this.nextState("Throw");
         }
         else if((((n.x + n.size) < gameFigure.x) && (n.x + n.size >= gameFigure.x - 50)) || (n.x >= gameFigure.x + (gameFigure.size)) && (n.x <= (gameFigure.x + 50))){
-        this.nextState("ViperStrike");
-        }*/
+            this.nextState("ViperStrike");
+        }
+  */
         else{}
     }
 

@@ -51,11 +51,11 @@ public class GameData {
         gameThread = new Thread(Main.animator);
         
 
-       enemys.add(new Dummy(300, 400, 5));
-       enemys.add(new Dummy(500, 400, 5));
-       enemys.add(new Dummy(0, 300, 5));
-       enemys.add(new Dummy(250, 250, 5));
-
+        /*enemys.add(new Dummy(300, 400, 5));
+        enemys.add(new Dummy(500, 400, 5));
+        enemys.add(new Dummy(0, 300, 5));
+        enemys.add(new Dummy(250, 250, 5));*/
+        
         nen = new Nen(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - nenSize, nenSize);
 
        rai = new Rai((GamePanel.PWIDTH), GamePanel.PHEIGHT - 90, 100);

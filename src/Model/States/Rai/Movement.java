@@ -7,7 +7,6 @@ package Model.States.Rai;
 
 import Controller.Main;
 import EventHandling.Observer;
-import Model.GameData;
 import Model.GameFigure;
 import Model.Nen;
 import Model.Rai;
@@ -42,10 +41,7 @@ public class Movement extends MotionState{
         else if(n.x > gameFigure.x){ 
             gameFigure.x += 5;
         }
-        //Matlocks was causing the model to get stuck and not move or attack.
-//        else if(n.x >= gameFigure.x + gameFigure.size){ 
-//            gameFigure.x += 5;
-//        }
+        
         if(gameFigure.cState instanceof Block || gameFigure.cState instanceof Hit || gameFigure.cState instanceof ViperStrike){
             this.nextState("Neutral");
         }
