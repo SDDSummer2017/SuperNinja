@@ -23,6 +23,8 @@ public class Whirlwind extends CombatState {
     private boolean rightStrike;
     private int distance = 0;
     private HitBox hitBox;
+    private long soundDelay;
+    private static final long SOUND_DELAY = 200;
     public Whirlwind(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
         
@@ -45,8 +47,7 @@ public class Whirlwind extends CombatState {
             nextState("Finished");
             Main.gameData.removeAlly(hitBox);
         }else
-        {
-            
+        { 
             distance += TRAVEL_RATE;
             if(gameFigure.isFacingRight) 
                 gameFigure.x += TRAVEL_RATE; 
@@ -58,6 +59,11 @@ public class Whirlwind extends CombatState {
             else
                 hitBox.translate(gameFigure.x - 65 + gameFigure.size/2, gameFigure.y + gameFigure.size/2); 
             
+            if(System.currentTimeMillis() - soundDelay >= SOUND_DELAY)
+            { 
+                this.notifyObservers("Whirlwind");
+                soundDelay = System.currentTimeMillis();
+            }
             //if(distance%10 == 0)     
                 rightStrike = !rightStrike;
         }

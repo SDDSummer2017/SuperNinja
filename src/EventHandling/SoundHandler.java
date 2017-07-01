@@ -6,9 +6,9 @@
 package EventHandling;
 
 import Model.GameFigure;
+import Model.States.Nen.Dash;
 import Model.States.State;
 import java.io.File;
-import java.net.URL;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -48,18 +48,27 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
          
          if(state.getClass() == Model.States.Nen.LightAttack.class){
          this.playSound("SoundEffects/ninja_whoosh.mp3");}
-//         
+         
+         if(state instanceof Dash)
+             this.playSound("SoundEffects/Ninja Jump 5.wav"); 
 //         if(state.getClass() == Model.States.Nen.NeutralCombat.class){
 //         this.playSound("SoundEffects/Breath.WAV");}
-//         
-         
-    
+//          
     }
 
     @Override
     public void onNotify(String string) {
         System.out.println(string);
         
+        if(string.equals("Whirlwind"))
+            this.playSound("SoundEffects/ninja_whoosh.mp3");
+         if(string.equals("FrontStep"))
+             this.playSound("SoundEffects/ninja_katana_level_03.mp3");
+//         
+
+          if(string.equals("HeavyAttackFinished"))
+             this.playSound("SoundEffects/Breath.wav");
+
         if("landed".equals(string))
         {
             this.playSound("SoundEffects/ninja_damage.mp3");

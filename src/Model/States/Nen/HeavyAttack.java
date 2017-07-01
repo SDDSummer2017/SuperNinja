@@ -47,6 +47,7 @@ public class HeavyAttack extends CombatState {
                 if(System.currentTimeMillis() - time >= PAUSE_DURATION)
                 {
                     nextState("Finished");
+                     this.notifyObservers("HeavyAttackFinished");
                     Main.gameData.allies.remove(hitBox);
                 }
             }else if(isFrontStep)
@@ -56,6 +57,8 @@ public class HeavyAttack extends CombatState {
                 createHitBox();
                 if(frontStep >= FRONT_STEP)
                     time = System.currentTimeMillis();
+                
+       
             }else if(BACK_STEP > backStep)
             {
                 backStep += BACK_STEP_RATE;
@@ -64,8 +67,10 @@ public class HeavyAttack extends CombatState {
                     time = System.currentTimeMillis();
             }else if(!isFrontStep)
             {
-                if(System.currentTimeMillis() - time >= CHARGE_DURATION)
+                if(System.currentTimeMillis() - time >= CHARGE_DURATION){
                     isFrontStep = true;
+                    this.notifyObservers("FrontStep");
+                }
             } 
     }
     
@@ -79,6 +84,10 @@ public class HeavyAttack extends CombatState {
         Main.gameData.allies.add(hitBox);
     }
  
+    public boolean getFrontStep(){
+        return isFrontStep;
+    }
+    
     @Override
     public void nextState(String s) { 
         
