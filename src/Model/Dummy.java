@@ -21,7 +21,7 @@ public class Dummy extends GameFigure {
     public Dummy(double x, double y, double size) {
         super(x, y, size);
         super.health = 50;
-        collisionBox = new Rectangle2D.Double(x, y, 100, 100);
+        collisionBox = new Rectangle2D.Double(x, y, size, size);
     }
 
     @Override

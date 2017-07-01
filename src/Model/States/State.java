@@ -5,11 +5,9 @@
  */
 package Model.States;
 
-import EventHandling.Observer;
-import EventHandling.SoundHandler;
+import EventHandling.Observer; 
 import EventHandling.Subject;
-import Model.GameFigure;
-import View.GamePanel;
+import Model.GameFigure; 
 import java.util.ArrayList;
 import EventHandling.StateObserver;
 
