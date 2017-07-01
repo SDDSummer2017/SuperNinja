@@ -4,6 +4,7 @@ import Controller.Main;
 import Controller.TimerListener;
 import EventHandling.PhysicsHandler;
 import EventHandling.CollisionObserver;
+import EventHandling.MusicHandler;
 import EventHandling.Observer;
 import EventHandling.SoundHandler;
 import EventHandling.Subject;
@@ -61,7 +62,7 @@ public class GameData implements Subject, Updateable, Renderable  {
         enemyTimer.setInitialDelay(3000);
         gameThread = new Thread(Main.animator);
         level = new NinjaVillage(); 
-     
+        
        
        
        //enemys.add(new Dummy(250, 250, 5));
@@ -69,7 +70,13 @@ public class GameData implements Subject, Updateable, Renderable  {
         nen = new Nen(nenSize, nenSize, nenSize);
         observers = new ArrayList<Observer>(); 
         this.registerObserver(new PhysicsHandler());
-    
+        
+        MusicHandler m = new MusicHandler("");
+        Thread thread = new Thread(m);
+        thread.start();
+        this.registerObserver(m);
+        this.notifyObservers("Level One");
+       
     }
 
 
@@ -204,7 +211,7 @@ public class GameData implements Subject, Updateable, Renderable  {
         deadBullets.clear();
         deadEnemys.clear();
         int bulletCount = bullets.size();
-       
+        
         nen.update();
         level.update();
         nen.calculatePhysics();
@@ -239,7 +246,10 @@ public class GameData implements Subject, Updateable, Renderable  {
     
     @Override
     public void notifyObservers(String event) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       for(Observer o : observers)
+       {
+           o.onNotify(event);
+       }
     }
 
     @Override
