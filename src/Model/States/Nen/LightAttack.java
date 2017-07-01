@@ -20,14 +20,17 @@ import java.util.ArrayList;
  */
 public class LightAttack extends CombatState {
      
-    HitBox hitBox; 
+    HitBox hitBox;
+    private int midX;
     private static final long DURATION = 500;
     private static final int MID_TIME = 150;
-    private static final int HIGH_TIME = 300;  
+    private static final int HIGH_TIME = 300; 
+    private final boolean IS_FACING_RIGHT;
     public LightAttack(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
         gameFigure.damage = 10;
-        hitBox =  new HitBox(gameFigure.x + (gameFigure.size/2), gameFigure.y, 75, 10);  
+        hitBox =  new HitBox(gameFigure.x + (gameFigure.size/2), gameFigure.y, 75, 10); 
+        IS_FACING_RIGHT = gameFigure.isFacingRight;
         Main.gameData.addAlly(hitBox);
 
     }
@@ -40,7 +43,7 @@ public class LightAttack extends CombatState {
         }
         
         //Attack right
-        if(direction > 0)
+        if(IS_FACING_RIGHT)
             if(System.currentTimeMillis() - initTime  >= MID_TIME && System.currentTimeMillis() - initTime <= HIGH_TIME)
             {
                 hitBox.translate(gameFigure.x + (gameFigure.size/2) + 20, gameFigure.y + 30);  

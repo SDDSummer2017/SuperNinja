@@ -7,24 +7,38 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.Timer;
-import View.GamePanel; 
+import View.GamePanel;
+import View.MainWindow;
 import java.util.Random;
 
 public class GameData {
 
     private final int SIZE = 50;
-    public final List<GameFigure> enemys; 
-    public final List<GameFigure> allies; 
+    public final List<GameFigure> enemys;
+    public final List<GameFigure> deadEnemys;
+    public final List<GameFigure> bullets;
+    public final List<GameFigure> allies;
+    
+    public final List<GameFigure> deadBullets;
     public final Nen nen;
  
     public Timer enemyTimer, bossTimer;
  
     public TimerListener timerListener;
-    public Thread gameThread; 
+    public Thread gameThread;
+    public Boss boss;
+    private boolean bossSpawned = false;
     private final int nenSize = 75;
- 
+
+    public void setBossSpawned(boolean bossSpawned) {
+        this.bossSpawned = bossSpawned;
+    }
+
     public GameData() {
-        enemys = Collections.synchronizedList(new ArrayList<GameFigure>()); 
+        enemys = Collections.synchronizedList(new ArrayList<GameFigure>());
+        deadEnemys = Collections.synchronizedList(new ArrayList<GameFigure>());
+        bullets = Collections.synchronizedList(new ArrayList<GameFigure>());
+        deadBullets = Collections.synchronizedList(new ArrayList<GameFigure>());
         allies = Collections.synchronizedList(new ArrayList<GameFigure>());
         timerListener = new TimerListener();
         enemyTimer = new Timer(5000, timerListener);
@@ -44,10 +58,11 @@ public class GameData {
         nen = new Nen(GamePanel.PWIDTH / 2, GamePanel.PHEIGHT - nenSize, nenSize);
 
        
-//              enemys.add(new Rai((GamePanel.PWIDTH), GamePanel.PHEIGHT - 90, 100));
-//            enemys.add(new Rai(0, GamePanel.PHEIGHT - 90, 100));
-    } 
-    
+              enemys.add(new Rai((GamePanel.PWIDTH), GamePanel.PHEIGHT - 90, 100));
+            enemys.add(new Rai(0, GamePanel.PHEIGHT - 90, 100));
+    }
+
+
     public void addEnemy(int n) {
         Random r = new Random();
          synchronized (enemys) {
@@ -59,9 +74,22 @@ public class GameData {
         }
     }
     
+    public void addBoss(){
+        synchronized (enemys){
+            boss = new Boss(30, 30, 250, 115);
+            enemys.add(boss);
+        }
+    }
     public void addNenBullet(double x1, double y1, double x2, double y2, Color color) {
-        synchronized (allies) {
-                allies.add(new Shuriken(x1, y1, x2, y2, color));
+        synchronized (bullets) {
+                bullets.add(new Shuriken(x1, y1, x2, y2, color));
+        }
+    }
+    
+    public void addEnemyBullet(double x1, double y1, double x2, double y2, Color color) {
+        synchronized (bullets) {
+                
+            bullets.add(new EnemyBullet(x1, y1, x2, y2, color));
         }
     }
     
@@ -77,20 +105,70 @@ public class GameData {
         }
     }
 
-    public void update() { 
-        
+    public void checkGameCondition(){
+        if(enemys.isEmpty() && !enemyTimer.isRunning() && !bossSpawned){
+            bossSpawned = true;
+            addBoss();
+            enemyTimer.restart();
+        }
+        if (nen.health <= 0){
+            Main.animator.running = false;
+            Main.gameOverWindow.setOutcomeText("loose");
+            Main.gameOverWindow.setVisible(true);
+        }
+        if ((boss != null) && (boss.health <= 0)){
+            Main.animator.running = false;
+            boss = null;
+            Main.gameOverWindow.setOutcomeText("win");
+            Main.gameOverWindow.setVisible(true);
+        }
+            
+    }
+    
+
+    public void update() {
+       
+
         nen.update();
         
+        synchronized (bullets) {
+            for (GameFigure b : bullets) {
+                b.update();
+                if(b.hit==true 
+                        || b.x < 0
+                        || b.x > GamePanel.PWIDTH
+                        || b.y > GamePanel.PHEIGHT
+                        || b.y <0)deadBullets.add(b);
+            }
+        }       
         synchronized (enemys) {
             for (GameFigure f : enemys) {
-                f.update(); 
+                f.update();
+                if(f.health <=0)deadEnemys.add(f); 
             }
         }
         
-        synchronized (allies) {
-            for (GameFigure a : allies)
-                a.update();
+        synchronized (enemys){
+            synchronized (allies){
+                for(GameFigure ally : allies)
+                    for(GameFigure enemy : enemys)
+                    if(ally.getCollisionBox().intersects(enemy.getCollisionBox()))
+                    {
+                        enemy.health -= 10;
+                        System.out.println("HEALTH: "  + enemy.health);
+                        if(enemy.health <= 0)
+                            deadEnemys.add(enemy);
+                    }
+            }
         }
+  
+        enemys.removeAll(deadEnemys);
+        bullets.removeAll(deadBullets);
+        deadBullets.clear();
+        deadEnemys.clear();
+        int bulletCount = bullets.size();
+        MainWindow.message.setText("Bullets:" + bulletCount + enemyTimer.isRunning());
+        checkGameCondition();
     }
 }
       

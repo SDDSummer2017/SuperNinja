@@ -41,14 +41,14 @@ public class KeyController implements KeyListener {
                 }
                 break;
             case KeyEvent.VK_S:
-                synchronized(Main.gameData.enemys)
+                synchronized(Main.gameData.bullets)
                 {
                     Random rand = new Random();
 
                     int  n = rand.nextInt(500) + 1;
-                    Main.gameData.enemys.add(new Dummy(n, n, 25)); 
+                    Main.gameData.bullets.add(new Dummy(n, n, 25)); 
                 }
-                break;
+                    
                 
             case KeyEvent.VK_F:
                 if(nen.cState.getClass() != Model.States.Nen.LightAttack.class)
@@ -56,12 +56,7 @@ public class KeyController implements KeyListener {
                      nen.cState.nextState("LightAttack");
                 }
                
-                break;
-            case KeyEvent.VK_D:
-                if(nen.cState.getClass() != Model.States.Nen.LightAttack.class)
-                {
-                     nen.cState.nextState("HeavyAttack");
-                }
+                break;    
         }
     }
 

@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class Dash extends MotionState {
 
     private final static int MAX_DISTANCE = 125;
-    private final static int DASH_RATE = 25;
     private int distance = 0;
     
     public Dash(GameFigure gameFigure, ArrayList<Observer> observers) {
@@ -31,8 +30,11 @@ public class Dash extends MotionState {
             nextState("End");
         else
         {
-            distance += DASH_RATE;
-            gameFigure.x += DASH_RATE * direction;
+            distance += 25;
+            if(gameFigure.isFacingRight)
+                gameFigure.x += 25;
+            else
+                gameFigure.x -= 25;
         }
     }
 
