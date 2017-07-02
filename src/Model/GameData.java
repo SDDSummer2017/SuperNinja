@@ -282,9 +282,9 @@ public class GameData implements Subject, Updateable, Renderable  {
     
     public void addEnemyBullet(GameFigure e)
     {
-        synchronized(enemyBullets)
+        synchronized(allies)
         {
-            this.enemyBullets.add(e);
+            level.allies.add(e);
         }
     }
    
