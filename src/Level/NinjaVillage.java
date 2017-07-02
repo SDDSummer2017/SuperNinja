@@ -11,6 +11,7 @@ import EventHandling.PhysicsHandler;
 import Model.GameFigure;
 import Model.Rai;
 import Model.Renderable;
+import Model.Terro;
 import Model.Updateable;
 import View.GamePanel;
 import java.awt.Graphics;
@@ -68,8 +69,14 @@ public class NinjaVillage extends Level {
               enemies.add(rai);
       
        rai.cState.registerObserver(new SoundHandler(""));
-        rai.mState.registerObserver(new SoundHandler(""));
-           
+       rai.mState.registerObserver(new SoundHandler(""));
+        
+       Terro terro = new Terro((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100);
+              enemies.add(terro);
+      
+       terro.cState.registerObserver(new SoundHandler(""));
+       terro.mState.registerObserver(new SoundHandler(""));
+       
         //Get event handlers for game logic.
         ArrayList<Object> observers = new ArrayList<>(); 
        
