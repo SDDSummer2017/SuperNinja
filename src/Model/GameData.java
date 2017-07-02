@@ -96,7 +96,7 @@ public class GameData implements Subject, Updateable, Renderable  {
 
 
        
-        enemies.add(new Rai((GamePanel.CAMERA_WIDTH / 2), GamePanel.CAMERA_HEIGHT - 90, 100));
+        //enemies.add(new Rai((GamePanel.CAMERA_WIDTH / 2), GamePanel.CAMERA_HEIGHT - 90, 100));
         //     enemys.add(new Rai(0, GamePanel.PHEIGHT - 90, 100));
     } 
     
