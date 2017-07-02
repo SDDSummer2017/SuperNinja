@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.Timer;
-import View.GamePanel; 
-import View.MainWindow;
+import View.GamePanel;  
 import java.util.Random;
 
 public class GameData {
@@ -23,10 +22,12 @@ public class GameData {
     public TimerListener timerListener;
     public Thread gameThread; 
     private final int nenSize = 75;
- 
+    public final List<GameFigure> enemySpawn;
     public GameData() {
         enemys = Collections.synchronizedList(new ArrayList<GameFigure>()); 
         allies = Collections.synchronizedList(new ArrayList<GameFigure>());
+        enemySpawn = Collections.synchronizedList(new ArrayList<GameFigure>());
+        
         timerListener = new TimerListener();
         enemyTimer = new Timer(5000, timerListener);
         enemyTimer.setInitialDelay(3000);
@@ -45,8 +46,8 @@ public class GameData {
         nen = new Nen(GamePanel.CAMERA_WIDTH / 2, GamePanel.CAMERA_HEIGHT - nenSize, nenSize);
 
        
-//              enemys.add(new Rai((GamePanel.PWIDTH), GamePanel.PHEIGHT - 90, 100));
-//            enemys.add(new Rai(0, GamePanel.PHEIGHT - 90, 100));
+        enemys.add(new Rai((GamePanel.CAMERA_WIDTH / 2), GamePanel.CAMERA_HEIGHT - 90, 100));
+        //     enemys.add(new Rai(0, GamePanel.PHEIGHT - 90, 100));
     } 
     
     public void addEnemy(int n) {
@@ -66,6 +67,13 @@ public class GameData {
         }
     }
     
+    public synchronized void addHitBox(GameFigure hitBox){
+        synchronized (enemys)
+        {
+            enemys.add(hitBox); 
+        }
+    }
+    
     public void addAlly(GameFigure ally) {
         synchronized (allies) {
                 allies.add(ally);
@@ -79,6 +87,7 @@ public class GameData {
     }
 
     public void update() { 
+
         
         nen.update();
         
@@ -91,7 +100,7 @@ public class GameData {
         synchronized (allies) {
             for (GameFigure a : allies)
                 a.update();
-        }
+        } 
     }
 }
       

@@ -34,9 +34,9 @@ public class HeavyAttack extends CombatState {
     private long time = 0;
     public HeavyAttack(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers); 
-        hitBox = new HitBox(0, 0, 0, 0);
+        hitBox = new HitBox(0, 0, 0, 0, gameFigure);
         Main.gameData.allies.add(hitBox);
-        gameFigure.damage = 30;
+        gameFigure.damage = 50;
         
     }
 
@@ -78,9 +78,9 @@ public class HeavyAttack extends CombatState {
        
         Main.gameData.allies.remove(hitBox);
         if(direction > 0)
-            hitBox = new HitBox(gameFigure.x + gameFigure.size/2, gameFigure.y + gameFigure.size/2, ATTACK_WIDTH, ATTACK_HEIGHT);
+            hitBox = new HitBox(gameFigure.x + gameFigure.size/2, gameFigure.y + gameFigure.size/2, ATTACK_WIDTH, ATTACK_HEIGHT, gameFigure);
         else 
-            hitBox = new HitBox(gameFigure.x + gameFigure.size/2 - ATTACK_WIDTH, gameFigure.y + gameFigure.size/2, ATTACK_WIDTH, ATTACK_HEIGHT);
+            hitBox = new HitBox(gameFigure.x + gameFigure.size/2 - ATTACK_WIDTH, gameFigure.y + gameFigure.size/2, ATTACK_WIDTH, ATTACK_HEIGHT, gameFigure);
         Main.gameData.allies.add(hitBox);
     }
  

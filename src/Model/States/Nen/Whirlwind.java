@@ -32,10 +32,10 @@ public class Whirlwind extends CombatState {
         if(gameFigure.isFacingRight)
         {
             rightStrike = true;
-            hitBox = new HitBox(gameFigure.x + 20, gameFigure.y, 50, 10);
+            hitBox = new HitBox(gameFigure.x + 20, gameFigure.y, 50, 10, gameFigure);
         }
         else 
-            hitBox = new HitBox(gameFigure.x - 55, gameFigure.y, 50, 10);
+            hitBox = new HitBox(gameFigure.x - 55, gameFigure.y, 50, 10, gameFigure);
         
         Main.gameData.addAlly(hitBox);
     }

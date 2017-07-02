@@ -27,7 +27,7 @@ public class LightAttack extends CombatState {
     public LightAttack(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
         gameFigure.damage = 10;
-        hitBox =  new HitBox(gameFigure.x + (gameFigure.size/2), gameFigure.y, 75, 10);  
+        hitBox =  new HitBox(gameFigure.x + (gameFigure.size/2), gameFigure.y, 75, 10, gameFigure);  
         Main.gameData.addAlly(hitBox);
 
     }

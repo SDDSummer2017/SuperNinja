@@ -29,6 +29,7 @@ public abstract class GameFigure implements Collision {
     public Point2D.Double location;
     public static final int GRAVITY = 8;
     public boolean hit;
+    public HitBox hitbox;
     
     //Animation Attributes
     public int moveFrameIndex, idleFrameIndex, jumpFrameIndex, attackFrameIndex, idleFrameDelayCount;
@@ -44,7 +45,7 @@ public abstract class GameFigure implements Collision {
         this.y = y;
         this.size = size;
         this.location = new Point2D.Double(x - (size/2), y-(size/2));
-        
+        health = 100;
         this.moveFrameIndex = this.idleFrameIndex = this.idleFrameDelayCount = this.jumpFrameIndex = 0;
         this.moveLeftAnimation =  null;
         this.attackLeftAnimation = null;
@@ -62,7 +63,7 @@ public abstract class GameFigure implements Collision {
         this.y = y;
         this.size = size;
         this.location = new Point2D.Double(x - (size/2), y-(size/2));
-        
+        health = 100;
         this.moveLeftAnimation =  new Image[mLength];
         this.moveRightAnimation = new Image[mLength];
         this.attackLeftAnimation = new Image[arLength];

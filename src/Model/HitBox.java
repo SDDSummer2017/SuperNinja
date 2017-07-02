@@ -18,16 +18,19 @@ public class HitBox extends GameFigure {
 
     private int length;
     private int width; 
+    public GameFigure gameFigure;
 
     public HitBox(double x, double y, double size) {
         super(x, y, size);
+        this.gameFigure = gameFigure;
         super.collisionBox = new Rectangle2D.Double(x, y, width, length );
     }
     
-    public HitBox(double x, double y, int width, int length){
+    public HitBox(double x, double y, int width, int length, GameFigure gameFigure){
         super(x, y, 0);
         this.length = length;
         this.width = width;
+        this.gameFigure = gameFigure;
         super.collisionBox = new Rectangle2D.Double(x, y, width, length);
         
     }   

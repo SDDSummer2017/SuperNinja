@@ -10,6 +10,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JPanel;
 import Model.GameFigure;
+import Model.HitBox;
+import Model.Nen;
 import view.Camera;
 import static Model.Nen.getImage;
 import java.awt.Graphics2D;
@@ -74,7 +76,7 @@ public class GamePanel extends JPanel {
                 a.render(graphics);
         }
         
-               List<GameFigure> allies = Main.gameData.allies;
+        List<GameFigure> allies = Main.gameData.allies;
         List<GameFigure> enemies = Main.gameData.enemys;
         
         
@@ -93,8 +95,18 @@ public class GamePanel extends JPanel {
                     list = tree.getList(a);
                     for(Collision obj : list)
                         if(obj.hashCode() != a.hashCode() && a.getCollisionBox().intersects(obj.getCollisionBox()))
-                        {
-                            enemies.remove((GameFigure)obj);
+                        { 
+                            
+                            if(obj instanceof HitBox &&  a instanceof Nen)
+                                ((Nen)a).health -= ((HitBox)obj).gameFigure.damage;
+                            else if(a instanceof HitBox && obj instanceof GameFigure)
+                                ((GameFigure)obj).health -= ((HitBox)a).gameFigure.damage;
+                            
+                            if(obj instanceof GameFigure && ((GameFigure)obj).health <= 0)
+                                enemies.remove((GameFigure)obj);
+                                
+                            if(a instanceof Nen && ((Nen)a).health <= 0)
+                                allies.remove(a);
                         }
                 }
                 
