@@ -35,7 +35,6 @@ public class SteelTwister extends CombatState{
         rai.setImage(rai.image);
         Nen n = Main.gameData.nen;
         int a = rai.getCount();
-        System.out.println("Rai.c = " + a);
         if (a >= 10){
             a = 0;
             rai.setCount(a);

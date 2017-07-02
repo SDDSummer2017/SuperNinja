@@ -8,8 +8,11 @@ package Model;
 import EventHandling.Observer;
 import Model.States.CombatState;
 import Model.States.MotionState;
-import Model.States.Rai.Default;
-import Model.States.Rai.Neutral;
+import Model.States.Terro.Default;
+import Model.States.Terro.Jump;
+import Model.States.Terro.Neutral;
+import Model.States.Terro.ShurikenThrow;
+import Model.States.Terro.WindmillShuriken;
 import View.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -25,16 +28,24 @@ import javax.swing.JOptionPane;
  *
  * @author matlock
  */
-public class Rai extends Enemy {
-    public int c; // used as a display count for placeholders only
+public class Terro extends Enemy{
     
-    public Rai(double x, double y, double size) {
+   public int c; // used as a display count for placeholders only
+   public boolean direction; //used in movement to toggle movement towards Nen or away
+   public int countDelay; // used as a delay counter so Terro isnt constantly attacking 
+   ArrayList<Observer> observers = new ArrayList<>();
+   
+    public Terro(double x, double y, double size) {
         super(x, y, size);
         
-        ArrayList<Observer> observers = new ArrayList<>();
+        
         super.mState = new Neutral(this, observers);
         super.cState = new Default(this, observers);
-        this.health = 120;
+        this.health = 80;
+        //used
+        this.countDelay = 0;
+        //false for left true for right in movementState
+        this.direction = false;
         
         //System.out.println("mState = " + super.mState);
         //System.out.println("cState = " + super.cState);
@@ -42,24 +53,33 @@ public class Rai extends Enemy {
         String imagePath = System.getProperty("user.dir");
         String separator = System.getProperty("file.separator");
         super.attack1 = getImage(imagePath + separator + "images" + separator
-                + "ViperStrike.png");
+                + "TerroShurikenThrow.png");
         super.attack2 = getImage(imagePath + separator + "images" + separator
-                + "SteelTwister.png");
+                + "TerroWindmillShuriken.png");
         super.movement = getImage(imagePath + separator + "images" + separator
-                + "Movement.png");
+                + "TerroMovement.png");
         super.block = getImage(imagePath + separator + "images" + separator
-                + "Block.png");
+                + "TerroEvade.png");
         super.neutral = getImage(imagePath + separator + "images" + separator
-                + "Neutral.png");
+                + "TerroNeutral.png");
         super.throwImage = getImage(imagePath + separator + "images" + separator
-                + "Throw.png");
-        super.staticImage = getImage(imagePath + separator + "images" + separator
-                + "Static.png");
+                + "TerroJump.png");
+        //super.staticImage = getImage(imagePath + separator + "images" + separator
+        //        + "TerroStatic.png");
+    }
+    //the following delayCount functions are used to delay the actions of Terro for attack
+    public int getDelayCount(){
+        return this.countDelay;
     }
     
-    // the following count functions are only used for the placeholders until animation
-    // is implemented.
+    public void setDelayCount(int i){
+        this.countDelay = i;
+    }
     
+    public void setDirection(boolean a){
+        this.direction = a;
+    }
+    // the following count functions are used to delay Terro for movement
     public int getCount(){
         return this.c;
     }
@@ -112,21 +132,40 @@ public class Rai extends Enemy {
     public void setImage(Image i){
         this.image = i;
     }
+    public boolean getDirection(){
+        return direction;
+    }
     
     @Override
     public void render(Graphics g) {
         g.drawImage(image, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
         g.setColor(Color.red);
-        g.fillRect(3, GamePanel.CAMERA_HEIGHT - 102, 10, 100);
+        g.fillRect(3, GamePanel.PHEIGHT - 102, 10, 100);
         g.setColor(Color.green);
-        g.fillRect(3, GamePanel.CAMERA_HEIGHT - (int) this.health - 2, 10, (int) this.health);
+        g.fillRect(3, GamePanel.PHEIGHT - (int) this.health - 2, 10, (int) this.health);
     }
 
     @Override
     public void update() {
-        //System.out.println("Rai.mState = " + mState + ",   Rai.cState = " + cState);
+        //System.out.println("Terro x location: " + super.x);
         mState.execute();
         cState.execute();
+        //System.out.println("MSTATE: " + mState + ", CSTATE: " + cState);
+        
+        /*if (direction){
+        super.x += 2;
+        }
+        
+        else{
+        super.x -= 2;
+        }*/
+        
+        if(this.y <= 450){
+            this.y += GRAVITY;
+        }
+        else{
+            airborn = false;
+        }
     }
 
     @Override
@@ -151,3 +190,4 @@ public class Rai extends Enemy {
     }
     
 }
+
