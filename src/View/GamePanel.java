@@ -80,8 +80,8 @@ public class GamePanel extends JPanel {
                 a.render(graphics);
         }
         
-        List<GameFigure> allies = Main.gameData.allies;
-        List<GameFigure> enemies = Main.gameData.enemies;
+        List<GameFigure> allies = Main.gameData.level.allies;
+        List<GameFigure> enemies = Main.gameData.level.enemies;
         
         
         synchronized(allies)

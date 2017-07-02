@@ -46,7 +46,7 @@ public class GameData implements Subject, Updateable, Renderable  {
     public TimerListener timerListener;
     public Thread gameThread;
     private final int nenSize = 70;
-    private Level level; 
+    public Level level; 
     private Force gravity;
     private Force lfriction; 
     Rectangle2D cb; 
@@ -70,18 +70,10 @@ public class GameData implements Subject, Updateable, Renderable  {
        
        
        
-       //enemys.add(new Dummy(250, 250, 5));
-        
-       
         observers = new ArrayList<Observer>(); 
         this.registerObserver(new PhysicsHandler());
         
 
-
-        /*enemys.add(new Dummy(300, 400, 5));
-        enemys.add(new Dummy(500, 400, 5));
-        enemys.add(new Dummy(0, 300, 5));
-        enemys.add(new Dummy(250, 250, 5));*/
         
         nen = new Nen(GamePanel.CAMERA_WIDTH / 2, GamePanel.CAMERA_HEIGHT - nenSize, nenSize);
 
@@ -104,7 +96,7 @@ public class GameData implements Subject, Updateable, Renderable  {
         Random r = new Random();
          synchronized (enemies) {
             for (int i = 0; i < n; i++) {
-                enemies.add(new Rai(r.nextInt(GamePanel.CAMERA_WIDTH),
+                level.enemies.add(new Rai(r.nextInt(GamePanel.CAMERA_WIDTH),
                         r.nextInt(GamePanel.CAMERA_HEIGHT), SIZE));
 
 
@@ -116,26 +108,26 @@ public class GameData implements Subject, Updateable, Renderable  {
 
     public void addNenBullet(double x1, double y1, double x2, double y2, Color color) {
         synchronized (allies) {
-                allies.add(new Shuriken(x1, y1, x2, y2, color));
+                level.allies.add(new Shuriken(x1, y1, x2, y2, color));
         }
     }
     
     public synchronized void addHitBox(GameFigure hitBox){
         synchronized (enemies)
         {
-            enemies.add(hitBox); 
+            level.enemies.add(hitBox); 
         }
     }
     
     public void addAlly(GameFigure ally) {
         synchronized (allies) {
-                allies.add(ally);
+                level.allies.add(ally);
         }
     }
     
     public void removeAlly(GameFigure ally) {
         synchronized (allies) {
-                allies.remove(ally);
+                level.allies.remove(ally);
         }
     }
      
@@ -156,16 +148,16 @@ public class GameData implements Subject, Updateable, Renderable  {
                   nen.forces.add(rfriction);
         }
 
-        synchronized (enemies) {
-            for (GameFigure f : enemies) {
-                f.update(); 
-            }
-        }
+//        synchronized (enemies) {
+//            for (GameFigure f : enemies) {
+//                f.update(); 
+//            }
+//        }
         
-        synchronized (allies) {
-            for (GameFigure a : allies)
-                a.update();
-        } 
+//        synchronized (allies) {
+//            for (GameFigure a : allies)
+//                a.update();
+//        } 
         synchronized (bullets) {
             for (GameFigure b : bullets) {
                 b.update();
@@ -183,40 +175,45 @@ public class GameData implements Subject, Updateable, Renderable  {
             }
         }
         
-        synchronized (enemies){
-            synchronized (allies){
-                for(GameFigure ally : allies)
-                    for(GameFigure enemy : enemies)
-                    if(ally.getCollisionBox().intersects(enemy.getCollisionBox()))
-                    {
-                       // System.out.println("Health: " + enemy.health);
-                        if(enemy.cState instanceof Block == false)
-                            enemy.health -= 5;
-                        //System.out.println("HEALTH: "  + enemy.health);
-                        enemy.cState.nextState("Hit");
-                        if(enemy.health <= 0)
-                            deadEnemys.add(enemy);
-                    }
-            }
-            
-            synchronized (allies){
-                for(GameFigure ally : allies)
-                    for(GameFigure enemy : enemies)
-                    if(ally.getCollisionBox().intersects(enemy.getCollisionBox()))
-                    {
-                       // System.out.println("Health: " + enemy.health);
-                        if(enemy.cState instanceof Block == false)
-                            enemy.health -= 5;
-                        //System.out.println("HEALTH: "  + enemy.health);
-                        enemy.cState.nextState("Hit");
-                        if(enemy.health <= 0)
-                            deadEnemys.add(enemy);
-                    }
-            }
-            
-           
-            
-            synchronized (nen){
+//        synchronized (enemies){
+//            synchronized (allies){
+//                for(GameFigure ally : allies)
+//                    for(GameFigure enemy : enemies)
+//                    if(ally.getCollisionBox().intersects(enemy.getCollisionBox()))
+//                    {
+//                       // System.out.println("Health: " + enemy.health);
+//                        if(enemy.cState instanceof Block == false)
+//                            enemy.health -= 5;
+//                        //System.out.println("HEALTH: "  + enemy.health);
+//                        enemy.cState.nextState("Hit");
+//                        if(enemy.health <= 0)
+//                            deadEnemys.add(enemy);
+//                    }
+//            }
+//            
+//            synchronized (allies){
+//                for(GameFigure ally : allies)
+//                    for(GameFigure enemy : enemies)
+//                    if(ally.getCollisionBox().intersects(enemy.getCollisionBox()))
+//                    {
+//                       // System.out.println("Health: " + enemy.health);
+//                        if(enemy.cState instanceof Block == false)
+//                            enemy.health -= 5;
+//                        //System.out.println("HEALTH: "  + enemy.health);
+//                        enemy.cState.nextState("Hit");
+//                        if(enemy.health <= 0)
+//                            deadEnemys.add(enemy);
+//                    }
+//            }
+//            
+//           
+//            
+//         
+//            
+//
+//        }
+  
+           synchronized (nen){
                     cb = nen.getCollisionBox();
                     cb.setRect(cb.getX() + nen.velocity.dx, cb.getY() + nen.velocity.dy, cb.getHeight(), cb.getWidth());
                     for(GameFigure terrain : level.terrain)
@@ -227,10 +224,7 @@ public class GameData implements Subject, Updateable, Renderable  {
                          
                     }
             }
-            
-
-        }
-  
+        
         enemies.removeAll(deadEnemys);
         bullets.removeAll(deadBullets);
         deadBullets.clear();
