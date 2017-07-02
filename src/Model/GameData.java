@@ -14,7 +14,8 @@ public class GameData {
 
     private final int SIZE = 50;
     public final List<GameFigure> enemys; 
-    public final List<GameFigure> allies; 
+    public final List<GameFigure> allies;
+    public final List<GameFigure> enemyBullets;
     public final Nen nen;
  
     public Timer enemyTimer, bossTimer;
@@ -25,6 +26,7 @@ public class GameData {
     public final List<GameFigure> enemySpawn;
     public GameData() {
         enemys = Collections.synchronizedList(new ArrayList<GameFigure>()); 
+        enemyBullets = Collections.synchronizedList(new ArrayList<GameFigure>());
         allies = Collections.synchronizedList(new ArrayList<GameFigure>());
         enemySpawn = Collections.synchronizedList(new ArrayList<GameFigure>());
         
@@ -46,8 +48,9 @@ public class GameData {
         nen = new Nen(GamePanel.CAMERA_WIDTH / 2, GamePanel.CAMERA_HEIGHT - nenSize, nenSize);
 
        
-        enemys.add(new Rai((GamePanel.CAMERA_WIDTH / 2), GamePanel.CAMERA_HEIGHT - 90, 100));
-        //     enemys.add(new Rai(0, GamePanel.PHEIGHT - 90, 100));
+        enemys.add(new Rai((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100));  
+        enemys.add(new Terro(0, GamePanel.CAMERA_WIDTH - 90, 100));
+        
     } 
     
     public void addEnemy(int n) {
@@ -85,6 +88,12 @@ public class GameData {
                 allies.remove(ally);
         }
     }
+    
+    public void addEnemyBullet(double x1, double y1, double x2, double y2, Color color) {
+        synchronized (enemyBullets) { 
+            enemyBullets.add(new EnemyBullet(x1, y1, x2, y2, color));
+        }
+    }
 
     public void update() { 
 
@@ -99,6 +108,11 @@ public class GameData {
         
         synchronized (allies) {
             for (GameFigure a : allies)
+                a.update();
+        } 
+        
+        synchronized (enemyBullets) {
+            for (GameFigure a : enemyBullets)
                 a.update();
         } 
     }

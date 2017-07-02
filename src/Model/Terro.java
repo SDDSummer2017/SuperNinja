@@ -140,9 +140,9 @@ public class Terro extends Enemy{
     public void render(Graphics g) {
         g.drawImage(image, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
         g.setColor(Color.red);
-        g.fillRect(3, GamePanel.PHEIGHT - 102, 10, 100);
+        g.fillRect(3, GamePanel.CAMERA_HEIGHT - 102, 10, 100);
         g.setColor(Color.green);
-        g.fillRect(3, GamePanel.PHEIGHT - (int) this.health - 2, 10, (int) this.health);
+        g.fillRect(3, GamePanel.CAMERA_HEIGHT - (int) this.health - 2, 10, (int) this.health);
     }
 
     @Override

@@ -75,41 +75,51 @@ public class GamePanel extends JPanel {
             for(GameFigure a : Main.gameData.allies)
                 a.render(graphics);
         }
+        synchronized (Main.gameData.enemyBullets)
+        {
+            for(GameFigure b : Main.gameData.enemyBullets)
+                b.render(graphics);
+        }
         
         List<GameFigure> allies = Main.gameData.allies;
         List<GameFigure> enemies = Main.gameData.enemys;
+        List<GameFigure> bullets = Main.gameData.enemys;
         
         
         synchronized(allies)
         {
             synchronized(enemies)
             {
-                for(GameFigure a : allies)
-                    tree.insert(a);
-                for(GameFigure e : enemies)
-                    tree.insert(e);
-                
-                ArrayList<Collision> list = null;
-                for(GameFigure a : allies)
+                synchronized(bullets)
                 {
-                    list = tree.getList(a);
-                    for(Collision obj : list)
-                        if(obj.hashCode() != a.hashCode() && a.getCollisionBox().intersects(obj.getCollisionBox()))
-                        { 
-                            
-                            if(obj instanceof HitBox &&  a instanceof Nen)
-                                ((Nen)a).health -= ((HitBox)obj).gameFigure.damage;
-                            else if(a instanceof HitBox && obj instanceof GameFigure)
-                                ((GameFigure)obj).health -= ((HitBox)a).gameFigure.damage;
-                            
-                            if(obj instanceof GameFigure && ((GameFigure)obj).health <= 0)
-                                enemies.remove((GameFigure)obj);
-                                
-                            if(a instanceof Nen && ((Nen)a).health <= 0)
-                                allies.remove(a);
-                        }
+                    for(GameFigure a : allies)
+                        tree.insert(a);
+                    for(GameFigure e : enemies)
+                        tree.insert(e);
+                    for(GameFigure b : bullets)
+                        tree.insert(b);
+
+                    ArrayList<Collision> list = null;
+                    for(GameFigure a : allies)
+                    {
+                        list = tree.getList(a);
+                        for(Collision obj : list)
+                            if(obj.hashCode() != a.hashCode() && a.getCollisionBox().intersects(obj.getCollisionBox()))
+                            { 
+
+                                if(obj instanceof HitBox &&  a instanceof Nen)
+                                    ((Nen)a).health -= ((HitBox)obj).gameFigure.damage;
+                                else if(a instanceof HitBox && obj instanceof GameFigure)
+                                    ((GameFigure)obj).health -= ((HitBox)a).gameFigure.damage;
+
+                                if(obj instanceof GameFigure && ((GameFigure)obj).health <= 0)
+                                    enemies.remove((GameFigure)obj);
+
+                                if(a instanceof Nen && ((Nen)a).health <= 0)
+                                    allies.remove(a);
+                            }
+                    }
                 }
-                
             }
         }
         tree.renderTree((Graphics2D)graphics);

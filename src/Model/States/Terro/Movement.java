@@ -45,12 +45,12 @@ public class Movement extends MotionState{
                 nextState("Evade");
                 ter.setDirection(false);
                 }*/
-                if (gameFigure.x + 50 >= GamePanel.PWIDTH - 150 && Math.abs(n.x - gameFigure.x + gameFigure.size) <= 50){
+                if (gameFigure.x + 50 >= GamePanel.CAMERA_WIDTH - 150 && Math.abs(n.x - gameFigure.x + gameFigure.size) <= 50){
                 //System.out.println("Terro is heading Right");
                     ter.setDirection(false);
                     nextState("Evade");
                 }
-                else if(gameFigure.x + 10 >= GamePanel.PWIDTH - 150){//point of inflection
+                else if(gameFigure.x + 10 >= GamePanel.CAMERA_WIDTH - 150){//point of inflection
                     //System.out.println("Terro is heading Right");
                     gameFigure.x -= 10;
                     ter.setDirection(false);
