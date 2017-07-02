@@ -12,5 +12,6 @@ import Model.GameFigure;
  * @author abilb
  */
 public interface CollisionObserver {
+    //Check test
     public void onNotify(GameFigure gameFigureOne, GameFigure gameFigureTwo); 
 }
