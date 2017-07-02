@@ -60,8 +60,8 @@ public class Evade extends MotionState{
                 }
             }
             else{
-                if(gameFigure.x + 50 >= GamePanel.PWIDTH - 150){
-                    q = Math.abs(GamePanel.PWIDTH - gameFigure.x);
+                if(gameFigure.x + 50 >= GamePanel.CAMERA_WIDTH - 150){
+                    q = Math.abs(GamePanel.CAMERA_WIDTH - gameFigure.x);
                     //System.out.println("Distance from terro.x to gamePanel width " + q);
                     this.gameFigure.x += q - 150;
                     this.gameFigure.y -= 5 * dy;

@@ -41,12 +41,12 @@ public class KeyController implements KeyListener {
                 }
                 break;
             case KeyEvent.VK_S:
-                synchronized(Main.gameData.enemys)
+                synchronized(Main.gameData.enemies)
                 {
                     Random rand = new Random();
 
                     int  n = rand.nextInt(500) + 1;
-                    Main.gameData.enemys.add(new Dummy(n, n, 25)); 
+                    Main.gameData.enemies.add(new Dummy(n, n, 25)); 
                 }
                 break;
                 

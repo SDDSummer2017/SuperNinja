@@ -18,7 +18,8 @@ import java.util.ArrayList;
  * @author matlock
  */
 public class Movement extends MotionState{
-
+ 
+    
     public Movement(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
         previousState = gameFigure.mState;
@@ -44,6 +45,12 @@ public class Movement extends MotionState{
         if(gameFigure.cState instanceof Block || gameFigure.cState instanceof Hit || gameFigure.cState instanceof ViperStrike){
             this.nextState("Neutral");
         }
+        
+          if(System.currentTimeMillis() - time >= 500 )
+       {
+           this.notifyObservers();
+           time = System.currentTimeMillis();
+       }
     }
 
     @Override

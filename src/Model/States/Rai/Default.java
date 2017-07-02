@@ -48,13 +48,14 @@ public class Default extends CombatState{
         }
         else if(s.equals("ViperStrike")){
             gameFigure.cState = new ViperStrike(this.gameFigure, observers);
+            
         }
         else{}
         /* not yet testable and therefore will be implemented later 
         else if(s.equals("IsThrown") && previousState instanceof Default){
         gameFigure.cState = new IsThrown(gameFigure);
         }*/
-
+        gameFigure.cState.notifyObservers();
     }
     
 }

@@ -10,14 +10,24 @@ import View.GamePanel;
 import EventHandling.SoundHandler; 
 import Model.States.Nen.Move;
 import Model.States.Nen.Jump;
+ 
 import Model.States.Nen.LightAttack;
+ 
+import Physics.Velocity;
+ 
 import java.util.ArrayList;
 public class Nen extends GameFigure {
    
     private int jumpHeight = 0;
     private int dy = -7;
     private final SoundHandler soundHandler = new SoundHandler("");
-
+ 
+    
+    private int moveFrameIndex , idleFrameIndex, idleFrameDelayCount, jumpFrameIndex;
+    private  int moveAnimationLength, idleAnimationLength, jumpAnimationLength;
+    public boolean jump, movingLeft, movingRight;
+    
+ 
     public Nen(int x, int y, int size) {
         super(x, y, size,
                 10,  //move animation length
@@ -27,13 +37,19 @@ public class Nen extends GameFigure {
                 10,  //attack left
                 "Nen"); //name for animation image file path
         this.health = 100;
-        
+        mass = 60; 
+        velocity = new Velocity();
+        velocity.dx = 0;
+        velocity.dy = 0;
+        forces = new ArrayList<>();
         ArrayList<Observer> observers = new ArrayList<Observer>();
         mState = new NeutralMotion(this, observers);
         cState = new NeutralCombat(this, observers);
-        
+       
+     
         mState.registerObserver(soundHandler);
         cState.registerObserver(soundHandler);
+ 
         movingRight = jump = movingLeft = false;
         String imagePath = System.getProperty("user.dir");
         // separator: Windows '\', Linux '/'
@@ -112,18 +128,13 @@ public class Nen extends GameFigure {
             mState.execute();
         else
             cState.execute();
-        gravity();
+       
+        
     }
 
  
-    public void gravity(){
-        if(y <= 450)
-           y += GRAVITY; 
-        else
-            airborn = false;
-    }
  
-
+ 
     public void translate(int dx, int dy) {
         if (super.x <= 0 && dx < 0) {
             dx = 0;
@@ -134,7 +145,7 @@ public class Nen extends GameFigure {
         super.x += dx;
         super.y += dy;
     }
-
+ 
     public void resetNen() {
  
         this.health = 100;

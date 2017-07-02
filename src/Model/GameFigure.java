@@ -2,19 +2,26 @@ package Model;
 
 import Model.States.CombatState;
 import Model.States.MotionState;
+import Physics.Acceleration;
+import Physics.Force;
+import Physics.Velocity;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+ 
 import java.awt.image.AffineTransformOp;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+ 
+import java.util.ArrayList;
+ 
 
-public abstract class GameFigure implements Collision {
+public abstract class GameFigure implements Collision, Renderable, Updateable {
 
     public double x; // for a faster access
     public double y;
@@ -29,6 +36,7 @@ public abstract class GameFigure implements Collision {
     public Point2D.Double location;
     public static final int GRAVITY = 8;
     public boolean hit;
+ 
     public HitBox hitbox;
     
     //Animation Attributes
@@ -39,6 +47,12 @@ public abstract class GameFigure implements Collision {
 
  
     //Static game figure constructor (no animation)
+ 
+    public double mass; 
+    public Acceleration acceleration;
+    public Velocity velocity; 
+    public ArrayList<Force> forces;
+ 
     public GameFigure(double x, double y, double size) {
         this.hit = false;
         this.x = x;
@@ -118,9 +132,32 @@ public abstract class GameFigure implements Collision {
         return location;
     }
 
+    public void calculatePhysics()
+    {
+        
+       //ApplyForce
+       for(Force f : forces)
+       {
+        velocity.dx += f.dvx();
+        velocity.dy += f.dvy(); 
+        
+       }
+      
+       
+        
+       
+       
+       //Apply Velocity
+       x += velocity.dx; 
+       y += velocity.dy; 
+       
+    }
+     
     
-    public abstract void render(Graphics g);
 
-    public abstract void update();
 
+    
+
+    
+    
 }

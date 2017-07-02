@@ -1,3 +1,4 @@
+ 
 package View;
 
 import Controller.Main;
@@ -65,8 +66,11 @@ public class GamePanel extends JPanel {
         graphics.drawImage(bgImage , 0, 0, GamePanel.CAMERA_WIDTH, GamePanel.CAMERA_HEIGHT, null);
         Main.gameData.nen.render(graphics);
         //Redner the enemys
-        synchronized (Main.gameData.enemys) {
-            for (GameFigure f : Main.gameData.enemys) {
+        
+        Main.gameData.render(graphics);
+        
+        synchronized (Main.gameData.enemies) {
+            for (GameFigure f : Main.gameData.enemies) {
                 f.render(graphics);
             }
         } 
@@ -77,7 +81,7 @@ public class GamePanel extends JPanel {
         }
         
         List<GameFigure> allies = Main.gameData.allies;
-        List<GameFigure> enemies = Main.gameData.enemys;
+        List<GameFigure> enemies = Main.gameData.enemies;
         
         
         synchronized(allies)
@@ -133,3 +137,4 @@ public class GamePanel extends JPanel {
         }
     }
 }
+ 
