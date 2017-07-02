@@ -49,6 +49,8 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
              this.playSound("SoundEffects/walk.mp3");
          }
          
+         
+
          if(state instanceof Model.States.Rai.Movement)
          {
               this.playSound("SoundEffects/walk.mp3");
@@ -95,6 +97,10 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
          if(string.equals("FrontStep"))
              this.playSound("SoundEffects/ninja_katana_level_03.mp3");
 //         
+        if(string.equals("Shuriken"))
+        {
+            this.playSound("SoundEffects/Ninja Jump 5.wav");
+        }
 
           if(string.equals("HeavyAttackFinished"))
              this.playSound("SoundEffects/Breath.wav");
