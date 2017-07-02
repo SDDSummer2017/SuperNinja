@@ -139,7 +139,6 @@ public class GameData implements Subject, Updateable, Renderable  {
         }
     }
      
-     
 
     @Override
     public void update() {
@@ -289,7 +288,10 @@ public class GameData implements Subject, Updateable, Renderable  {
     
     public void addEnemyBullet(GameFigure e)
     {
-        this.enemyBullets.add(e);
+        synchronized(enemyBullets)
+        {
+            this.enemyBullets.add(e);
+        }
     }
    
     
