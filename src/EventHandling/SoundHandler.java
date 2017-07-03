@@ -92,8 +92,6 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
         
         if(string.equals("Whirlwind"))
             this.playSound("SoundEffects/ninja_whoosh.mp3");
-         if(string.equals("Shuriken"))
-            this.playSound("SoundEffects/Ninja Jump 5.wav");
          if(string.equals("FrontStep"))
              this.playSound("SoundEffects/ninja_katana_level_03.mp3");
 //         
