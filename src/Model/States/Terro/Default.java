@@ -5,8 +5,10 @@
  */
 package Model.States.Terro;
 
+import Controller.Main;
 import EventHandling.Observer;
 import Model.GameFigure;
+import Model.Nen;
 import Model.States.CombatState;
 import Model.Terro;
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ public class Default extends CombatState{
     @Override
     public void execute() {
         Terro ter = (Terro) this.gameFigure;
+        Nen n = Main.gameData.nen;
         
         a = ter.getDelayCount();
         if(a >= 60){
@@ -40,9 +43,16 @@ public class Default extends CombatState{
                 }
             }
             else if(!(ter.mState instanceof Evade)){
-                a = 0;
-                ter.setDelayCount(a);
-                nextState("Jump");
+                if(gameFigure.x + 50 >= n.x + 400 || gameFigure.x - 50 <= n.x - 500){
+                    a = a - 5;
+                    ter.setDelayCount(a);
+                    nextState("Evade");
+                }
+                else{
+                    a = 0;
+                    ter.setDelayCount(a);
+                    nextState("Jump");
+                }
             }
         }
         else{
@@ -59,6 +69,9 @@ public class Default extends CombatState{
                 break;
             case "Hit":
                 gameFigure.cState = new Hit(this.gameFigure, observers);
+                break;
+            case "Evade":
+                gameFigure.mState = new Evade(this.gameFigure, observers);
                 break;
             case "WindmillShuriken":
                 gameFigure.cState = new WindmillShuriken(this.gameFigure, observers);
