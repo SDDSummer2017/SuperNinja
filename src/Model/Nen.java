@@ -53,8 +53,14 @@ public class Nen extends GameFigure {
             idleFrameIndex = 0;
             idleFrameDelayCount = 0;
             jumpFrameIndex = 0;
-            g.drawImage(attackRightAnimation[attackFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-            attackFrameIndex = (attackFrameIndex == attackRightAnimation.length-1) ? 0 : attackFrameIndex + 1;
+            if (isFacingRight){
+                g.drawImage(lightAttackRightAnimation[attackFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+                attackFrameIndex = (attackFrameIndex == lightAttackRightAnimation.length-1) ? 0 : attackFrameIndex + 1;
+            }else
+            {
+                g.drawImage(lightAttackLeftAnimation[attackFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+                attackFrameIndex = (attackFrameIndex == lightAttackLeftAnimation.length-1) ? 0 : attackFrameIndex + 1;
+            }                     
         }
         else if(mState instanceof Move)
         {
