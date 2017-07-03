@@ -67,7 +67,8 @@ public class GameData implements Subject, Updateable, Renderable  {
         enemyTimer.setInitialDelay(3000);
         gameThread = new Thread(Main.animator);
         level = new NinjaVillage(); 
-    
+       
+       
        
         observers = new ArrayList<Observer>(); 
         this.registerObserver(new PhysicsHandler());
@@ -80,7 +81,6 @@ public class GameData implements Subject, Updateable, Renderable  {
         Thread thread = new Thread(m);
         thread.start();
         this.registerObserver(m);
-        this.registerObserver(new SoundHandler(""));
         this.notifyObservers("Level One");
        
     
@@ -109,10 +109,7 @@ public class GameData implements Subject, Updateable, Renderable  {
     public void addNenBullet(double x1, double y1, double x2, double y2, Color color) {
         synchronized (allies) {
                 level.allies.add(new Shuriken(x1, y1, x2, y2, color));
-                  this.notifyObservers("Shuriken");
-                
         }
-       
     }
     
     public synchronized void addHitBox(GameFigure hitBox){
@@ -123,17 +120,9 @@ public class GameData implements Subject, Updateable, Renderable  {
     }
     
     public void addAlly(GameFigure ally) {
-        
-        if(ally instanceof Shuriken || ally instanceof EnemyBullet)
-        {
-            this.notifyObservers("Shuriken");
-        }
-        
         synchronized (allies) {
                 level.allies.add(ally);
         }
-        
-       
     }
     
     public void removeAlly(GameFigure ally) {
