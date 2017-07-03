@@ -82,7 +82,7 @@ public class GameData implements Subject, Updateable, Renderable  {
         thread.start();
         this.registerObserver(m);
         this.notifyObservers("Level One");
-       
+        this.registerObserver(new SoundHandler(""));
     
 
 
@@ -109,9 +109,9 @@ public class GameData implements Subject, Updateable, Renderable  {
     public void addNenBullet(double x1, double y1, double x2, double y2, Color color) {
         synchronized (allies) {
                 level.allies.add(new Shuriken(x1, y1, x2, y2, color));
-        }
+                this.notifyObservers("Shuriken");
     }
-    
+    }
     public synchronized void addHitBox(GameFigure hitBox){
         synchronized (enemies)
         {
