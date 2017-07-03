@@ -12,7 +12,7 @@ import Model.States.Nen.Move;
 import Model.States.Nen.Jump;
  
 import Model.States.Nen.LightAttack;
-//import Model.States.Nen.HeavyAttack;
+import Model.States.Nen.HeavyAttack;
 import Physics.Velocity;
 import java.util.ArrayList;
 public class Nen extends GameFigure {
@@ -20,12 +20,7 @@ public class Nen extends GameFigure {
     private int jumpHeight = 0;
     private int dy = -7;
     private final SoundHandler soundHandler = new SoundHandler("");
- 
-    
-    private int moveFrameIndex , idleFrameIndex, idleFrameDelayCount, jumpFrameIndex;
-    private  int moveAnimationLength, idleAnimationLength, jumpAnimationLength;
-    public boolean jump, movingLeft, movingRight;
-    
+  
  
     public Nen(int x, int y, int size) {
         super(x, y, size,
@@ -77,20 +72,20 @@ public class Nen extends GameFigure {
                 attackFrameIndex = (attackFrameIndex == lightAttackLeftAnimation.length-1) ? 0 : attackFrameIndex + 1;
             }                     
         }
-//        else if(cState instanceof HeavyAttack){
-//            moveFrameIndex = 0;
-//            idleFrameIndex = 0;
-//            idleFrameDelayCount = 0;
-//            jumpFrameIndex = 0;
-//            if (isFacingRight){
-//                g.drawImage(heavyAttackRightAnimation[attackFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-//                attackFrameIndex = (attackFrameIndex == heavyAttackRightAnimation.length-1) ? 0 : attackFrameIndex + 1;
-//            }else
-//            {
-//                g.drawImage(heavyAttackLeftAnimation[attackFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-//                attackFrameIndex = (attackFrameIndex == heavyAttackLeftAnimation.length-1) ? 0 : attackFrameIndex + 1;
-//            }                     
-//        }
+        else if(cState instanceof HeavyAttack){
+            moveFrameIndex = 0;
+            idleFrameIndex = 0;
+            idleFrameDelayCount = 0;
+            jumpFrameIndex = 0;
+            if (isFacingRight){
+                g.drawImage(heavyAttackRightAnimation[attackFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+                attackFrameIndex = (attackFrameIndex == heavyAttackRightAnimation.length-1) ? 0 : attackFrameIndex + 1;
+            }else
+            {
+                g.drawImage(heavyAttackLeftAnimation[attackFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+                attackFrameIndex = (attackFrameIndex == heavyAttackLeftAnimation.length-1) ? 0 : attackFrameIndex + 1;
+            }                     
+        }
         else if(mState instanceof Move)
         {
             //If we are moving, reset the idle animtion frame index

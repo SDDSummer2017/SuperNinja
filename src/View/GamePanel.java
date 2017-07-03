@@ -116,7 +116,7 @@ public class GamePanel extends JPanel {
                 
             }
         }
-        tree.renderTree((Graphics2D)graphics);
+//        tree.renderTree((Graphics2D)graphics);
         tree.clear();
     }
 
