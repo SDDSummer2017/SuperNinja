@@ -43,8 +43,9 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     public int moveFrameIndex, idleFrameIndex, jumpFrameIndex, attackFrameIndex, idleFrameDelayCount;
     public boolean jump, movingLeft, movingRight ;
     public Image staticImage;
-    public final Image[] moveRightAnimation, moveLeftAnimation, idleAnimation, jumpAnimation, attackRightAnimation, attackLeftAnimation;
-
+    public final Image[] moveRightAnimation, moveLeftAnimation, idleAnimation, jumpAnimation; 
+    public final Image[] lightAttackRightAnimation, lightAttackLeftAnimation, heavyAttackRightAnimation, heavyAttackLeftAnimation;
+   
  
     //Static game figure constructor (no animation)
  
@@ -62,9 +63,11 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         health = 100;
         this.moveFrameIndex = this.idleFrameIndex = this.idleFrameDelayCount = this.jumpFrameIndex = 0;
         this.moveLeftAnimation =  null;
-        this.attackLeftAnimation = null;
         this.moveRightAnimation = null;
-        this.attackRightAnimation = null;
+        this.lightAttackRightAnimation = null;
+        this.lightAttackLeftAnimation = null;
+        this.heavyAttackRightAnimation = null;
+        this.heavyAttackLeftAnimation = null;
         this.idleAnimation = null;
         this.jumpAnimation = null;
         this.staticImage = null;
@@ -80,8 +83,10 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         health = 100;
         this.moveLeftAnimation =  new Image[mLength];
         this.moveRightAnimation = new Image[mLength];
-        this.attackLeftAnimation = new Image[arLength];
-        this.attackRightAnimation = new Image[alLength];
+        this.lightAttackLeftAnimation = new Image[arLength];
+        this.lightAttackRightAnimation = new Image[alLength];
+        this.heavyAttackRightAnimation = new Image[alLength];
+        this.heavyAttackLeftAnimation = new Image[arLength];
         this.idleAnimation = new Image[iLength];
         this.jumpAnimation = new Image[jLength];
         this.staticImage = null;
@@ -110,9 +115,24 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
             jumpAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Jump" + separator
                 + "Jump__00" + i + ".png");
         }
-        //Attack Right Animation
-        for(int i=0;i<attackRightAnimation.length;i++){
-            attackRightAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Attack_Right" + separator
+        //Light Attack Right Animation
+        for(int i=0;i<lightAttackRightAnimation.length;i++){
+            lightAttackRightAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Light_Attack_Right" + separator
+                + "Attack__00" + i + ".png");
+        }
+        //light Attack Left Animation
+        for(int i=0;i<lightAttackLeftAnimation.length;i++){
+            lightAttackLeftAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Light_Attack_Left" + separator
+                + "Attack__00" + i + ".png");
+        }
+        //Heavy Attack Right Animation
+        for(int i=0;i<heavyAttackRightAnimation.length;i++){
+            heavyAttackRightAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Heavy_Attack_Right" + separator
+                + "Attack__00" + i + ".png");
+        }
+        //Heavy Attack Left Animation
+        for(int i=0;i<heavyAttackLeftAnimation.length;i++){
+            heavyAttackLeftAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Heavy_Attack_Left" + separator
                 + "Attack__00" + i + ".png");
         }
     }
