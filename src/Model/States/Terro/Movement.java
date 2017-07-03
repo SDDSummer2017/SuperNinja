@@ -45,12 +45,12 @@ public class Movement extends MotionState{
                 nextState("Evade");
                 ter.setDirection(false);
                 }*/
-                if (gameFigure.x + 50 >= n.x + 350 && Math.abs(n.x - gameFigure.x + gameFigure.size) <= 50){
+                if (gameFigure.x + 50 >= GamePanel.CAMERA_WIDTH - 150 && Math.abs(n.x - gameFigure.x + gameFigure.size) <= 50){
                 //System.out.println("Terro is heading Right");
                     ter.setDirection(false);
                     nextState("Evade");
                 }
-                else if(gameFigure.x + 10 >= n.x + 400){//point of inflection
+                else if(gameFigure.x + 10 >= GamePanel.CAMERA_WIDTH - 150){//point of inflection
                     //System.out.println("Terro is heading Right");
                     gameFigure.x -= 10;
                     ter.setDirection(false);
@@ -67,13 +67,12 @@ public class Movement extends MotionState{
             }
             else{
             //terro should be moving to the left
-            //GamePanel.CAMERA_WIDTH - 1000 should = 0 when nen has not yet moved and should constantly move as the camera position moves
-                if (gameFigure.x - 50 <= n.x - 350 && Math.abs(n.x - n.size - gameFigure.x + 50) <= 50){
+                if (gameFigure.x - 50 <= 150 && Math.abs(n.x - n.size - gameFigure.x + 50) <= 50){
                     ter.setDirection(true);
                     nextState("Evade");
                     //System.out.println("Terro is heading Left");
                 }
-                else if(gameFigure.x - 10 <= n.x - 400){
+                else if(gameFigure.x - 10 <= 20){
                     gameFigure.x += 10;
                     ter.setDirection(true);
                     //System.out.println("Terro is heading Left");

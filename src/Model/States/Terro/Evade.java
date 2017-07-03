@@ -5,10 +5,8 @@
  */
 package Model.States.Terro;
 
-import Controller.Main;
 import EventHandling.Observer;
 import Model.GameFigure;
-import Model.Nen;
 import Model.States.MotionState;
 import Model.Terro;
 import View.GamePanel;
@@ -45,7 +43,6 @@ public class Evade extends MotionState{
         Terro ter = (Terro) this.gameFigure;
         ter.image = ter.block;
         ter.setImage(ter.image);
-        Nen n = Main.gameData.nen;
         delayCount = ter.getDelayCount();
         //put Terro on the wall
         a = ter.getCount();
@@ -63,10 +60,10 @@ public class Evade extends MotionState{
                 }
             }
             else{
-                if(gameFigure.x + 50 >= n.x + 400){
-                    q = Math.abs(n.x + 500 - gameFigure.x);
+                if(gameFigure.x + 50 >= GamePanel.CAMERA_WIDTH - 150){
+                    q = Math.abs(GamePanel.CAMERA_WIDTH - gameFigure.x);
                     //System.out.println("Distance from terro.x to gamePanel width " + q);
-                    this.gameFigure.x += q;
+                    this.gameFigure.x += q - 150;
                     this.gameFigure.y -= 5 * dy;
                     left = false;
                     a++;
@@ -75,7 +72,7 @@ public class Evade extends MotionState{
                 else{
                     // gameFigure.x should be within 10 pixels of 0
                     left = true;
-                    q = Math.abs(gameFigure.x - (n.x - 500));
+                    q = gameFigure.x;
                     this.gameFigure.x -= q;
                     this.gameFigure.y -= 5 * dy;
                     a++;
