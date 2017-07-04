@@ -33,10 +33,11 @@ public class NeutralMotion extends MotionState {
             gameFigure.mState = new Dash(gameFigure, observers);
         else if(s.equals("Move") && gameFigure.cState instanceof NeutralCombat)
            gameFigure.mState = new Move(gameFigure, observers);
-        else if(s.equals("Jump") && gameFigure.cState instanceof NeutralCombat){
+        else if(s.equals("Jump") && gameFigure.cState instanceof NeutralCombat)
            gameFigure.mState = new Jump(gameFigure, observers);
-          
-        }
+        else if(s.equals("Crouch") && gameFigure.cState instanceof NeutralCombat)
+            gameFigure.mState = new Crouch(gameFigure, observers);
+        
        gameFigure.mState.notifyObservers();
         
         

@@ -14,11 +14,17 @@ import Model.States.Nen.Jump;
 import Model.States.Nen.LightAttack;
 import Model.States.Nen.HeavyAttack;
 import Physics.Velocity;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 public class Nen extends GameFigure {
    
     private int jumpHeight = 0;
     private int dy = -7;
+    private int hitBox_X = 0;
+    private int hitBox_Y = 0;
+    private int hitBox_width = 0;
+    private int hitBox_height = 0;
+    
     private final SoundHandler soundHandler = new SoundHandler("");
   
  
@@ -30,6 +36,8 @@ public class Nen extends GameFigure {
                 10,  //attack right
                 10,  //attack left
                 "Nen"); //name for animation image file path
+        this.hitBox_width = size;
+        this.hitBox_height = size;
         this.health = 100;
         mass = 60; 
         velocity = new Velocity();
@@ -133,6 +141,8 @@ public class Nen extends GameFigure {
 
         g.setColor(Color.green);
         g.fillRect(3, GamePanel.CAMERA_HEIGHT - (int) this.health - 2, 10, (int) this.health);
+        
+        ((Graphics2D)g).draw(getCollisionBox());
     }
     
     @Override
@@ -142,13 +152,8 @@ public class Nen extends GameFigure {
             mState.execute();
         else
             cState.execute();
-       
-        
     }
 
- 
- 
- 
     public void translate(int dx, int dy) {
         if (super.x <= 0 && dx < 0) {
             dx = 0;
@@ -171,6 +176,13 @@ public class Nen extends GameFigure {
         super.x = GamePanel.CAMERA_WIDTH/2;
     }
 
+    public void setCollisionOffsetsAndSize(int x, int y, int width, int height)
+    {
+        hitBox_X = x;
+        hitBox_Y = y;
+        hitBox_width = width;
+        hitBox_height = height;
+    }
 
     @Override
     public String toString() {
@@ -179,7 +191,7 @@ public class Nen extends GameFigure {
 
     @Override
     public Rectangle2D.Double getCollisionBox() {
-        return new Rectangle2D.Double(super.x, super.y, super.size, super.size);
+        return new Rectangle2D.Double(super.x + hitBox_X, super.y + hitBox_Y, hitBox_width, hitBox_height);
     }
 
 }

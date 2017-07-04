@@ -4,6 +4,7 @@ import Model.Dummy;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import Model.Nen;
+import Model.States.Nen.Crouch;
 import Model.States.Nen.Jump;
 import Model.States.Nen.Move;
 import java.util.Random;
@@ -38,6 +39,13 @@ public class KeyController implements KeyListener {
                 if(nen.mState.getClass() != Jump.class)
                 {
                      nen.mState.nextState("Jump");
+                }
+                break;
+            
+            case KeyEvent.VK_DOWN:
+                if(nen.mState.getClass() != Crouch.class)
+                {
+                     nen.mState.nextState("Crouch");
                 }
                 break;
             case KeyEvent.VK_S:
@@ -81,6 +89,9 @@ public class KeyController implements KeyListener {
             case KeyEvent.VK_RIGHT:
                 nen.mState.nextState("NeutralMotion");
                 break;        
+            case KeyEvent.VK_DOWN:
+                nen.mState.nextState("NeutralMotion");
+                break;
         }
     }
 }
