@@ -37,7 +37,7 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
     
     @Override
     public void onNotify(GameFigure gameFigureOne, GameFigure gameFigureTwo) {
-         System.out.println("Two objects have collided, and now we will play a sound" );
+        // System.out.println("Two objects have collided, and now we will play a sound" );
     }
 
     @Override
@@ -59,13 +59,13 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
          if(state instanceof Model.States.Rai.ViperStrike)
          {
          this.playSound("SoundEffects/Ninja Jump 6.WAV");
-         System.out.println("Viper Strike");
+        // System.out.println("Viper Strike");
          }
          
          if(state instanceof Model.States.Rai.Throw)
          {
          this.playSound("SoundEffects/Ninja Jump 6.WAV");
-         System.out.println("Viper Strike");
+         //System.out.println("Viper Strike");
          }
          
          if(state.getClass() == Model.States.Nen.Jump.class){
@@ -79,7 +79,7 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
              this.playSound("SoundEffects/Ninja Jump 5.wav"); 
      if(state instanceof ViperStrike)
          {
-             System.out.println("Playing katana noise");
+             //System.out.println("Playing katana noise");
              this.playSound("SoundEffects/ninja_katana_level_03.mp3");
          }
 //         
