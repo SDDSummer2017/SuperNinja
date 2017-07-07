@@ -32,7 +32,8 @@ public class NeutralCombat extends CombatState {
     public void nextState(String s) {
         if(s.equals("LightAttack"))
             gameFigure.cState = new LightAttack(gameFigure, this.observers);
-        
+        else if(s.equals("HeavyAttack"))
+            gameFigure.cState = new HeavyAttack(gameFigure, this.observers);
         gameFigure.cState.notifyObservers();
     }
     

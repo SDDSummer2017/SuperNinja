@@ -35,8 +35,10 @@ public class Rai extends Enemy {
         super.mState = new Neutral(this, observers);
         super.cState = new Default(this, observers);
         this.health = 120;
+        
         //System.out.println("mState = " + super.mState);
         //System.out.println("cState = " + super.cState);
+        
         String imagePath = System.getProperty("user.dir");
         String separator = System.getProperty("file.separator");
         super.attack1 = getImage(imagePath + separator + "images" + separator
@@ -54,6 +56,7 @@ public class Rai extends Enemy {
         super.staticImage = getImage(imagePath + separator + "images" + separator
                 + "Static.png");
     }
+    
     // the following count functions are only used for the placeholders until animation
     // is implemented.
     
@@ -114,9 +117,9 @@ public class Rai extends Enemy {
     public void render(Graphics g) {
         g.drawImage(image, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
         g.setColor(Color.red);
-        g.fillRect(3, GamePanel.PHEIGHT - 102, 10, 100);
+        g.fillRect(3, GamePanel.CAMERA_HEIGHT - 102, 10, 100);
         g.setColor(Color.green);
-        g.fillRect(3, GamePanel.PHEIGHT - (int) this.health - 2, 10, (int) this.health);
+        g.fillRect(3, GamePanel.CAMERA_HEIGHT - (int) this.health - 2, 10, (int) this.health);
     }
 
     @Override

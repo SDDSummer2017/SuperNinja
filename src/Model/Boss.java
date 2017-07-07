@@ -51,10 +51,7 @@ public class Boss extends GameFigure {
         double targetX = Main.gameData.nen.x + Main.gameData.nen.size/2;
         double targetY = Main.gameData.nen.y;
         
-        if(random.nextBoolean())
-        Main.gameData.addEnemyBullet(super.x, super.y + this.bossHeight/2, targetX, targetY, Color.red);
-        else
-        Main.gameData.addEnemyBullet(super.x + super.size, super.y + this.bossHeight/2, targetX, targetY, Color.red);
+ 
     }
     
     
@@ -84,9 +81,9 @@ public class Boss extends GameFigure {
         
         super.x += dx;
         
-        if (super.x + size > GamePanel.PWIDTH) {
+        if (super.x + size > GamePanel.CAMERA_WIDTH) {
             dx = -dx;
-            super.x = GamePanel.PWIDTH - size;
+            super.x = GamePanel.CAMERA_WIDTH - size;
         } 
         else if (super.x - size < 0) {
             dx = -dx;

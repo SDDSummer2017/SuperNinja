@@ -16,11 +16,16 @@ public abstract class MotionState extends State  {
     protected MotionState previousState;
     protected CombatState combatState;
     protected long time = System.currentTimeMillis(); 
+    protected int direction = 0;
     
     public MotionState(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
         previousState = gameFigure.mState;
         combatState = gameFigure.cState;
+        if(gameFigure.isFacingRight)
+            direction = 1;
+        else
+            direction = -1;
     }
     
    

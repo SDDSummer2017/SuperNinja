@@ -21,8 +21,6 @@ public class ButtonListener implements ActionListener {
  
             Main.gameData.nen.resetNen();
  
-            
-            Main.gameData.setBossSpawned(false);
             //Main.gameData.boss.resetHealth();
             Main.animator.running = true;
             Main.gameData.timerListener.mutaCount = 0;

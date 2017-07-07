@@ -40,6 +40,8 @@ public class Neutral extends MotionState{
         if(s.equals("Movement")){
             this.gameFigure.mState = new Movement(this.gameFigure, observers);
         }
+    
+       
     }
     
 }

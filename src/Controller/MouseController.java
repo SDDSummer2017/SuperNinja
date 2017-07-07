@@ -1,6 +1,6 @@
 package Controller;
 
-import java.awt.Color;
+import java.awt.Color; 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -28,7 +28,8 @@ public class MouseController implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent me) {
- 
+  
+//        Main.gameData.enemies.add(new Dummy(me.getX(), me.getY(), 20));
         targetX = me.getX();
         targetY = me.getY();
         originX = Main.gameData.nen.x + Main.gameData.nen.size/2;

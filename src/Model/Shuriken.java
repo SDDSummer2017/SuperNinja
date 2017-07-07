@@ -26,8 +26,8 @@ public class Shuriken extends GameFigure {
         this.currentLocation = new Vector2f((float)super.x, (float)super.y);
         this.targetPath = new Vector2f((float)targetX,(float)targetY);
         targetPath.sub(currentLocation);
-        targetPath.scale((float) Math.sqrt((double)(GamePanel.PHEIGHT * GamePanel.PHEIGHT) *
-                (double)(GamePanel.PWIDTH * GamePanel.WIDTH)));
+        targetPath.scale((float) Math.sqrt((double)(GamePanel.CAMERA_HEIGHT * GamePanel.CAMERA_HEIGHT) *
+                (double)(GamePanel.CAMERA_WIDTH * GamePanel.WIDTH)));
         targetPath.normalize();
         targetPath.scale(moveDistance);
         
@@ -46,8 +46,8 @@ public class Shuriken extends GameFigure {
         super.x = currentLocation.x;
         super.y = currentLocation.y;
         
-        synchronized (Main.gameData.enemys) {
-            for (GameFigure f : Main.gameData.enemys) {
+        synchronized (Main.gameData.enemies) {
+            for (GameFigure f : Main.gameData.enemies) {
                     if (this.getCollisionBox().intersects(f.getCollisionBox())){
                         super.hit = true;
                         f.health -= damage;
