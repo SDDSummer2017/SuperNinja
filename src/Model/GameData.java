@@ -185,54 +185,22 @@ public class GameData implements Subject, Updateable, Renderable  {
             }
         }
         
-//        synchronized (enemies){
-//            synchronized (allies){
-//                for(GameFigure ally : allies)
-//                    for(GameFigure enemy : enemies)
-//                    if(ally.getCollisionBox().intersects(enemy.getCollisionBox()))
-//                    {
-//                       // System.out.println("Health: " + enemy.health);
-//                        if(enemy.cState instanceof Block == false)
-//                            enemy.health -= 5;
-//                        //System.out.println("HEALTH: "  + enemy.health);
-//                        enemy.cState.nextState("Hit");
-//                        if(enemy.health <= 0)
-//                            deadEnemys.add(enemy);
-//                    }
-//            }
-//            
-//            synchronized (allies){
-//                for(GameFigure ally : allies)
-//                    for(GameFigure enemy : enemies)
-//                    if(ally.getCollisionBox().intersects(enemy.getCollisionBox()))
-//                    {
-//                       // System.out.println("Health: " + enemy.health);
-//                        if(enemy.cState instanceof Block == false)
-//                            enemy.health -= 5;
-//                        //System.out.println("HEALTH: "  + enemy.health);
-//                        enemy.cState.nextState("Hit");
-//                        if(enemy.health <= 0)
-//                            deadEnemys.add(enemy);
-//                    }
-//            }
-//            
-//           
-//            
-//         
-//            
-//
-//        }
-  
+           //Refactor this into quad tree 
            synchronized (nen){
                     cb = nen.getCollisionBox();
                     cb.setRect(cb.getX() + nen.velocity.dx, cb.getY() + nen.velocity.dy, cb.getHeight(), cb.getWidth());
-                    for(GameFigure terrain : level.terrain)
+                    for(GameFigure terrain : level.terrain){
                     
-                    if(cb.intersects(terrain.getCollisionBox()))
-                    {
-                        this.notityObservers(terrain, nen);
+                        if(cb.intersects(terrain.getCollisionBox()))
+                        {
+                            this.notityObservers(terrain, nen);
                          
+                        }
+                        
                     }
+                    
+                    
+                    
             }
         
         enemies.removeAll(deadEnemys);

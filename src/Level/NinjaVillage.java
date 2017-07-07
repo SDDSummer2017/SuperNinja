@@ -43,7 +43,7 @@ public class NinjaVillage extends Level {
         this.allies = Collections.synchronizedList(new ArrayList<GameFigure>()); 
         this.enemies = Collections.synchronizedList(new ArrayList<GameFigure>()); 
         this.terrain = Collections.synchronizedList(new ArrayList<GameFigure>()); 
-       
+        this.remove = Collections.synchronizedList(new ArrayList<GameFigure>());
        //Load Resources
         
        try {
@@ -64,6 +64,7 @@ public class NinjaVillage extends Level {
         }
         
         this.terrain.add(new Platform(256, 300));
+        this.terrain.add(new Trap(400, 200));
         
        Rai rai = new Rai((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100);
               enemies.add(rai);
@@ -113,6 +114,17 @@ public class NinjaVillage extends Level {
 
     @Override
     public void update() {
+      
+        for(GameFigure r : remove)
+        {
+            if(terrain.contains(r)){
+            terrain.remove(r);}
+            
+            if(enemies.contains(r)){
+            enemies.remove(r);}
+            if(allies.contains(r)){
+            allies.remove(r);}
+        }
         
         for(Updateable u : terrain)
         {

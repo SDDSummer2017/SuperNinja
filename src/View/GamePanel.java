@@ -3,6 +3,7 @@ package View;
 
 import Controller.Main;
 import Controller.QuadTree;
+import Level.Platform;
 import Model.Collision;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,6 +16,7 @@ import Model.HitBox;
 import Model.Nen;
 import view.Camera;
 import static Model.Nen.getImage;
+import Model.Shuriken;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,8 +84,9 @@ public class GamePanel extends JPanel {
         
         List<GameFigure> allies = Main.gameData.level.allies;
         List<GameFigure> enemies = Main.gameData.level.enemies;
-        
-        
+        List<GameFigure> enemyBullets = Main.gameData.enemyBullets;
+        List<GameFigure> alliedBullets = Main.gameData.bullets; 
+        List<GameFigure> terrain = Main.gameData.level.terrain;
         synchronized(allies)
         {
             synchronized(enemies)
@@ -92,10 +95,50 @@ public class GamePanel extends JPanel {
                     tree.insert(a);
                 for(GameFigure e : enemies)
                     tree.insert(e);
+                for(GameFigure eb : enemyBullets )
+                {
+                    tree.insert(eb);
+                }
+                for(GameFigure ab : alliedBullets)
+                {
+                    tree.insert(ab);
+                }
+                for(GameFigure t : terrain)
+                {
+                    tree.insert(t);
+                }
                 
                 ArrayList<Collision> list = null;
+                
+                for(GameFigure eb: allies)
+                {
+                    list = tree.getList(eb);
+                    for(Collision obj : list)
+                    {
+                        
+                        if(obj.hashCode() != eb.hashCode() && eb.getCollisionBox().intersects(obj.getCollisionBox()))
+                        { 
+                            
+                           
+                                
+                            if(eb instanceof Shuriken && obj instanceof Platform)
+                            {
+                               Main.gameData.level.remove.add(eb);
+                                
+                                
+                               
+                            }
+                            
+                           
+                            
+                            
+                        }
+                    }
+                }
+                
                 for(GameFigure a : allies)
                 {
+                    
                     list = tree.getList(a);
                     for(Collision obj : list)
                         if(obj.hashCode() != a.hashCode() && a.getCollisionBox().intersects(obj.getCollisionBox()))
@@ -109,8 +152,11 @@ public class GamePanel extends JPanel {
                             if(obj instanceof GameFigure && ((GameFigure)obj).health <= 0)
                                 enemies.remove((GameFigure)obj);
                                 
+                           
                             if(a instanceof Nen && ((Nen)a).health <= 0)
                                 allies.remove(a);
+                            
+                            
                         }
                 }
                 

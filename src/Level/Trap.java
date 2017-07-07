@@ -6,6 +6,7 @@
 package Level;
 
 import Model.GameFigure;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 
@@ -13,25 +14,26 @@ import java.awt.geom.Rectangle2D;
  *
  * @author abilb
  */
-public class Trap extends GameFigure {
+public class Trap extends Platform {
 
-    public Trap(double x, double y, double size) {
-        super(x, y, size);
+    public Trap(double x, double y) {
+        super(x, y);
     }
 
     @Override
     public void render(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.render(g);
+        g.setColor(Color.red);
     }
 
     @Override
     public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.update(); 
     }
 
     @Override
     public Rectangle2D.Double getCollisionBox() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         return super.getCollisionBox();
     }
     
 }

@@ -23,6 +23,6 @@ public abstract class Level implements Renderable, Updateable {
     public List<GameFigure> terrain; 
     public List<GameFigure> allies; 
     public List<GameFigure> enemies; 
-    
+    public List<GameFigure> remove; 
     
 }
