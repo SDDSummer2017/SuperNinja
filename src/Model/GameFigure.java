@@ -6,7 +6,7 @@ import Model.States.MotionState;
 import Physics.Acceleration;
 import Physics.Force;
 import Physics.Velocity; 
-import StatusEffects.EffectsManager;
+import StatusEffects.StatusEffects;
 import java.awt.Image; 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D; 
@@ -33,7 +33,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     public Point2D.Double location;
     public static final int GRAVITY = 8;
     public boolean hit;
-    public EffectsManager effectsManager;
+    public StatusEffects effectsManager;
     public HitBox hitbox;
     public boolean isGoodGuy;
     //Animation Attributes
@@ -59,7 +59,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         this.location = new Point2D.Double(x - (size/2), y-(size/2));
         health = 100;
         this.isGoodGuy = isGoodGuy;
-        this.effectsManager = new EffectsManager();
+        this.effectsManager = new StatusEffects();
         this.moveFrameIndex = this.idleFrameIndex = this.idleFrameDelayCount = this.jumpFrameIndex = 0;
         this.moveLeftAnimation =  null;
         this.moveRightAnimation = null;
@@ -81,7 +81,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         this.location = new Point2D.Double(x - (size/2), y-(size/2));
         health = 100;
         this.isGoodGuy = isGoodGuy;
-        this.effectsManager = new EffectsManager();
+        this.effectsManager = new StatusEffects();
         this.moveLeftAnimation =  new Image[mLength];
         this.moveRightAnimation = new Image[mLength];
         this.lightAttackLeftAnimation = new Image[arLength];
