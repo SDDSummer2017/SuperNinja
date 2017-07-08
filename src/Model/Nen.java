@@ -14,6 +14,7 @@ import Model.States.Nen.Jump;
 import Model.States.Nen.LightAttack;
 import Model.States.Nen.HeavyAttack;
 import Physics.Velocity;
+import java.awt.Image;
 import java.util.ArrayList;
 public class Nen extends GameFigure {
    
@@ -58,57 +59,52 @@ public class Nen extends GameFigure {
     @Override
     public void render(Graphics g) {
         
+        Image frameImage;
+        
         if(cState instanceof LightAttack){
             moveFrameIndex = 0;
             idleFrameIndex = 0;
-            idleFrameDelayCount = 0;
             jumpFrameIndex = 0;
-            if (isFacingRight){
-                g.drawImage(lightAttackRightAnimation[attackFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-                attackFrameIndex = (attackFrameIndex == lightAttackRightAnimation.length-1) ? 0 : attackFrameIndex + 1;
-            }else
-            {
-                g.drawImage(lightAttackLeftAnimation[attackFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-                attackFrameIndex = (attackFrameIndex == lightAttackLeftAnimation.length-1) ? 0 : attackFrameIndex + 1;
-            }                     
+            
+            //Select frame image based on which direction Nen is facing
+            frameImage = (isFacingRight) ? lightAttackAnimation[attackFrameIndex] : GameFigure.flipImageHorizontally(lightAttackAnimation[attackFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            attackFrameIndex = (attackFrameIndex == lightAttackAnimation.length-1) ? 0 : attackFrameIndex + 1;                 
         }
         else if(cState instanceof HeavyAttack){
             moveFrameIndex = 0;
             idleFrameIndex = 0;
-            idleFrameDelayCount = 0;
             jumpFrameIndex = 0;
-            if (isFacingRight){
-                g.drawImage(heavyAttackRightAnimation[attackFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-                attackFrameIndex = (attackFrameIndex == heavyAttackRightAnimation.length-1) ? 0 : attackFrameIndex + 1;
-            }else
-            {
-                g.drawImage(heavyAttackLeftAnimation[attackFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-                attackFrameIndex = (attackFrameIndex == heavyAttackLeftAnimation.length-1) ? 0 : attackFrameIndex + 1;
-            }                     
+            
+            //Select frame image based on which direction Nen is facing
+            frameImage = (isFacingRight) ? heavyAttackAnimation[attackFrameIndex] : GameFigure.flipImageHorizontally(heavyAttackAnimation[attackFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            attackFrameIndex = (attackFrameIndex == heavyAttackAnimation.length-1) ? 0 : attackFrameIndex + 1;                      
         }
         else if(mState instanceof Move)
         {
             //If we are moving, reset the idle animtion frame index
             idleFrameIndex = 0;
             jumpFrameIndex = 0;
-            idleFrameDelayCount = 0;
             attackFrameIndex = 0;
-            if(isFacingRight){
-                g.drawImage(moveRightAnimation[moveFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-                //If we've reached the end of the animation reset frameCounter to zero, otherwise increment it.
-                moveFrameIndex = (moveFrameIndex == moveRightAnimation.length-1) ? 0 : moveFrameIndex + 1;           
-            }else 
-            {
-                g.drawImage(moveLeftAnimation[moveFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-                moveFrameIndex = (moveFrameIndex == moveLeftAnimation.length-1) ? 0 : moveFrameIndex + 1;   
-            }
+            
+            //Select frame image based on which direction Nen is facing
+            frameImage = (isFacingRight) ? runAnimation[moveFrameIndex] : GameFigure.flipImageHorizontally(runAnimation[moveFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            moveFrameIndex = (moveFrameIndex == runAnimation.length-1) ? 0 : moveFrameIndex + 1;
         }
         else if(mState instanceof Jump){
             moveFrameIndex = 0;
             idleFrameIndex = 0;
-            idleFrameDelayCount = 0;
             attackFrameIndex = 0;
-            g.drawImage(jumpAnimation[jumpFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+                      
+            //Select frame image based on which direction Nen is facing
+            frameImage = (isFacingRight) ? jumpAnimation[jumpFrameIndex] : GameFigure.flipImageHorizontally(jumpAnimation[jumpFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             jumpFrameIndex = (jumpFrameIndex == jumpAnimation.length-1) ? 0 : jumpFrameIndex + 1;
         }
         else
@@ -117,14 +113,12 @@ public class Nen extends GameFigure {
             moveFrameIndex = 0;               
             jumpFrameIndex = 0;
             attackFrameIndex = 0;
-            g.drawImage(idleAnimation[idleFrameIndex], (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+
+            //Select frame image based on which direction Nen is facing
+            frameImage = (isFacingRight) ? idleAnimation[idleFrameIndex] : GameFigure.flipImageHorizontally(idleAnimation[idleFrameIndex]);
             
-            if (idleFrameDelayCount == 1){
-                idleFrameIndex = (idleFrameIndex == idleAnimation.length-1) ? 0 : idleFrameIndex + 1; 
-                idleFrameDelayCount = 0;
-            }else{
-                idleFrameDelayCount++;
-            }
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            idleFrameIndex = (idleFrameIndex == idleAnimation.length-1) ? 0 : idleFrameIndex + 1;
         
         }
 

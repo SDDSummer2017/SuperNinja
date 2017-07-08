@@ -13,6 +13,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
  
 import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -40,11 +41,11 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     public HitBox hitbox;
     
     //Animation Attributes
-    public int moveFrameIndex, idleFrameIndex, jumpFrameIndex, attackFrameIndex, idleFrameDelayCount;
+    public int moveFrameIndex, idleFrameIndex, jumpFrameIndex, attackFrameIndex;
     public boolean jump, movingLeft, movingRight ;
     public Image staticImage;
-    public final Image[] moveRightAnimation, moveLeftAnimation, idleAnimation, jumpAnimation; 
-    public final Image[] lightAttackRightAnimation, lightAttackLeftAnimation, heavyAttackRightAnimation, heavyAttackLeftAnimation;
+    public final Image[] runAnimation, idleAnimation, jumpAnimation; 
+    public final Image[] lightAttackAnimation, heavyAttackAnimation;
    
  
     //Static game figure constructor (no animation)
@@ -61,34 +62,28 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         this.size = size;
         this.location = new Point2D.Double(x - (size/2), y-(size/2));
         health = 100;
-        this.moveFrameIndex = this.idleFrameIndex = this.idleFrameDelayCount = this.jumpFrameIndex = 0;
-        this.moveLeftAnimation =  null;
-        this.moveRightAnimation = null;
-        this.lightAttackRightAnimation = null;
-        this.lightAttackLeftAnimation = null;
-        this.heavyAttackRightAnimation = null;
-        this.heavyAttackLeftAnimation = null;
+        this.moveFrameIndex = this.idleFrameIndex = this.jumpFrameIndex = 0;
+        this.runAnimation = null;
+        this.lightAttackAnimation = null;
+        this.heavyAttackAnimation = null;
         this.idleAnimation = null;
         this.jumpAnimation = null;
         this.staticImage = null;
         
     }
     //Animation game figure constructor (backwards compatibility
-    public GameFigure(double x, double y, double size, int mLength, int iLength, int jLength, int arLength, int alLength, String name) {
+    public GameFigure(double x, double y, double size, int runLength, int idleLength, int jumpLength, int lightAttackLength, int heavyAttackLength, String name) {
         this.hit = false;
         this.x = x;
         this.y = y;
         this.size = size;
         this.location = new Point2D.Double(x - (size/2), y-(size/2));
         health = 100;
-        this.moveLeftAnimation =  new Image[mLength];
-        this.moveRightAnimation = new Image[mLength];
-        this.lightAttackLeftAnimation = new Image[arLength];
-        this.lightAttackRightAnimation = new Image[alLength];
-        this.heavyAttackRightAnimation = new Image[alLength];
-        this.heavyAttackLeftAnimation = new Image[arLength];
-        this.idleAnimation = new Image[iLength];
-        this.jumpAnimation = new Image[jLength];
+        this.runAnimation = new Image[runLength];
+        this.lightAttackAnimation = new Image[lightAttackLength];
+        this.heavyAttackAnimation = new Image[heavyAttackLength];
+        this.idleAnimation = new Image[idleLength];
+        this.jumpAnimation = new Image[jumpLength];
         this.staticImage = null;
         
         this.loadAnimations(name);
@@ -97,13 +92,11 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     private void loadAnimations(String name){
         String imagePath = System.getProperty("user.dir");
         String separator = System.getProperty("file.separator");
+        Image img;
         //Move Animations
-        for(int i=0;i<moveRightAnimation.length;i++){
-            moveRightAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Run_Right" + separator
-                + "Run__00" + i + ".png");
-            
-            moveLeftAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Run_Left" + separator
-                + "Run__00" + i + ".png");
+        for(int i=0;i<runAnimation.length;i++){
+            runAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Run" + separator
+                + "Run__00" + i + ".png");          
         }
         //Idle Animation 
         for(int i=0;i<idleAnimation.length;i++){
@@ -116,23 +109,13 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
                 + "Jump__00" + i + ".png");
         }
         //Light Attack Right Animation
-        for(int i=0;i<lightAttackRightAnimation.length;i++){
-            lightAttackRightAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Light_Attack_Right" + separator
-                + "Attack__00" + i + ".png");
-        }
-        //light Attack Left Animation
-        for(int i=0;i<lightAttackLeftAnimation.length;i++){
-            lightAttackLeftAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Light_Attack_Left" + separator
+        for(int i=0;i<lightAttackAnimation.length;i++){
+            lightAttackAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Light_Attack" + separator
                 + "Attack__00" + i + ".png");
         }
         //Heavy Attack Right Animation
-        for(int i=0;i<heavyAttackRightAnimation.length;i++){
-            heavyAttackRightAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Heavy_Attack_Right" + separator
-                + "Attack__00" + i + ".png");
-        }
-        //Heavy Attack Left Animation
-        for(int i=0;i<heavyAttackLeftAnimation.length;i++){
-            heavyAttackLeftAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Heavy_Attack_Left" + separator
+        for(int i=0;i<heavyAttackAnimation.length;i++){
+            heavyAttackAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Heavy_Attack" + separator
                 + "Attack__00" + i + ".png");
         }
     }
@@ -146,6 +129,21 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
             JOptionPane.showMessageDialog(null, "Error: Cannot open image:" + fileName);
         }
         return image;
+    }
+    public static Image flipImageHorizontally(Image img)
+    {
+       
+        AffineTransform at;
+        AffineTransformOp ato;
+        BufferedImage bi;   
+        
+        at = AffineTransform.getScaleInstance(-1, 1);     
+        at.translate(-img.getWidth(null), 0);
+        ato = new AffineTransformOp(at, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+        
+        bi = (BufferedImage) img;
+        img = ato.filter(bi, null); 
+        return img;
     }
     
     public Point2D.Double getLocation(){
