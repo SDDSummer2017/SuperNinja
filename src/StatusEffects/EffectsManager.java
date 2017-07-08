@@ -15,11 +15,11 @@ import java.util.Map;
  *
  * @author Garrett A. Clement
  */
-public class StatusEffects {
+public class EffectsManager {
     
     private HashMap<HitBox, ArrayList<StatusEffect>> effects;
     
-    public StatusEffects(){
+    public EffectsManager(){
         effects = new HashMap<HitBox, ArrayList<StatusEffect>>();
     }
     
