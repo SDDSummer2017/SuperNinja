@@ -16,8 +16,12 @@ import java.awt.geom.Rectangle2D;
  */
 public class Trap extends Platform {
 
-    public Trap(double x, double y) {
+    Level level;
+    int iterable; 
+    public Trap(double x, double y, Level level) {
         super(x, y);
+        this.level = level; 
+        iterable = 0; 
     }
 
     @Override
@@ -28,7 +32,14 @@ public class Trap extends Platform {
 
     @Override
     public void update() {
-        super.update(); 
+        super.update();
+        iterable++; 
+        //5 seconds or so
+        if(iterable == 100)
+        {
+            level.enemies.add(new Fireball(x, y + 25));
+            iterable = 0;
+        }
     }
 
     @Override

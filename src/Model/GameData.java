@@ -8,6 +8,7 @@ import EventHandling.MusicHandler;
 import EventHandling.Observer;
 import EventHandling.SoundHandler;
 import EventHandling.Subject;
+import Level.Fireball;
 import Level.Level;
 import Level.NinjaVillage;
 import Model.States.Rai.Block;
@@ -148,6 +149,14 @@ public class GameData implements Subject, Updateable, Renderable  {
         
         nen.forces.clear();
         nen.forces.add(gravity);
+        for(GameFigure g : level.enemies)
+        {
+            if(g instanceof Fireball)
+            {
+                ((Fireball) g).forces.clear();
+                ((Fireball) g).forces.add(gravity);
+            }
+        }
         
         if(nen.velocity.dx > 0)
         {
@@ -241,7 +250,7 @@ public class GameData implements Subject, Updateable, Renderable  {
              }
          }
     }
-    
+   
     @Override
     public void notifyObservers(String event) {
        for(Observer o : observers)

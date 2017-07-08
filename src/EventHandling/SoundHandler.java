@@ -37,7 +37,7 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
     
     @Override
     public void onNotify(GameFigure gameFigureOne, GameFigure gameFigureTwo) {
-         System.out.println("Two objects have collided, and now we will play a sound" );
+        // System.out.println("Two objects have collided, and now we will play a sound" );
     }
 
     @Override

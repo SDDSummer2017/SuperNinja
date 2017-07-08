@@ -60,12 +60,32 @@ public class NinjaVillage extends Level {
         for(int i = 0; i < 80; i++)
         {
             //Loading in floor tiles. 
-            this.terrain.add(new Platform(i * 128.0, 535.0));
+           
+            if(i%10 == 0 && i != 0)
+            {
+                this.terrain.add(new Trap(i * 128, 525.0, this));
+            }
+            else
+            {
+                 this.terrain.add(new Platform(i * 128.0, 535.0));
+            }
+            if(i%3 == 0)
+            {
+               // this.terrain.add(new Platform(i * 128.0, 200)); 
+            }
+            
+              if(i%4 == 0)
+            {
+                this.terrain.add(new Platform(i * 128.0, 300)); 
+            }
+            
+            if(i%4==0 && i%10==0)
+            {
+                this.terrain.add(new Platform(i*128, 172));
+            }  
         }
         
-        this.terrain.add(new Platform(256, 300));
-        this.terrain.add(new Trap(400, 200));
-        
+       
        Rai rai = new Rai((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100);
               enemies.add(rai);
       

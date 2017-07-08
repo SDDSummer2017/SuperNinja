@@ -7,6 +7,7 @@ package Level;
 
 import EventHandling.Observer;
 import EventHandling.Subject;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,28 +15,36 @@ import EventHandling.Subject;
  */
 public class Checkpoint extends Platform implements Subject{
 
+    private ArrayList<Observer> observers; 
     public Checkpoint(double x, double y) {
         super(x, y);
+        this.observers = new ArrayList<>();
     }
 
     @Override
     public void registerObserver(Observer observer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.observers.add(observer);
     }
 
     @Override
     public void deregisterObserver(Observer observer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.observers.remove(observer); 
     }
 
     @Override
     public void notifyObservers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for(Observer o : observers)
+        {
+            o.onNotify("Checkpoint");
+        }
     }
 
     @Override
     public void notifyObservers(String event) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         for(Observer o : observers)
+        {
+            o.onNotify(event);
+        } 
     }
     
 }

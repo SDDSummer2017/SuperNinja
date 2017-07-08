@@ -4,6 +4,8 @@ import Controller.Main;
 import Model.States.CombatState;
 import Model.States.MotionState;
 import Model.States.State; 
+import View.GamePanel;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
@@ -70,7 +72,13 @@ public abstract class Enemy extends GameFigure {
     public static Image getImage(String fileName){return null;}
  
     @Override
-    public void render(Graphics g) {}
+    public void render(Graphics g) 
+    {
+           g.setColor(Color.red);
+        g.fillRect((int) (x + 100), (int) (y), 10, (int)this.maxHealth);
+        g.setColor(Color.green);
+        g.fillRect((int) (x + 100), (int) (y), 10, (int) this.health);
+    }
 
     @Override
     public void update() {}

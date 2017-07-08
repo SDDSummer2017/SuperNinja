@@ -20,6 +20,7 @@ public class Platform extends GameFigure{
     public Platform(double x, double y) {
         super(x, y, 128);
          collisionBox = new Rectangle2D.Double(x, y, 128, 128);
+         
            
     }
 
