@@ -35,7 +35,8 @@ public class Nen extends GameFigure {
                 10,  //jump animation length
                 10,  //attack right
                 10,  //attack left
-                "Nen"); //name for animation image file path
+                "Nen", //name for animation image file path
+                true);
         this.hitBox_width = size;
         this.hitBox_height = size;
         this.health = 100;

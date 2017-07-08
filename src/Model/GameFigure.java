@@ -6,7 +6,7 @@ import Model.States.MotionState;
 import Physics.Acceleration;
 import Physics.Force;
 import Physics.Velocity; 
-import StatusEffects.StatusEffect;
+import StatusEffects.StatusEffects;
 import java.awt.Image; 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D; 
@@ -33,7 +33,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     public Point2D.Double location;
     public static final int GRAVITY = 8;
     public boolean hit;
-    public ArrayList<StatusEffect> statusEffects = new ArrayList<>();
+    public StatusEffects effectsManager;
     public HitBox hitbox;
     public boolean isGoodGuy;
     //Animation Attributes
@@ -51,13 +51,15 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     public Velocity velocity; 
     public ArrayList<Force> forces;
  
-    public GameFigure(double x, double y, double size) {
+    public GameFigure(double x, double y, double size, boolean isGoodGuy) {
         this.hit = false;
         this.x = x;
         this.y = y;
         this.size = size;
         this.location = new Point2D.Double(x - (size/2), y-(size/2));
         health = 100;
+        this.isGoodGuy = isGoodGuy;
+        this.effectsManager = new StatusEffects();
         this.moveFrameIndex = this.idleFrameIndex = this.idleFrameDelayCount = this.jumpFrameIndex = 0;
         this.moveLeftAnimation =  null;
         this.moveRightAnimation = null;
@@ -71,13 +73,15 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         
     }
     //Animation game figure constructor (backwards compatibility
-    public GameFigure(double x, double y, double size, int mLength, int iLength, int jLength, int arLength, int alLength, String name) {
+    public GameFigure(double x, double y, double size, int mLength, int iLength, int jLength, int arLength, int alLength, String name, boolean isGoodGuy) {
         this.hit = false;
         this.x = x;
         this.y = y;
         this.size = size;
         this.location = new Point2D.Double(x - (size/2), y-(size/2));
         health = 100;
+        this.isGoodGuy = isGoodGuy;
+        this.effectsManager = new StatusEffects();
         this.moveLeftAnimation =  new Image[mLength];
         this.moveRightAnimation = new Image[mLength];
         this.lightAttackLeftAnimation = new Image[arLength];
@@ -152,11 +156,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     @Override
     public void update(){
 
-        for(int i = 0 ; i < statusEffects.size(); i++)
-            if(statusEffects.get(i).isFinished())
-                statusEffects.remove(statusEffects.get(i));
-            else
-                statusEffects.get(i).applyEffect(this);
+        effectsManager.applyEffects(this);
         
         if(this.health <= 0) 
             Main.gameData.removeGameData(this); 

@@ -10,9 +10,7 @@ import Model.HitBox;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-
+import java.util.Map; 
 /**
  *
  * @author Garrett A. Clement
@@ -21,8 +19,12 @@ public class StatusEffects {
     
     private HashMap<HitBox, ArrayList<StatusEffect>> effects;
     
+    public StatusEffects(){
+        effects = new HashMap<HitBox, ArrayList<StatusEffect>>();
+    }
+    
     public void applyEffects(GameFigure gameFigure){
-
+        
     //Processs all effects on the gameFigure.
     for(HitBox h : effects.keySet())
     {
@@ -40,9 +42,25 @@ public class StatusEffects {
     clearExcess();
     } 
     
-    public boolean contains(GameFigure gameFigure)
+    public void addEffect(HitBox hitbox, StatusEffect statusEffect){
+        if(effects.containsKey(hitbox))
+            effects.get(hitbox).add(statusEffect.clone());
+        else
+        {
+            ArrayList<StatusEffect> list = new ArrayList<>();
+            list.add(statusEffect.clone());
+            effects.put(hitbox, list);
+        }
+    }
+    
+    public boolean contains(HitBox hitbox, StatusEffect statusEffect)
     {
-        return effects.keySet().contains(gameFigure);
+        boolean inEffect = false;
+        if(effects.containsKey(hitbox))
+            for(StatusEffect se : effects.get(hitbox))
+                if(se.getClass().equals(statusEffect.getClass()))
+                    inEffect = true;
+        return inEffect;
     }
     
     //Remove any gameFigures that have no status effects
@@ -50,9 +68,8 @@ public class StatusEffects {
     {
         Iterator it = effects.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            System.out.println(pair.getKey() + " = " + pair.getValue());
-            it.remove(); // avoids a ConcurrentModificationException 
+            Map.Entry pair = (Map.Entry)it.next(); 
+            //it.remove(); // avoids a ConcurrentModificationException 
             if(((ArrayList<?>)pair.getValue()).isEmpty())
                 effects.remove(effects.get(pair.getKey())); 
         }      

@@ -72,17 +72,20 @@ public class NinjaVillage extends Level {
         
         this.terrain.add(new Platform(256, 300));
         
-       Rai rai = new Rai((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100);
-              addGameData(rai);
-      
-       rai.cState.registerObserver(new SoundHandler(""));
-       rai.mState.registerObserver(new SoundHandler(""));
+//       Rai rai = new Rai((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100);
+//              addGameData(rai);
+//      
+//       rai.cState.registerObserver(new SoundHandler(""));
+//       rai.mState.registerObserver(new SoundHandler(""));
         
        Terro terro = new Terro((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100);
               addGameData(terro);
       
        terro.cState.registerObserver(new SoundHandler(""));
        terro.mState.registerObserver(new SoundHandler(""));
+       
+       
+       
        
         //Get event handlers for game logic.
         ArrayList<Object> observers = new ArrayList<>(); 

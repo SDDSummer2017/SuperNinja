@@ -38,10 +38,10 @@ public class CollisionHandler implements CollisionObserver {
     private void applyStatusEffects(GameFigure gameFigure, HitBox hitbox)
     {
         //if statement to makesure no friendly fire occurs 
-        if((!gameFigure.isGoodGuy && !hitbox.gameFigure.isGoodGuy) || !((gameFigure.isGoodGuy && hitbox.gameFigure.isGoodGuy)))
+        if((!gameFigure.isGoodGuy && hitbox.gameFigure.isGoodGuy) || (gameFigure.isGoodGuy && !hitbox.gameFigure.isGoodGuy))
             for(StatusEffect se : hitbox.statusEffects)
-                if(!gameFigure.statusEffects.contains(se)) 
-                    gameFigure.statusEffects.add(se);  
+                if(!gameFigure.effectsManager.contains(hitbox, se)) 
+                    gameFigure.effectsManager.addEffect(hitbox, se);
     }
     
 }

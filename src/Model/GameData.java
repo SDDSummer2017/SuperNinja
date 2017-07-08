@@ -58,7 +58,7 @@ public class GameData implements Subject, Updateable, Renderable  {
 
         
         nen = new Nen(GamePanel.CAMERA_WIDTH / 2, GamePanel.CAMERA_HEIGHT - nenSize, nenSize);
-
+        addGameData(nen);
         MusicHandler m = new MusicHandler("");
         Thread thread = new Thread(m);
         thread.start();
@@ -84,12 +84,12 @@ public class GameData implements Subject, Updateable, Renderable  {
     }
     
 
-    public void addNenBullet(double x1, double y1, double x2, double y2, Color color) {
- 
-        addGameData(new Shuriken(x1, y1, x2, y2, color));
-        this.notifyObservers("Shuriken");
-       
-    }
+//    public void addNenBullet(double x1, double y1, double x2, double y2, Color color) {
+// 
+//        addGameData(new Shuriken(x1, y1, x2, y2, color, true));
+//        this.notifyObservers("Shuriken");
+//       
+//    }
 
     @Override
     public void update() {
@@ -111,18 +111,7 @@ public class GameData implements Subject, Updateable, Renderable  {
         {
                   nen.forces.add(rfriction);
         }
- 
-//        synchronized (bullets) {
-//            for (GameFigure b : bullets) {
-//                b.update();
-//                if(b.hit==true 
-//                        || b.x < 0
-//                        || b.x > GamePanel.CAMERA_WIDTH
-//                        || b.y > GamePanel.CAMERA_HEIGHT
-//                        || b.y <0)deadBullets.add(b);
-//            }
-//        }       
-  
+
         synchronized (nen){
             cb = nen.getCollisionBox();
             cb.setRect(cb.getX() + nen.velocity.dx, cb.getY() + nen.velocity.dy, cb.getHeight(), cb.getWidth());
@@ -134,7 +123,7 @@ public class GameData implements Subject, Updateable, Renderable  {
 
             }
          } 
-        nen.update();
+       // nen.update();
         level.update();
         nen.calculatePhysics();
         
@@ -177,10 +166,7 @@ public class GameData implements Subject, Updateable, Renderable  {
 
     @Override
     public void render(Graphics g) {
-        level.render(g);
-        //Rectangle2D r = cb.getBounds2D();
-        
-        //g.drawRect((int) r.getX(), (int) r.getY(), (int) r.getHeight(), (int) r.getWidth());
+        level.render(g); 
         
     }
     

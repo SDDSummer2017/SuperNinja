@@ -12,7 +12,7 @@ public abstract class StatusEffect {
 protected GameFigure gameFigure;
 protected int damage;
 protected long timeApplied;
-protected long duration;
+protected int duration;
 protected boolean isFinished = false;
 
 public StatusEffect(GameFigure gameFigure)
@@ -40,6 +40,17 @@ public StatusEffect(GameFigure gameFigure, int damage, int duration)
 public abstract void applyEffect(GameFigure target);
 
 public abstract boolean isFinished();    
+
+public abstract StatusEffect clone();
+
+public StatusEffect clone(StatusEffect clone){
+    clone.damage = this.damage;
+    clone.isFinished = isFinished;
+    clone.duration = this.duration;
+    clone.gameFigure = this.gameFigure;
+    clone.timeApplied = System.currentTimeMillis();
+    return clone;
+}
 
 }
   

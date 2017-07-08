@@ -16,7 +16,7 @@ import java.awt.geom.Rectangle2D;
 public class Trap extends GameFigure {
 
     public Trap(double x, double y, double size) {
-        super(x, y, size);
+        super(x, y, size, false);
     }
 
     @Override

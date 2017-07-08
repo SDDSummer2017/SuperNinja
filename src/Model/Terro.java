@@ -148,6 +148,7 @@ public class Terro extends Enemy{
     @Override
     public void update() {
         //System.out.println("Terro x location: " + super.x);
+        super.update();
         mState.execute();
         cState.execute();
         //System.out.println("MSTATE: " + mState + ", CSTATE: " + cState);

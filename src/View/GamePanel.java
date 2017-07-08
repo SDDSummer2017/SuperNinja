@@ -64,21 +64,8 @@ public class GamePanel extends JPanel {
         graphics.clearRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
         //Render Background
         graphics.drawImage(bgImage , 0, 0, GamePanel.CAMERA_WIDTH, GamePanel.CAMERA_HEIGHT, null);
-        Main.gameData.nen.render(graphics);
-        //Redner the enemys
-        
+ 
         Main.gameData.render(graphics);
-//        
-//        synchronized (Main.gameData.enemies) {
-//            for (GameFigure f : Main.gameData.enemies) {
-//                f.render(graphics);
-//            }
-//        } 
-//        
-//        synchronized (Main.gameData.allies){
-//            for(GameFigure a : Main.gameData.allies)
-//                a.render(graphics);
-//        }
 
 
 //        tree.renderTree((Graphics2D)graphics);
@@ -110,8 +97,7 @@ public class GamePanel extends JPanel {
             tree.insert(c);
         
         ArrayList<Collision> list = null;
-        
-        //Check allies collision
+         
         for(Collision c1 : Main.gameData.level.collisions)
         {
           list = tree.getList(c1);

@@ -33,7 +33,7 @@ public abstract class Enemy extends GameFigure {
     public Image image;
 
     public Enemy(double x, double y, double size) {
-        super(x, y, size);
+        super(x, y, size, false);
         image = null;
     }
 

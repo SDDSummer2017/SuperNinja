@@ -29,14 +29,13 @@ public class Whirlwind extends CombatState {
     public Whirlwind(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
         
-        
         if(gameFigure.isFacingRight)
         {
             rightStrike = true;
-            hitBox = new HitBox(gameFigure.x - 20, gameFigure.y, 50, 10, gameFigure, new DamageEffect(gameFigure, 10, 10));
+            hitBox = new HitBox(gameFigure.x - 20, gameFigure.y, 50, 10, gameFigure, new DamageEffect(gameFigure, 10, 250));
         }
         else 
-            hitBox = new HitBox(gameFigure.x - 55, gameFigure.y, 50, 10, gameFigure, new DamageEffect(gameFigure, 10, 10));
+            hitBox = new HitBox(gameFigure.x - 55, gameFigure.y, 50, 10, gameFigure, new DamageEffect(gameFigure, 10, 250));
         Main.gameData.addGameData(hitBox);
         
     }

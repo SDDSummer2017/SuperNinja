@@ -38,5 +38,15 @@ public class DamageEffect extends StatusEffect {
         else
             return false;
     }
+
+    @Override
+    public StatusEffect clone() {
+        DamageEffect clone = new DamageEffect(gameFigure, damage, duration);
+        return clone(clone);
+    }
     
+    @Override
+    public StatusEffect clone(StatusEffect clone){
+        return super.clone(clone);
+    }
 }
