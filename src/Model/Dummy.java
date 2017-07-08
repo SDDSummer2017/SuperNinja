@@ -21,7 +21,6 @@ public class Dummy extends GameFigure {
     public Dummy(double x, double y, double size) {
         super(x, y, size, false);
         super.health = 50;
-        int meaningless;
         collisionBox = new Rectangle2D.Double(x, y, size, size);
     }
 
