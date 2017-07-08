@@ -24,8 +24,8 @@ public class GamePanel extends JPanel {
     public static final int CAMERA_WIDTH = 1000;
     public static final int CAMERA_HEIGHT = 540;
     
-    public static final int WORLD_WIDTH = 10000;
-    public static final int WORLD_HEIGHT = 540;
+    public static final int WORLD_WIDTH = 10240;
+    public static final int WORLD_HEIGHT = 2560;
     public Camera camera;
     
 

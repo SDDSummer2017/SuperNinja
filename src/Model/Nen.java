@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import View.GamePanel;
 import EventHandling.SoundHandler; 
+import Model.States.Nen.Dash;
 import Model.States.Nen.Move;
 import Model.States.Nen.Jump;
  
@@ -25,11 +26,7 @@ public class Nen extends GameFigure {
  
     public Nen(int x, int y, int size) {
         super(x, y, size,
-                10,  //move animation length
-                10,  //idle animation length
-                10,  //jump animation length
-                10,  //attack right
-                10,  //attack left
+                10,  // animation length
                 "Nen"); //name for animation image file path
         this.health = 100;
         mass = 60; 
@@ -106,6 +103,19 @@ public class Nen extends GameFigure {
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             jumpFrameIndex = (jumpFrameIndex == jumpAnimation.length-1) ? 0 : jumpFrameIndex + 1;
+        }
+        else if(mState instanceof Dash)
+        {
+            //If we are moving, reset the idle animtion frame index
+            idleFrameIndex = 0;
+            jumpFrameIndex = 0;
+            attackFrameIndex = 0;
+            
+            //Select frame image based on which direction Nen is facing
+            frameImage = (isFacingRight) ? dashAnimation[moveFrameIndex] : GameFigure.flipImageHorizontally(dashAnimation[moveFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            moveFrameIndex = (moveFrameIndex == dashAnimation.length-1) ? 0 : moveFrameIndex + 1;
         }
         else
         {
