@@ -27,11 +27,6 @@ public class Animator implements Runnable {
                 }
             } catch (InterruptedException e) {
             }
-        }
-
- 
-        Main.gameData.enemies.clear();
-        Main.gameData.bullets.clear();
- 
+        } 
     }
 }

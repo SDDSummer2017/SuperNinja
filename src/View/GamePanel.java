@@ -3,6 +3,7 @@ package View;
 
 import Controller.Main;
 import Controller.QuadTree;
+import EventHandling.CollisionHandler;
 import Model.Collision;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,11 +13,10 @@ import java.awt.Toolkit;
 import javax.swing.JPanel;
 import Model.GameFigure;
 import Model.HitBox;
-import Model.Nen;
 import view.Camera;
 import static Model.Nen.getImage;
-import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GamePanel extends JPanel {
@@ -34,7 +34,7 @@ public class GamePanel extends JPanel {
     private Image doubleBufferImage = null;
     private Image bgImage;
     private QuadTree tree;
-
+    CollisionHandler handler  = new CollisionHandler();
     public GamePanel() {
         setBackground(Color.blue);
         setPreferredSize(new Dimension(CAMERA_WIDTH, CAMERA_HEIGHT));
@@ -68,55 +68,21 @@ public class GamePanel extends JPanel {
         //Redner the enemys
         
         Main.gameData.render(graphics);
-        
-        synchronized (Main.gameData.enemies) {
-            for (GameFigure f : Main.gameData.enemies) {
-                f.render(graphics);
-            }
-        } 
-        
-        synchronized (Main.gameData.allies){
-            for(GameFigure a : Main.gameData.allies)
-                a.render(graphics);
-        }
-        
-        List<GameFigure> allies = Main.gameData.level.allies;
-        List<GameFigure> enemies = Main.gameData.level.enemies;
-        
-        
-        synchronized(allies)
-        {
-            synchronized(enemies)
-            {
-                for(GameFigure a : allies)
-                    tree.insert(a);
-                for(GameFigure e : enemies)
-                    tree.insert(e);
-                
-                ArrayList<Collision> list = null;
-                for(GameFigure a : allies)
-                {
-                    list = tree.getList(a);
-                    for(Collision obj : list)
-                        if(obj.hashCode() != a.hashCode() && a.getCollisionBox().intersects(obj.getCollisionBox()))
-                        { 
-                            
-                            if(obj instanceof HitBox &&  a instanceof Nen)
-                                ((Nen)a).health -= ((HitBox)obj).gameFigure.damage;
-                            else if(a instanceof HitBox && obj instanceof GameFigure)
-                                ((GameFigure)obj).health -= ((HitBox)a).gameFigure.damage;
-                            
-                            if(obj instanceof GameFigure && ((GameFigure)obj).health <= 0)
-                                enemies.remove((GameFigure)obj);
-                                
-                            if(a instanceof Nen && ((Nen)a).health <= 0)
-                                allies.remove(a);
-                        }
-                }
-                
-            }
-        }
+//        
+//        synchronized (Main.gameData.enemies) {
+//            for (GameFigure f : Main.gameData.enemies) {
+//                f.render(graphics);
+//            }
+//        } 
+//        
+//        synchronized (Main.gameData.allies){
+//            for(GameFigure a : Main.gameData.allies)
+//                a.render(graphics);
+//        }
+
+
 //        tree.renderTree((Graphics2D)graphics);
+        checkCollisions();
         tree.clear();
     }
 
@@ -135,6 +101,25 @@ public class GamePanel extends JPanel {
         } catch (Exception e) {
             System.out.println("Graphics error: " + e);
         }
+    }
+    
+    public void checkCollisions()
+    {
+ 
+        for(Collision c : Main.gameData.level.collisions)
+            tree.insert(c);
+        
+        ArrayList<Collision> list = null;
+        
+        //Check allies collision
+        for(Collision c1 : Main.gameData.level.collisions)
+        {
+          list = tree.getList(c1);
+          for(Collision c2 : list)
+             if(c1.getCollisionBox().intersects(c2.getCollisionBox()))
+                 handler.onNotify(c1, c2);
+        }
+ 
     }
 }
  

@@ -11,6 +11,7 @@ import EventHandling.Observer;
 import Model.HitBox;
 import Model.GameFigure;
 import Model.States.CombatState;
+import StatusEffects.DamageEffect;
 import java.util.ArrayList;
  
 
@@ -21,21 +22,23 @@ import java.util.ArrayList;
 public class LightAttack extends CombatState {
      
     HitBox hitBox; 
-    private static final long DURATION = 500;
+    private static final int DURATION = 500;
     private static final int MID_TIME = 150;
     private static final int HIGH_TIME = 300;  
+    private static final int DAMAGE = 10;
     public LightAttack(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
-        gameFigure.damage = 10;
-        hitBox =  new HitBox(gameFigure.x + (gameFigure.size/2), gameFigure.y, 75, 10, gameFigure);  
-        Main.gameData.addAlly(hitBox);
+        gameFigure.damage = 10; 
+       hitBox =  new HitBox(gameFigure.x + (gameFigure.size/2), gameFigure.y, 75, 10, gameFigure, new DamageEffect(gameFigure, DAMAGE ,5000));
+       Main.gameData.addGameData(hitBox);
+        
 
     }
     @Override
     public void execute() {    
         if(System.currentTimeMillis() - initTime >= DURATION)
         {
-            Main.gameData.removeAlly(hitBox);
+            Main.gameData.removeGameData(hitBox);
             nextState("NeutralCombat");
         }
         
@@ -65,7 +68,7 @@ public class LightAttack extends CombatState {
        else if(s.equals("LightAttack") && System.currentTimeMillis() - initTime  >= MID_TIME && System.currentTimeMillis() - initTime <= HIGH_TIME)
        {
            gameFigure.cState = new Whirlwind(gameFigure, observers);
-           Main.gameData.removeAlly(hitBox);
+           Main.gameData.removeGameData(hitBox);
        }
     }
 }

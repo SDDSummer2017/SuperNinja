@@ -9,6 +9,7 @@ import Model.GameFigure;
 import Model.Nen;
 import Level.Platform;
 import Level.Trap;
+import Model.Collision;
 import Model.States.Nen.Jump;
 import Physics.Acceleration;
 import Physics.Force;
@@ -114,6 +115,11 @@ public class PhysicsHandler implements CollisionObserver {
     @Override
     public void onNotify(String string) {
         
+    }
+
+    @Override
+    public void onNotify(Collision object1, Collision object2) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -5,6 +5,7 @@
  */
 package EventHandling;
 
+import Model.Collision;
 import Model.GameFigure;
 
 import Model.States.Nen.Dash;
@@ -128,6 +129,11 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
             mediaPlayer.setVolume(0.2);
             mediaPlayer.play();
         }
+    }
+
+    @Override
+    public void onNotify(Collision object1, Collision object2) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
      

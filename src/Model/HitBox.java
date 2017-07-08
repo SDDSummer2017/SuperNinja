@@ -5,40 +5,47 @@
  */
 package Model;
 
+import Controller.Main;
+import StatusEffects.StatusEffect;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D; 
+import java.util.ArrayList;
 
 /**
  *
  * @author Garrett A. Clement
  */
-public class HitBox extends GameFigure {
+public class HitBox implements Collision, Renderable, Updateable {
 
     private int length;
     private int width; 
+    private Rectangle2D.Double collisionBox;
+    public ArrayList<StatusEffect> statusEffects; 
     public GameFigure gameFigure;
-
-    public HitBox(double x, double y, double size) {
-        super(x, y, size);
-        this.gameFigure = gameFigure;
-        super.collisionBox = new Rectangle2D.Double(x, y, width, length );
+    
+    public HitBox(double x, double y, double size) {  
+        collisionBox = new Rectangle2D.Double(x, y, width, length);
+        statusEffects = new ArrayList<>(); 
     }
     
-    public HitBox(double x, double y, int width, int length, GameFigure gameFigure){
-        super(x, y, 0);
-        this.length = length;
-        this.width = width;
+    public HitBox(double x, double y, int width, int length, GameFigure gameFigure, StatusEffect... statusEffects){
+        collisionBox = new Rectangle2D.Double(x, y, width, length);
         this.gameFigure = gameFigure;
-        super.collisionBox = new Rectangle2D.Double(x, y, width, length);
+        this.length = length;
+        this.width = width; 
+        this.collisionBox = new Rectangle2D.Double(x, y, width, length);
         
+        this.statusEffects = new ArrayList<>();
+        for(StatusEffect se : statusEffects)
+            this.statusEffects.add(se); 
     }   
  
     public void translate(double x, double y){
-        super.collisionBox = new Rectangle2D.Double(x, y, width, length);
+        collisionBox = new Rectangle2D.Double(x, y, width, length);
     }
-    
+     
     @Override
     public void render(Graphics g) {
        Graphics2D g2 = (Graphics2D)g; 
@@ -49,17 +56,16 @@ public class HitBox extends GameFigure {
        g2.setColor(Color.black); 
        
     }
-
-    @Override
-    public void update() {
-      
+    
+    public void hadHitBox(){
+        
     }
 
+    @Override
+    public void update() {} 
+    
     @Override
     public Rectangle2D.Double getCollisionBox() {
        return collisionBox;
     }
-    
-    
-    
 }

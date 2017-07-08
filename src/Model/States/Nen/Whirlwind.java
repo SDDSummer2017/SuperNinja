@@ -10,6 +10,7 @@ import EventHandling.Observer;
 import Model.GameFigure;
 import Model.HitBox;
 import Model.States.CombatState;
+import StatusEffects.DamageEffect;
 import java.util.ArrayList;
 
 /**
@@ -32,12 +33,12 @@ public class Whirlwind extends CombatState {
         if(gameFigure.isFacingRight)
         {
             rightStrike = true;
-            hitBox = new HitBox(gameFigure.x + 20, gameFigure.y, 50, 10, gameFigure);
+            hitBox = new HitBox(gameFigure.x - 20, gameFigure.y, 50, 10, gameFigure, new DamageEffect(gameFigure, 10, 10));
         }
         else 
-            hitBox = new HitBox(gameFigure.x - 55, gameFigure.y, 50, 10, gameFigure);
+            hitBox = new HitBox(gameFigure.x - 55, gameFigure.y, 50, 10, gameFigure, new DamageEffect(gameFigure, 10, 10));
+        Main.gameData.addGameData(hitBox);
         
-        Main.gameData.addAlly(hitBox);
     }
     @Override
     public void execute() {
@@ -45,7 +46,7 @@ public class Whirlwind extends CombatState {
         if(TRAVEL_DISTANCE <= distance)
         {
             nextState("Finished");
-            Main.gameData.removeAlly(hitBox);
+         //   Main.gameData.removeAlly(hitBox);
         }else
         { 
             distance += TRAVEL_RATE;
@@ -63,8 +64,7 @@ public class Whirlwind extends CombatState {
             { 
                 this.notifyObservers("Whirlwind");
                 soundDelay = System.currentTimeMillis();
-            }
-            //if(distance%10 == 0)     
+            }  
                 rightStrike = !rightStrike;
         }
         
@@ -73,7 +73,14 @@ public class Whirlwind extends CombatState {
     @Override
     public void nextState(String s) { 
         if(s.equals("Finished"))
+        {
             gameFigure.cState = new NeutralCombat(gameFigure, observers);
+            Main.gameData.removeGameData(hitBox);
+        }
     }
+    
+    public void strikeRihgt(){
+        
+    } 
     
 }

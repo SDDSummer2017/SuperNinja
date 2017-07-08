@@ -148,6 +148,9 @@ public class Nen extends GameFigure {
     @Override
     public void update() {
  
+        //Apply Status Effect
+        super.update();
+        
         if(cState instanceof NeutralCombat)
             mState.execute();
         else

@@ -73,7 +73,7 @@ public abstract class Enemy extends GameFigure {
     public void render(Graphics g) {}
 
     @Override
-    public void update() {}
+    public void update() { super.update();}
 
     @Override
     public Rectangle2D.Double getCollisionBox() {

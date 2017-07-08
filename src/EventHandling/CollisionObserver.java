@@ -5,6 +5,7 @@
  */
 package EventHandling;
 
+import Model.Collision;
 import Model.GameFigure;
 
 /**
@@ -15,4 +16,6 @@ import Model.GameFigure;
 public interface CollisionObserver extends Observer {
 
     public void onNotify(GameFigure gameFigureOne, GameFigure gameFigureTwo); 
+    
+    public void onNotify(Collision object1, Collision object2);
 }

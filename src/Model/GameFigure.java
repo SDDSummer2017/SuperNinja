@@ -1,18 +1,15 @@
 package Model;
 
+import Controller.Main;
 import Model.States.CombatState;
 import Model.States.MotionState;
 import Physics.Acceleration;
 import Physics.Force;
-import Physics.Velocity;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Shape;
-import java.awt.geom.AffineTransform;
+import Physics.Velocity; 
+import StatusEffects.StatusEffect;
+import java.awt.Image; 
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
- 
-import java.awt.image.AffineTransformOp;
+import java.awt.geom.Rectangle2D; 
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -36,16 +33,16 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     public Point2D.Double location;
     public static final int GRAVITY = 8;
     public boolean hit;
- 
+    public ArrayList<StatusEffect> statusEffects = new ArrayList<>();
     public HitBox hitbox;
-    
+    public boolean isGoodGuy;
     //Animation Attributes
     public int moveFrameIndex, idleFrameIndex, jumpFrameIndex, attackFrameIndex, idleFrameDelayCount;
     public boolean jump, movingLeft, movingRight ;
     public Image staticImage;
     public final Image[] moveRightAnimation, moveLeftAnimation, idleAnimation, jumpAnimation; 
     public final Image[] lightAttackRightAnimation, lightAttackLeftAnimation, heavyAttackRightAnimation, heavyAttackLeftAnimation;
-   
+    
  
     //Static game figure constructor (no animation)
  
@@ -152,6 +149,19 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         return location;
     }
 
+    @Override
+    public void update(){
+
+        for(int i = 0 ; i < statusEffects.size(); i++)
+            if(statusEffects.get(i).isFinished())
+                statusEffects.remove(statusEffects.get(i));
+            else
+                statusEffects.get(i).applyEffect(this);
+        
+        if(this.health <= 0) 
+            Main.gameData.removeGameData(this); 
+        
+    }
     public void calculatePhysics()
     {
         
@@ -161,23 +171,11 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         velocity.dx += f.dvx();
         velocity.dy += f.dvy(); 
         
-       }
-      
-       
-        
-       
+       } 
        
        //Apply Velocity
        x += velocity.dx; 
        y += velocity.dy; 
        
-    }
-     
-    
-
-
-    
-
-    
-    
+    } 
 }

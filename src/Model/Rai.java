@@ -125,6 +125,8 @@ public class Rai extends Enemy {
     @Override
     public void update() {
         //System.out.println("Rai.mState = " + mState + ",   Rai.cState = " + cState);
+        super.update();
+        System.out.println("Health: " + health);
         mState.execute();
         cState.execute();
     }

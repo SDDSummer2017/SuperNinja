@@ -48,14 +48,11 @@ public class KeyController implements KeyListener {
                      nen.mState.nextState("Crouch");
                 }
                 break;
-            case KeyEvent.VK_S:
-                synchronized(Main.gameData.enemies)
-                {
+            case KeyEvent.VK_S: 
                     Random rand = new Random();
-
                     int  n = rand.nextInt(500) + 1;
-                    Main.gameData.enemies.add(new Dummy(n, n, 25)); 
-                }
+                    Main.gameData.addGameData(new Dummy(n, n, 25)); 
+                
                 break;
                 
             case KeyEvent.VK_F:

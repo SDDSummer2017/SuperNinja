@@ -3,26 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Level;
-
-import EventHandling.Observer;
-import EventHandling.SoundHandler;
-import EventHandling.PhysicsHandler;
+package Level; 
+import Controller.Main;
+import EventHandling.SoundHandler; 
+import Model.Collision;
 import Model.GameFigure;
+import Model.HitBox;
 import Model.Rai;
 import Model.Renderable;
 import Model.Terro;
 import Model.Updateable;
-import View.GamePanel;
-import java.awt.Graphics;
-import java.awt.Image;
+import View.GamePanel; 
+import com.sun.javafx.geom.AreaOp;
+import java.awt.Graphics; 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import jdk.nashorn.internal.runtime.arrays.ArrayLikeIterator;
 
 /**
  *
@@ -39,11 +41,16 @@ public class NinjaVillage extends Level {
         this.width = 10240;
         this.height = 2560; 
        
-        this.tiles = Collections.synchronizedList(new ArrayList<Tile>()); 
-        this.allies = Collections.synchronizedList(new ArrayList<GameFigure>()); 
-        this.enemies = Collections.synchronizedList(new ArrayList<GameFigure>()); 
+        this.tiles = Collections.synchronizedList(new ArrayList<Tile>());  
         this.terrain = Collections.synchronizedList(new ArrayList<GameFigure>()); 
-       
+        
+        
+        this.collisions = Collections.synchronizedList(new ArrayList<Collision>()); 
+        this.renderables = Collections.synchronizedList(new ArrayList<Renderable>()); 
+        this.updatables = Collections.synchronizedList(new ArrayList<Updateable>());   
+        this.removables = Collections.synchronizedList(new ArrayList<>());
+        this.addables = Collections.synchronizedList(new ArrayList<>());
+         
        //Load Resources
         
        try {
@@ -66,13 +73,13 @@ public class NinjaVillage extends Level {
         this.terrain.add(new Platform(256, 300));
         
        Rai rai = new Rai((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100);
-              enemies.add(rai);
+              addGameData(rai);
       
        rai.cState.registerObserver(new SoundHandler(""));
        rai.mState.registerObserver(new SoundHandler(""));
         
        Terro terro = new Terro((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100);
-              enemies.add(terro);
+              addGameData(terro);
       
        terro.cState.registerObserver(new SoundHandler(""));
        terro.mState.registerObserver(new SoundHandler(""));
@@ -84,8 +91,7 @@ public class NinjaVillage extends Level {
          
         
     }
-
-     
+ 
     
     
     @Override
@@ -100,14 +106,8 @@ public class NinjaVillage extends Level {
            r.render(g);
        }
        
-       for(Renderable r : allies)
-       {
-          r.render(g);
-       }
-       for(Renderable r : enemies)
-       {
-           r.render(g);
-       }
+       for(Renderable r : renderables)
+           r.render(g); 
         
     }
 
@@ -118,15 +118,11 @@ public class NinjaVillage extends Level {
         {
             u.update(); 
         }
-        for(Updateable u : allies)
+        synchronized(updatables)
         {
-            u.update(); 
+            for(Updateable u : updatables)
+                u.update();
         }
-        for(Updateable u : enemies)
-        {
-            u.update(); 
-        }
-        
     }
     
     

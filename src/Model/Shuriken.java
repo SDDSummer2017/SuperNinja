@@ -45,15 +45,16 @@ public class Shuriken extends GameFigure {
         
         super.x = currentLocation.x;
         super.y = currentLocation.y;
+  
         
-        synchronized (Main.gameData.enemies) {
-            for (GameFigure f : Main.gameData.enemies) {
-                    if (this.getCollisionBox().intersects(f.getCollisionBox())){
-                        super.hit = true;
-                        f.health -= damage;
-                    }
-                }
-            }
+//        synchronized (Main.gameData.enemies) {
+//            for (GameFigure f : Main.gameData.enemies) {
+//                    if (this.getCollisionBox().intersects(f.getCollisionBox())){
+//                        super.hit = true;
+//                        f.health -= damage;
+//                    }
+//                }
+//            }
         }
 
     @Override
