@@ -5,6 +5,11 @@
  */ 
 package Level;
 
+import EventHandling.Observer;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 /**
  *
  * @author abilb
@@ -15,6 +20,24 @@ public class VictoryCheckPoint extends Checkpoint {
         super(x, y);
     }
     
+    @Override 
+    public void notifyObservers()
+    {
+        for(Observer o : observers)
+        {
+            o.onNotify("Level Complete");
+        }
+    }
+    @Override
+     public void render(Graphics g) {
+         Graphics2D g2 = (Graphics2D)g;
+        g2.setColor(Color.yellow);
+        g2.draw(collisionBox);
+        g2.fill(collisionBox);
+        super.health = 1000;
+            
+    
+    }
     
     
 }

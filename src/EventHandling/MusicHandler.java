@@ -5,6 +5,7 @@
  */
 package EventHandling;
 
+import Controller.Main;
 import java.io.File;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.AudioClip;
@@ -36,11 +37,14 @@ public class MusicHandler extends ResourceHandler implements Observer, Runnable 
     public void run() {
         
         
-        if(!music.isEmpty()){
+        if(!music.isEmpty() && Main.gameData != null){
         final Media media = new Media(new File(music).toURI().toString());
         final AudioClip mediaPlayer = new AudioClip(media.getSource());
         mediaPlayer.setVolume(0.2);
         mediaPlayer.play();}
+        else{
+            
+        }
     }
 }
 

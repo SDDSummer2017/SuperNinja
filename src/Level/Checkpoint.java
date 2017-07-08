@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class Checkpoint extends Platform implements Subject{
 
-    private ArrayList<Observer> observers; 
+    protected ArrayList<Observer> observers; 
     public Checkpoint(double x, double y) {
         super(x, y);
         this.observers = new ArrayList<>();

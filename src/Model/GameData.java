@@ -2,6 +2,7 @@ package Model;
 
 import Controller.Main;
 import Controller.TimerListener;
+import EventHandling.CheckpointHandler;
 import EventHandling.PhysicsHandler;
 import EventHandling.CollisionObserver;
 import EventHandling.MusicHandler;
@@ -46,13 +47,17 @@ public class GameData implements Subject, Updateable, Renderable  {
   
     public TimerListener timerListener;
     public Thread gameThread;
-    private final int nenSize = 70;
+    public final int nenSize = 70;
     public Level level; 
     private Force gravity;
     private Force lfriction; 
     Rectangle2D cb; 
     private final Force rfriction;
+    private CheckpointHandler checkpointHandler;
+    public Thread musicThread; 
+        
     public GameData()  {
+        nen = new Nen(GamePanel.CAMERA_WIDTH / 2, GamePanel.CAMERA_HEIGHT - nenSize, nenSize);
         lfriction = new Force(.05, new Acceleration(0, -1)); 
         rfriction = new Force(.05, new Acceleration(0, 1)); 
         gravity = new  Force(9, new Acceleration(0, .49));
@@ -67,19 +72,18 @@ public class GameData implements Subject, Updateable, Renderable  {
         enemyTimer = new Timer(5000, timerListener);
         enemyTimer.setInitialDelay(3000);
         gameThread = new Thread(Main.animator);
-        level = new NinjaVillage(); 
-    
-       
+        level = new NinjaVillage(this); 
+      
         observers = new ArrayList<Observer>(); 
         this.registerObserver(new PhysicsHandler());
         
 
         
-        nen = new Nen(GamePanel.CAMERA_WIDTH / 2, GamePanel.CAMERA_HEIGHT - nenSize, nenSize);
+     
 
         MusicHandler m = new MusicHandler("");
-        Thread thread = new Thread(m);
-        thread.start();
+        musicThread = new Thread(m);
+        musicThread.start();
         this.registerObserver(m);
         this.registerObserver(new SoundHandler(""));
         this.notifyObservers("Level One");

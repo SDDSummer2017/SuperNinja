@@ -4,6 +4,7 @@ package View;
 import Controller.Main;
 import Controller.QuadTree;
 import Level.Platform;
+import Level.VictoryCheckPoint;
 import Model.Collision;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -110,6 +111,20 @@ public class GamePanel extends JPanel {
                 
                 ArrayList<Collision> list = null;
                 
+                list = tree.getList(Main.gameData.nen);
+                for(Collision obj : list)
+                {
+                   if(obj instanceof VictoryCheckPoint)
+                            {
+                                if(Main.gameData.nen.getCollisionBox().intersects(obj.getCollisionBox())){
+                                ((VictoryCheckPoint)obj).notifyObservers(); }
+                                
+                                
+                               
+                            }
+                           
+                }
+                
                 for(GameFigure eb: allies)
                 {
                     list = tree.getList(eb);
@@ -128,13 +143,14 @@ public class GamePanel extends JPanel {
                                 
                                
                             }
-                            
-                           
+                          
                             
                             
                         }
                     }
                 }
+                
+                
                 
                 for(GameFigure a : allies)
                 {

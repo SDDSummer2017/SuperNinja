@@ -20,6 +20,7 @@ import java.awt.geom.Rectangle2D;
  */
 public class Fireball extends GameFigure {
 
+    int iterable = 0; 
     public Fireball(double x, double y) {
         super(x + 32, y, 64);
         this.forces.add(new Force(9, new Acceleration(0, -6)));
@@ -46,7 +47,7 @@ public class Fireball extends GameFigure {
     @Override
     public void update() {
        this.calculatePhysics();
-        
+       iterable++;
     }
     
 }

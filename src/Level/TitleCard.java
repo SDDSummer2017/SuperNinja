@@ -5,8 +5,10 @@
  */
 package Level;
 
+import Controller.Main;
 import Model.Renderable;
 import View.GamePanel;
+import java.awt.Color;
 import java.awt.Graphics;
 
 /**
@@ -24,7 +26,10 @@ public class TitleCard implements Renderable {
     
     @Override
     public void render(Graphics g) {
-         g.drawRect(gamePanel.camera.camX, gamePanel.camera.camY, Main, 0);
+         g.drawRect(gamePanel.camera.camX, gamePanel.camera.camY,  Main.startWindow.getWidth(), Main.startWindow.getHeight());
+         g.setColor(Color.BLACK);
+         g.drawString("LEVEL COMPLETE!!!", gamePanel.camera.camX, gamePanel.camera.camY);
+    
     }
     
 }

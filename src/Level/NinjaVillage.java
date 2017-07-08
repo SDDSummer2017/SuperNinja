@@ -5,10 +5,13 @@
  */
 package Level;
 
+import EventHandling.CheckpointHandler;
 import EventHandling.Observer;
 import EventHandling.SoundHandler;
 import EventHandling.PhysicsHandler;
+import Model.GameData;
 import Model.GameFigure;
+import Model.Nen;
 import Model.Rai;
 import Model.Renderable;
 import Model.Terro;
@@ -33,17 +36,20 @@ public class NinjaVillage extends Level {
     BufferedImage img = null;
     TileModel ground;
     
-    public NinjaVillage()
+    public NinjaVillage(GameData gameData)
     {
         //This constructor is where level development currently happens. 
         this.width = 10240;
         this.height = 2560; 
-       
+        gameData.nen.x = GamePanel.CAMERA_WIDTH / 2;
+        gameData.nen.y = GamePanel.CAMERA_HEIGHT - gameData.nenSize;
         this.tiles = Collections.synchronizedList(new ArrayList<Tile>()); 
         this.allies = Collections.synchronizedList(new ArrayList<GameFigure>()); 
         this.enemies = Collections.synchronizedList(new ArrayList<GameFigure>()); 
         this.terrain = Collections.synchronizedList(new ArrayList<GameFigure>()); 
         this.remove = Collections.synchronizedList(new ArrayList<GameFigure>());
+        
+        checkpointHandler = new CheckpointHandler(gameData); 
        //Load Resources
         
        try {
@@ -82,7 +88,13 @@ public class NinjaVillage extends Level {
             if(i%4==0 && i%10==0)
             {
                 this.terrain.add(new Platform(i*128, 172));
-            }  
+            }
+                if(i%20 == 0 && i != 0)
+            {
+                VictoryCheckPoint v = new VictoryCheckPoint(i * 128.0, 300);
+                v.registerObserver(checkpointHandler);
+                this.terrain.add(v); 
+            }
         }
         
        
@@ -124,7 +136,7 @@ public class NinjaVillage extends Level {
        for(Renderable r : allies)
        {
           r.render(g);
-       }
+                 }
        for(Renderable r : enemies)
        {
            r.render(g);
@@ -134,7 +146,16 @@ public class NinjaVillage extends Level {
 
     @Override
     public void update() {
-      
+        int fireballcount = 0; 
+        for(GameFigure f : enemies)
+        {
+            if(f instanceof Fireball)
+            {
+                fireballcount++; 
+                if(((Fireball)f).iterable > 100){
+                remove.add(f);}
+            }
+        }
         for(GameFigure r : remove)
         {
             if(terrain.contains(r)){
