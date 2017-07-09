@@ -27,6 +27,7 @@ public class Fireball extends GameFigure {
         this.velocity = new Velocity();
         velocity.dx = 0; 
         velocity.dy = 0;
+        this.calculatePhysics();
     }
 
     @Override

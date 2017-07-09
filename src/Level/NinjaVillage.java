@@ -163,7 +163,7 @@ public class NinjaVillage extends Level {
        {
            r.render(g);
        }
-       
+      
  
        for(Renderable r : renderables)
            r.render(g); 
@@ -181,6 +181,11 @@ public class NinjaVillage extends Level {
                 fireballcount++; 
                 if(((Fireball)f).iterable > 100){
                 this.removables.add(f);}
+                else{
+                //    ((Fireball) f).calculatePhysics();
+                }
+                
+                
             }
         }
        
@@ -188,6 +193,7 @@ public class NinjaVillage extends Level {
         for(Updateable u : terrain)
         {
             u.update(); 
+            
         }
         synchronized(updatables)
         {
