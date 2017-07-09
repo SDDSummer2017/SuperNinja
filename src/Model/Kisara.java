@@ -40,6 +40,7 @@ public class Kisara extends Enemy{
         super.mState = new Neutral(this, observers);
         super.cState = new Default(this, observers);
         this.health = 80;
+        this.maxHealth = health;
         this.countDelay = 0;
         
         //false for left true for right in movementState
@@ -136,10 +137,10 @@ public class Kisara extends Enemy{
     public void render(Graphics g) {
         super.render(g);
         g.drawImage(image, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-        g.setColor(Color.red);
-        g.fillRect(3, GamePanel.CAMERA_HEIGHT- 102, 10, 100);
-        g.setColor(Color.green);
-        g.fillRect(3, GamePanel.CAMERA_HEIGHT - (int) this.health - 2, 10, (int) this.health);
+//        g.setColor(Color.red);
+//        g.fillRect(3, GamePanel.CAMERA_HEIGHT- 102, 10, 100);
+//        g.setColor(Color.green);
+//        g.fillRect(3, GamePanel.CAMERA_HEIGHT - (int) this.health - 2, 10, (int) this.health);
     }
 
     @Override

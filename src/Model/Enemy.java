@@ -74,10 +74,13 @@ public abstract class Enemy extends GameFigure {
     @Override
     public void render(Graphics g) 
     {
-           g.setColor(Color.red);
+        
+        if(health < maxHealth){
+        g.setColor(Color.red);
         g.fillRect((int) (x + 100), (int) (y), 10, (int)this.maxHealth);
         g.setColor(Color.green);
         g.fillRect((int) (x + 100), (int) (y), 10, (int) this.health);
+        }
     }
 
     @Override
