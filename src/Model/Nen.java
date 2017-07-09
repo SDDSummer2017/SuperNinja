@@ -145,6 +145,7 @@ public class Nen extends GameFigure {
 
         g.setColor(Color.green);
         g.fillRect(3, GamePanel.CAMERA_HEIGHT - (int) this.health - 2, 10, (int) this.health);
+        ((Graphics2D)g).draw(getCollisionBox());
     }
     
     
