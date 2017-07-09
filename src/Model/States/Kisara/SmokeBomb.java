@@ -36,12 +36,12 @@ public class SmokeBomb extends CombatState{
         System.out.println("SmokeBomb");
         if (n.x > gameFigure.x){
             //kisara is to the left of nen
-            Main.gameData.addEnemyBullet(new Shuriken(kis.x, kis.y, kis.x + 10, kis.y + 90, RED));
+            Main.gameData.addGameData(new Shuriken(kis.x, kis.y, kis.x + 10, kis.y + 90, RED, false));
             gameFigure.x -= 2 * Math.abs(n.x - gameFigure.x);
             nextState("Default");
         }
         else{
-            Main.gameData.addEnemyBullet(new Shuriken(kis.x, kis.y, kis.x - 10, kis.y + 90, RED));
+            Main.gameData.addGameData(new Shuriken(kis.x, kis.y, kis.x - 10, kis.y + 90, RED, false));
             gameFigure.x += 2 * Math.abs(n.x - gameFigure.x);
             nextState("Default");
         }

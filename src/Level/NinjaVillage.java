@@ -16,6 +16,7 @@ import EventHandling.SoundHandler;
 import EventHandling.PhysicsHandler;
 import Model.GameData;
 import Model.GameFigure;
+import Model.Kisara;
 import Model.Nen;
  
 import Model.Rai;
@@ -120,13 +121,19 @@ public class NinjaVillage extends Level {
  
        
        Rai rai = new Rai((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100);
-              this.addGameData(rai);
+       addGameData(rai);
       
        rai.cState.registerObserver(new SoundHandler(""));
        rai.mState.registerObserver(new SoundHandler(""));
- 
+       
+       Kisara kisara = new Kisara((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100); 
+       addGameData(kisara);   
+       kisara.cState.registerObserver(new SoundHandler(""));
+       kisara.mState.registerObserver(new SoundHandler(""));
+       
+       
        Terro terro = new Terro((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100);
-              addGameData(terro);
+       addGameData(terro);
       
        terro.cState.registerObserver(new SoundHandler(""));
        terro.mState.registerObserver(new SoundHandler(""));

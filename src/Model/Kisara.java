@@ -134,6 +134,7 @@ public class Kisara extends Enemy{
     
     @Override
     public void render(Graphics g) {
+        super.render(g);
         g.drawImage(image, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
         g.setColor(Color.red);
         g.fillRect(3, GamePanel.CAMERA_HEIGHT- 102, 10, 100);
@@ -143,6 +144,7 @@ public class Kisara extends Enemy{
 
     @Override
     public void update() {
+        super.update();
         this.mState.execute();
         this.cState.execute();
         
