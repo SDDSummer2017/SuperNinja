@@ -2,12 +2,14 @@ package Model;
 
 import Controller.Main;
 import Controller.TimerListener;
+import EventHandling.CheckpointHandler;
 import EventHandling.PhysicsHandler;
 import EventHandling.CollisionObserver;
 import EventHandling.MusicHandler;
 import EventHandling.Observer;
 import EventHandling.SoundHandler;
 import EventHandling.Subject;
+import Level.Fireball;
 import Level.Level;
 import Level.NinjaVillage;
 import Physics.Acceleration;
@@ -34,13 +36,18 @@ public class GameData implements Subject, Updateable, Renderable  {
   
     public TimerListener timerListener;
     public Thread gameThread;
-    private final int nenSize = 70;
+    public final int nenSize = 70;
     public Level level; 
     private Force gravity;
     private Force lfriction; 
     Rectangle2D cb; 
     private final Force rfriction;
+    private CheckpointHandler checkpointHandler;
+    public Thread musicThread; 
+        
     public GameData()  {
+        nen = new Nen(GamePanel.CAMERA_WIDTH / 2, GamePanel.CAMERA_HEIGHT - nenSize, nenSize);
+        
         lfriction = new Force(.05, new Acceleration(0, -1)); 
         rfriction = new Force(.05, new Acceleration(0, 1)); 
         gravity = new  Force(9, new Acceleration(0, .49));
@@ -49,19 +56,21 @@ public class GameData implements Subject, Updateable, Renderable  {
         enemyTimer = new Timer(5000, timerListener);
         enemyTimer.setInitialDelay(3000);
         gameThread = new Thread(Main.animator);
-        level = new NinjaVillage(); 
-    
-       
+        level = new NinjaVillage(this); 
+        addGameData(nen);
         observers = new ArrayList<Observer>(); 
         this.registerObserver(new PhysicsHandler());
         
 
-        
-        nen = new Nen(GamePanel.CAMERA_WIDTH / 2, GamePanel.CAMERA_HEIGHT - nenSize, nenSize);
-        addGameData(nen);
+ 
+    
+ 
+     
+
+ 
         MusicHandler m = new MusicHandler("");
-        Thread thread = new Thread(m);
-        thread.start();
+        musicThread = new Thread(m);
+        musicThread.start();
         this.registerObserver(m);
         this.registerObserver(new SoundHandler(""));
         this.notifyObservers("Level One");
@@ -99,6 +108,14 @@ public class GameData implements Subject, Updateable, Renderable  {
         
         nen.forces.clear();
         nen.forces.add(gravity);
+        for(Updateable g : level.updatables)
+        {
+            if(g instanceof Fireball)
+            {
+                ((Fireball) g).forces.clear();
+                ((Fireball) g).forces.add(gravity);
+            }
+        }
         
 
         
@@ -112,6 +129,7 @@ public class GameData implements Subject, Updateable, Renderable  {
                   nen.forces.add(rfriction);
         }
 
+ 
         synchronized (nen){
             cb = nen.getCollisionBox();
             cb.setRect(cb.getX() + nen.velocity.dx, cb.getY() + nen.velocity.dy, cb.getHeight(), cb.getWidth());
@@ -120,9 +138,34 @@ public class GameData implements Subject, Updateable, Renderable  {
             if(cb.intersects(terrain.getCollisionBox()))
             {
                 this.notityObservers(terrain, nen);
-
+            }}
+ 
+//        synchronized (enemies) {
+//            for (GameFigure f : enemies) {
+//                f.update(); 
+//            }
+//        }
+        
+//        synchronized (allies) {
+//       
+           //Refactor this into quad tree 
+           synchronized (nen){
+                    cb = nen.getCollisionBox();
+                    cb.setRect(cb.getX() + nen.velocity.dx, cb.getY() + nen.velocity.dy, cb.getHeight(), cb.getWidth());
+                    for(GameFigure terrain : level.terrain){
+                    
+                        if(cb.intersects(terrain.getCollisionBox()))
+                        {
+                            this.notityObservers(terrain, nen);
+                         
+                        }
+                        
+                    }
+                    
+                    
+ 
             }
-         } 
+         
        // nen.update();
         level.update();
         nen.calculatePhysics();
@@ -155,7 +198,7 @@ public class GameData implements Subject, Updateable, Renderable  {
              }
          }
     }
-    
+   
     @Override
     public void notifyObservers(String event) {
        for(Observer o : observers)

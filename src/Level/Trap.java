@@ -6,6 +6,7 @@
 package Level;
 
 import Model.GameFigure;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 
@@ -13,25 +14,39 @@ import java.awt.geom.Rectangle2D;
  *
  * @author abilb
  */
-public class Trap extends GameFigure {
+public class Trap extends Platform {
 
-    public Trap(double x, double y, double size) {
-        super(x, y, size, false);
+ 
+    Level level;
+    int iterable; 
+    public Trap(double x, double y, Level level) {
+        super(x, y);
+        this.level = level; 
+        iterable = 0; 
+ 
     }
 
     @Override
     public void render(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.render(g);
+        g.setColor(Color.red);
     }
 
     @Override
     public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.update();
+        iterable++; 
+        //5 seconds or so
+        if(iterable == 100)
+        {
+            level.addGameData(new Fireball(x, y + 25));
+            iterable = 0;
+        }
     }
 
     @Override
     public Rectangle2D.Double getCollisionBox() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         return super.getCollisionBox();
     }
     
 }

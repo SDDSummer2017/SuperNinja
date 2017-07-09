@@ -51,15 +51,21 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     public Velocity velocity; 
     public ArrayList<Force> forces;
  
+    public double maxHealth; 
     public GameFigure(double x, double y, double size, boolean isGoodGuy) {
+ 
         this.hit = false;
         this.x = x;
         this.y = y;
         this.size = size;
         this.location = new Point2D.Double(x - (size/2), y-(size/2));
         health = 100;
+ 
         this.isGoodGuy = isGoodGuy;
         this.effectsManager = new EffectsManager();
+ 
+        maxHealth = health; 
+ 
         this.moveFrameIndex = this.idleFrameIndex = this.idleFrameDelayCount = this.jumpFrameIndex = 0;
         this.moveLeftAnimation =  null;
         this.moveRightAnimation = null;
@@ -70,6 +76,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         this.idleAnimation = null;
         this.jumpAnimation = null;
         this.staticImage = null;
+        this.forces = new ArrayList<Force>();
         
     }
     //Animation game figure constructor (backwards compatibility
@@ -80,8 +87,12 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         this.size = size;
         this.location = new Point2D.Double(x - (size/2), y-(size/2));
         health = 100;
+ 
         this.isGoodGuy = isGoodGuy;
         this.effectsManager = new EffectsManager();
+ 
+        maxHealth = health;
+ 
         this.moveLeftAnimation =  new Image[mLength];
         this.moveRightAnimation = new Image[mLength];
         this.lightAttackLeftAnimation = new Image[arLength];

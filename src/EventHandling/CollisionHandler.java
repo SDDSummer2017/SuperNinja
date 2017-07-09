@@ -5,9 +5,14 @@
  */
 package EventHandling;
 
+import Controller.Main;
+import Level.Platform;
+import Level.VictoryCheckPoint;
 import Model.Collision;
 import Model.GameFigure;
 import Model.HitBox;
+import Model.Nen;
+import Model.Shuriken;
 import StatusEffects.StatusEffect;
 
 /**
@@ -30,6 +35,19 @@ public class CollisionHandler implements CollisionObserver {
        
        else if(object1 instanceof GameFigure && object2 instanceof HitBox)
            applyStatusEffects((GameFigure)object1, (HitBox)object2); 
+       
+       if(object1 instanceof VictoryCheckPoint && object2 instanceof Nen)
+       {
+           ((VictoryCheckPoint) object1).notifyObservers();
+       }
+       if(object1 instanceof Shuriken && object2 instanceof Platform)
+       {
+           Main.gameData.level.removables.add(object1);
+            Main.gameData.level.removables.add(((Shuriken) object1).hitbox);
+       }
+       
+        
+       
     }
 
     @Override

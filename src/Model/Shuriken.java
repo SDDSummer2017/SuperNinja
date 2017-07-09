@@ -14,7 +14,7 @@ public class Shuriken extends GameFigure {
     private final Color color;
     public double targetX, targetY, dx, dy;
     private final double damage = 50;
-    private HitBox hitbox;
+    
     private final float moveDistance = 20;
     Vector2f currentLocation;
     Vector2f targetPath;

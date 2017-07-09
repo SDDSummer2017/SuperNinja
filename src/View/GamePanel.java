@@ -3,7 +3,11 @@ package View;
 
 import Controller.Main;
 import Controller.QuadTree;
+ 
 import EventHandling.CollisionHandler;
+ 
+import Level.Platform;
+ 
 import Model.Collision;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,6 +19,11 @@ import Model.GameFigure;
 import Model.HitBox;
 import view.Camera;
 import static Model.Nen.getImage;
+ 
+ 
+import Model.Shuriken;
+import java.awt.Graphics2D;
+ 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -66,8 +75,78 @@ public class GamePanel extends JPanel {
         graphics.drawImage(bgImage , 0, 0, GamePanel.CAMERA_WIDTH, GamePanel.CAMERA_HEIGHT, null);
  
         Main.gameData.render(graphics);
-
-
+ 
+        
+        
+             
+               
+//                for(Collision obj : list)
+//                {
+//                   if(obj instanceof VictoryCheckPoint)
+//                            {
+//                                if(Main.gameData.nen.getCollisionBox().intersects(obj.getCollisionBox())){
+//                                ((VictoryCheckPoint)obj).notifyObservers(); }
+//                                
+//                                
+//                               
+//                            }
+//                           
+//                }
+//                
+//                for(GameFigure eb: allies)
+//                {
+//                    list = tree.getList(eb);
+//                    for(Collision obj : list)
+//                    {
+//                        
+//                        if(obj.hashCode() != eb.hashCode() && eb.getCollisionBox().intersects(obj.getCollisionBox()))
+//                        { 
+//                            
+//                           
+//                                
+//                            if(eb instanceof Shuriken && obj instanceof Platform)
+//                            {
+//                               Main.gameData.level.remove.add(eb);
+//                                
+//                                
+//                               
+//                            }
+//                          
+//                            
+//                            
+//                        }
+//                    }
+//                }
+                
+                
+                
+//                for(GameFigure a : allies)
+//                {
+//                    
+//                    list = tree.getList(a);
+//                    for(Collision obj : list)
+//                        if(obj.hashCode() != a.hashCode() && a.getCollisionBox().intersects(obj.getCollisionBox()))
+//                        { 
+//                            
+//                            if(obj instanceof HitBox &&  a instanceof Nen)
+//                                ((Nen)a).health -= ((HitBox)obj).gameFigure.damage;
+//                            else if(a instanceof HitBox && obj instanceof GameFigure)
+//                                ((GameFigure)obj).health -= ((HitBox)a).gameFigure.damage;
+//                            
+//                            if(obj instanceof GameFigure && ((GameFigure)obj).health <= 0)
+//                                enemies.remove((GameFigure)obj);
+//                                
+//                           
+//                            if(a instanceof Nen && ((Nen)a).health <= 0)
+//                                allies.remove(a);
+//                            
+//                            
+//                        }
+//                }
+                
+            
+        
+ 
 //        tree.renderTree((Graphics2D)graphics);
         checkCollisions();
         tree.clear();

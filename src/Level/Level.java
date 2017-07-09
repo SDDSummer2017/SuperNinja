@@ -5,7 +5,12 @@
  */
 package Level;
 
+ 
 import Model.Collision;
+ 
+import EventHandling.CheckpointHandler;
+import Model.GameData;
+ 
 import Model.GameFigure;
 import Model.Renderable;
 import Model.Updateable; 
@@ -20,8 +25,11 @@ import java.util.function.ObjDoubleConsumer;
 public abstract class Level implements Renderable, Updateable {
     int width; 
     int height; 
+    protected GameData gameData; 
+    protected CheckpointHandler checkpointHandler;
     //TODO: 2d Array of Tiles 
     public List<Tile> tiles; 
+ 
     public List<GameFigure> terrain;  
     
     public List<Collision> collisions;
@@ -33,6 +41,9 @@ public abstract class Level implements Renderable, Updateable {
     public void addGameData(Object ob){
         addables.add(ob);
     }
+ 
+    
+ 
     
     public void addGameData(){
         for(Object ob : addables)

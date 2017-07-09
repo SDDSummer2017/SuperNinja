@@ -16,10 +16,11 @@ import java.awt.geom.Rectangle2D;
  * @author abilb
  */
 public class Platform extends GameFigure{
-      private final Rectangle2D.Double collisionBox;
+   
     public Platform(double x, double y) {
         super(x, y, 128, false);
          collisionBox = new Rectangle2D.Double(x, y, 128, 128);
+         
            
     }
 

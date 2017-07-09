@@ -2,13 +2,22 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+ */ 
 package Level; 
 import Controller.Main;
 import EventHandling.SoundHandler; 
 import Model.Collision;
 import Model.GameFigure;
 import Model.HitBox;
+ 
+import EventHandling.CheckpointHandler;
+import EventHandling.Observer;
+import EventHandling.SoundHandler;
+import EventHandling.PhysicsHandler;
+import Model.GameData;
+import Model.GameFigure;
+import Model.Nen;
+ 
 import Model.Rai;
 import Model.Renderable;
 import Model.Terro;
@@ -25,6 +34,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import jdk.nashorn.internal.runtime.arrays.ArrayLikeIterator;
+ 
 
 /**
  *
@@ -35,11 +45,12 @@ public class NinjaVillage extends Level {
     BufferedImage img = null;
     TileModel ground;
     
-    public NinjaVillage()
+    public NinjaVillage(GameData gameData)
     {
         //This constructor is where level development currently happens. 
         this.width = 10240;
         this.height = 2560; 
+ 
        
         this.tiles = Collections.synchronizedList(new ArrayList<Tile>());  
         this.terrain = Collections.synchronizedList(new ArrayList<GameFigure>()); 
@@ -51,6 +62,14 @@ public class NinjaVillage extends Level {
         this.removables = Collections.synchronizedList(new ArrayList<>());
         this.addables = Collections.synchronizedList(new ArrayList<>());
          
+ 
+        gameData.nen.x = GamePanel.CAMERA_WIDTH / 2;
+        gameData.nen.y = GamePanel.CAMERA_HEIGHT - gameData.nenSize;
+        this.tiles = Collections.synchronizedList(new ArrayList<Tile>()); 
+     
+        
+        checkpointHandler = new CheckpointHandler(gameData); 
+ 
        //Load Resources
         
        try {
@@ -67,17 +86,45 @@ public class NinjaVillage extends Level {
         for(int i = 0; i < 80; i++)
         {
             //Loading in floor tiles. 
-            this.terrain.add(new Platform(i * 128.0, 535.0));
+           
+            if(i%10 == 0 && i != 0)
+            {
+                this.terrain.add(new Trap(i * 128, 525.0, this));
+            }
+            else
+            {
+                 this.terrain.add(new Platform(i * 128.0, 535.0));
+            }
+            if(i%3 == 0)
+            {
+               // this.terrain.add(new Platform(i * 128.0, 200)); 
+            }
+            
+              if(i%4 == 0)
+            {
+                this.terrain.add(new Platform(i * 128.0, 300)); 
+            }
+            
+            if(i%4==0 && i%10==0)
+            {
+                this.terrain.add(new Platform(i*128, 172));
+            }
+                if(i%20 == 0 && i != 0)
+            {
+                VictoryCheckPoint v = new VictoryCheckPoint(i * 128.0, 300);
+                v.registerObserver(checkpointHandler);
+                this.terrain.add(v); 
+            }
         }
         
-        this.terrain.add(new Platform(256, 300));
-        
-//       Rai rai = new Rai((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100);
-//              addGameData(rai);
-//      
-//       rai.cState.registerObserver(new SoundHandler(""));
-//       rai.mState.registerObserver(new SoundHandler(""));
-        
+ 
+       
+       Rai rai = new Rai((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100);
+              this.addGameData(rai);
+      
+       rai.cState.registerObserver(new SoundHandler(""));
+       rai.mState.registerObserver(new SoundHandler(""));
+ 
        Terro terro = new Terro((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100);
               addGameData(terro);
       
@@ -91,7 +138,15 @@ public class NinjaVillage extends Level {
         ArrayList<Object> observers = new ArrayList<>(); 
        
         observers.add(new SoundHandler("")); 
-         
+//        for(Tile t : tiles)
+//        {
+//            gameData.addGameData(t);
+//        }
+        
+           for(GameFigure tr : terrain)
+        {
+             addGameData(tr);
+        } 
         
     }
  
@@ -109,13 +164,26 @@ public class NinjaVillage extends Level {
            r.render(g);
        }
        
+ 
        for(Renderable r : renderables)
            r.render(g); 
+ 
         
     }
 
     @Override
     public void update() {
+        int fireballcount = 0; 
+        for(Updateable f : this.updatables)
+        {
+            if(f instanceof Fireball)
+            {
+                fireballcount++; 
+                if(((Fireball)f).iterable > 100){
+                this.removables.add(f);}
+            }
+        }
+       
         
         for(Updateable u : terrain)
         {
