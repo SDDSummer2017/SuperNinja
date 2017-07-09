@@ -67,6 +67,8 @@ public class KeyController implements KeyListener {
                 {
                      nen.cState.nextState("HeavyAttack");
                 }
+                break;
+       
         }
     }
 
@@ -88,6 +90,9 @@ public class KeyController implements KeyListener {
                 break;        
             case KeyEvent.VK_DOWN:
                 nen.mState.nextState("NeutralMotion");
+                break;
+            case KeyEvent.VK_Q:
+                Main.gamePanel.show = !Main.gamePanel.show;
                 break;
         }
     }

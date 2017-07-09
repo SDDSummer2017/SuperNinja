@@ -35,6 +35,7 @@ public class GamePanel extends JPanel {
     
     public static final int WORLD_WIDTH = 10000;
     public static final int WORLD_HEIGHT = 540;
+    public boolean show;
     public Camera camera;
     
 
@@ -74,6 +75,7 @@ public class GamePanel extends JPanel {
         //Render Background
         graphics.drawImage(bgImage , 0, 0, GamePanel.CAMERA_WIDTH, GamePanel.CAMERA_HEIGHT, null);
  
+       
         Main.gameData.render(graphics);
  
         
@@ -147,8 +149,10 @@ public class GamePanel extends JPanel {
             
         
  
-//        tree.renderTree((Graphics2D)graphics);
+
         checkCollisions();
+        if(show)
+            tree.renderTree((Graphics2D)graphics);
         tree.clear();
     }
 
