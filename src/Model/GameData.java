@@ -12,6 +12,7 @@ import EventHandling.Subject;
 import Level.Fireball;
 import Level.Level;
 import Level.NinjaVillage;
+import Level.TitleCard;
 import Physics.Acceleration;
 import Physics.Force;
 
@@ -33,7 +34,7 @@ public class GameData implements Subject, Updateable, Renderable  {
     public final Nen nen;
  
     public Timer enemyTimer, bossTimer;
-  
+    public TitleCard titleCard; 
     public TimerListener timerListener;
     public Thread gameThread;
     public final int nenSize = 70;
@@ -103,6 +104,8 @@ public class GameData implements Subject, Updateable, Renderable  {
     @Override
     public void update() {
         
+        if(titleCard == null){
+        
         level.addGameData();
         level.removeGameData();
         
@@ -169,7 +172,15 @@ public class GameData implements Subject, Updateable, Renderable  {
        // nen.update();
         level.update();
         nen.calculatePhysics();
-        
+        }
+        else
+        {
+            titleCard.iterable++;
+            if(titleCard.iterable > 100)
+            {
+                titleCard = null;
+            }
+        }
     
     }
     
@@ -209,7 +220,15 @@ public class GameData implements Subject, Updateable, Renderable  {
 
     @Override
     public void render(Graphics g) {
-        level.render(g); 
+        if(titleCard != null)
+        {
+            titleCard.render(g);
+            //level.render(g); 
+        }
+        else{
+            level.render(g); 
+        }
+        
         
     }
     

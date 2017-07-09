@@ -44,7 +44,7 @@ public class CheckpointHandler implements Observer{
                     
                     gameData.level = new NinjaVillage(gameData); 
                     gameData.level.addGameData(gameData.nen);
-                    // (((Renderable) new TitleCard(Main.gamePanel)));
+                    gameData.titleCard = new TitleCard(gamePanel);
                    
                 }
         

@@ -181,9 +181,8 @@ public class NinjaVillage extends Level {
                 fireballcount++; 
                 if(((Fireball)f).iterable > 100){
                 this.removables.add(f);}
-                else{
-                //    ((Fireball) f).calculatePhysics();
-                }
+                this.removables.add(((Fireball) f).hitbox);
+                 
                 
                 
             }
