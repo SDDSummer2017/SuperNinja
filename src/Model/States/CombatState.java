@@ -14,6 +14,7 @@ import java.util.ArrayList;
  *
  * @author Garrett A. Clement
  */
+
 public abstract class CombatState extends State {
     protected long initTime;
     protected long comboWindow;
