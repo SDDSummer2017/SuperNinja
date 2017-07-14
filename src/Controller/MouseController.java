@@ -35,7 +35,7 @@ public class MouseController implements MouseListener {
         targetY = me.getY();
         originX = Main.gameData.nen.x + Main.gameData.nen.size/2;
         originY = Main.gameData.nen.y + Main.gameData.nen.size/2;
-        Main.gameData.addGameData(new Shuriken(originX, originY, targetX, targetY, Color.yellow, true)); 
+        Main.gameData.addGameData(new Shuriken(originX, originY, targetX, targetY, Color.yellow, true, 10, 3)); 
  
     }
 

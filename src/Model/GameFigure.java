@@ -45,6 +45,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     public Image staticImage;
     public final Image[] runAnimation, idleAnimation, jumpAnimation, dashAnimation; 
     public final Image[] lightAttackAnimation, heavyAttackAnimation, rangeAttackAnimation;
+    public final Image[] projectileAnimation;
     
  
     //Static game figure constructor (no animation)
@@ -77,6 +78,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         this.rangeAttackAnimation = null;
         this.idleAnimation = null;
         this.jumpAnimation = null;
+        this.projectileAnimation = null;
         this.staticImage = null;
         this.forces = new ArrayList<Force>();
         
@@ -102,6 +104,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         this.rangeAttackAnimation = new Image[animationLength];
         this.idleAnimation = new Image[animationLength];
         this.jumpAnimation = new Image[animationLength];
+        this.projectileAnimation = new Image[animationLength];
         this.staticImage = null;
         
         this.loadAnimations(name);
@@ -145,6 +148,11 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         for(int i=0;i<rangeAttackAnimation.length;i++){
             rangeAttackAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Range_Attack" + separator
                 + "Throw__00" + i + ".png");
+        }
+        //Projectile Animation
+        for(int i=0;i<runAnimation.length;i++){
+            projectileAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Projectile" + separator
+                + "Projectile__00" + i + ".png");          
         }
     }
     

@@ -1,32 +1,35 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Model;
- 
+
 import Controller.Main;
 import StatusEffects.DamageEffect;
+import View.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import javax.vecmath.Vector2f;
-import View.GamePanel;
 
-
-public class Shuriken extends Projectiles {
+/**
+ *
+ * @author matlock
+ */
+public class ProjectileWindmillShuriken extends Projectiles{
     
-    private final Color color;
-    public double targetX, targetY, dx, dy;
-    private double damage = 50;
+    public boolean direction;
+    public boolean finnished;
     
-    private final float moveDistance = 20;
-    Vector2f currentLocation;
-    Vector2f targetPath;
-    
-    
-    public Shuriken(double x, double y, double tx, double ty, Color color, boolean isGoodGuy, int d, double s) {
+    public ProjectileWindmillShuriken(double x, double y, double tx, double ty, Color color, boolean isGoodGuy, int d, double s) {
         super(x, y, tx, ty, color, isGoodGuy, d, s);
+        finnished = false;
         this.targetX = tx;
         this.targetY = ty;
         this.color = color;
-        this.damage = 10;
-        this.size = 3;
+        this.damage = 30;
+        this.size = 30;
         this.currentLocation = new Vector2f((float)super.x, (float)super.y);
         this.targetPath = new Vector2f((float)targetX,(float)targetY);
         targetPath.sub(currentLocation);
@@ -37,8 +40,6 @@ public class Shuriken extends Projectiles {
         
         hitbox = new HitBox(x, y, (int)super.size * 2, (int)super.size * 2, this, new DamageEffect(this, 10, 5000));
         Main.gameData.addGameData(hitbox);
-//hitbox = new HitBox(x, y, GRAVITY, GRAVITY, this, (int)super.size * 2, (int)super.size * 2, new DamageEffect(this, 10, 5000));
-        
     }
     
     @Override
@@ -46,34 +47,48 @@ public class Shuriken extends Projectiles {
         g.setColor(color);
         g.fillOval((int)x - (int)super.size, (int)y - (int)super.size, (int)super.size * 2, (int)super.size * 2);   
     }
+    
+    public void setDirection(boolean b){
+        this.direction = b;
+    }
+    
     @Override
     public void update() {       
-       
+        Nen n = Main.gameData.nen;
+       System.out.println("Windmill.y = " + super.y);
         currentLocation.add(targetPath);
         
         super.x = currentLocation.x;
         super.y = currentLocation.y;
         hitbox.translate(super.x, super.y);
-        
-         
-//        synchronized (bullets) {
-//            for (GameFigure b : bullets) {
-//                b.update();
-//                if(b.hit==true 
-//                        || b.x < 0
-//                        || b.x > GamePanel.CAMERA_WIDTH
-//                        || b.y > GamePanel.CAMERA_HEIGHT
-//                        || b.y <0)deadBullets.add(b);
-//            }
-//        }       
-  
+        if (super.y + size >= 200){
+            if (super.x < n.x){
+                direction = true;
+            }
+            else{
+                direction = false;
+            }
+            
+            if (direction && !finnished){
+                this.targetX = n.x + 500;
+            }
+            else if(!direction && !finnished){
+                this.targetX = n.x - 500;
+            }
+            else if(finnished){
+                this.health = 0;
+            }
+            else{}
         }
+        
+        if (super.x >= n.x + 500 || super.x <= n.x - 500){
+            finnished = true;
+        }
+    }
 
     @Override
     public Rectangle2D.Double getCollisionBox() {
         return new Rectangle2D.Double(super.x - super.size, super.y - super.size, super.size * 2, super.size * 2);
     }
-
     
 }
-
