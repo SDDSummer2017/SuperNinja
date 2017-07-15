@@ -30,7 +30,13 @@ public class MusicHandler extends ResourceHandler implements Observer, Runnable 
         {
            music = "SoundEffects/Eternal Terminal.mp3";
         }
-    }    
+        else if(string.equals("Level Two"))
+                {
+                    music = "SoundEffects/Volatile Reaction.mp3";
+                }
+    }
+
+    
     // cl is the ClassLoader for the current class, ie. CurrentClass.class.getClassLoader();
       
     @Override

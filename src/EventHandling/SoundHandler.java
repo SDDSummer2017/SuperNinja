@@ -50,8 +50,39 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
              this.playSound("SoundEffects/walk.mp3");
          }
          
+         if(state instanceof Model.States.Kisara.Jump)
+         {
+             this.playSound("SoundEffects/Ninja Jump 5.WAV");
+         }
          
+          if(state instanceof Model.States.Kisara.ShadowStrike)
+         {
+             this.playSound("SoundEffects/Ninja Jump 1.WAV");
+         }
 
+          if(state instanceof Model.States.Kisara.SmokeBomb)
+         {
+             this.playSound("SoundEffects/Ninja Jump 1.WAV");
+         }
+           if(state instanceof Model.States.Kisara.Evade)
+         {
+             this.playSound("SoundEffects/Ninja Jump 1.WAV");
+         }
+   
+
+           if(state instanceof Model.States.Terro.Jump)
+         {
+             this.playSound("SoundEffects/Ninja Jump 5.WAV");
+         }
+           
+         if(state instanceof Model.States.Terro.WindmillShuriken)
+         {
+             this.playSound("SoundEffects/Ninja Jump 3.WAV");
+         }  
+         if(state instanceof Model.States.Terro.ShurikenThrow)
+         {
+             this.playSound("SoundEffects/Ninja Jump 2.WAV");
+         }
          if(state instanceof Model.States.Rai.Movement)
          {
               this.playSound("SoundEffects/walk.mp3");

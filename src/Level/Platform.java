@@ -27,7 +27,7 @@ public class Platform extends GameFigure{
     @Override
     public void render(Graphics g) {
          Graphics2D g2 = (Graphics2D)g;
-        g2.setColor(Color.blue);
+        g2.setColor(Color.green);
         g2.draw(collisionBox);
         g2.fill(collisionBox);
         super.health = 1000;

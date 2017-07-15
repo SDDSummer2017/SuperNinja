@@ -78,6 +78,9 @@ public class Default extends CombatState{
                 break;
             default:
                 break;
+                
         }
+        gameFigure.cState.notifyObservers();
+        gameFigure.mState.notifyObservers();
     }
 }
