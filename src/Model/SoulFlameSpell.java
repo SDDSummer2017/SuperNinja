@@ -7,12 +7,9 @@ package Model;
 
 import Controller.Main;
 import StatusEffects.DamageEffect;
-import View.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
-import javax.vecmath.Vector2d;
 import javax.vecmath.Vector2f;
 
 /**
@@ -42,7 +39,7 @@ public class SoulFlameSpell extends Enemy {
         targetPath.normalize();
         targetPath.scale(moveDistance);
         
-        hitbox = new HitBox(x - size/2, y - size/2, (int)super.size * 2, (int)super.size * 2, this, new DamageEffect(this, 10, 5000));
+        hitbox = new HitBox(x - size/2, y - size/2, 40, 40, this, new DamageEffect(this, 10, 5000));
         Main.gameData.addGameData(hitbox); 
         
     }
@@ -50,7 +47,7 @@ public class SoulFlameSpell extends Enemy {
     @Override
     public void render(Graphics g) {
         g.setColor(color);
-        g.fillOval((int)x - (int)super.size, (int)y - (int)super.size, (int)super.size * 2, (int)super.size * 2);   
+        g.fillOval((int)x - (int)super.size, (int)y - (int)super.size, (int)super.size, (int)super.size);   
     }
     @Override
     public void update() {       

@@ -6,11 +6,10 @@
 package Model;
 
 import EventHandling.Observer;
-import Model.States.CombatState;
-import Model.States.MotionState;
 import Model.States.Sage.Chant;
 import Model.States.Sage.NeutralMotion;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
@@ -32,10 +31,7 @@ public class Sage extends Enemy {
         ArrayList<Observer> observers = new ArrayList<>();
         super.mState = new NeutralMotion(this, observers);
         super.cState = new Chant(this, observers);
-        this.health = 120;
-        
-        //System.out.println("mState = " + super.mState);
-        //System.out.println("cState = " + super.cState);
+        this.health = 70; 
         
         String imagePath = System.getProperty("user.dir");
         String separator = System.getProperty("file.separator");
@@ -55,19 +51,17 @@ public class Sage extends Enemy {
                 + "Static.png");
     }
     
-    // the following count functions are only used for the placeholders until animation
-    // is implemented.
-    
     @Override
     public void render(Graphics g) {
         g.drawImage(image, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
        super.render(g);
+       
+       ((Graphics2D)g).draw(getCollisionBox()); 
     }
 
     @Override
     public void update() {
-        super.update(); 
-        
+        super.update();  
         mState.execute();
         cState.execute();
     }

@@ -1,9 +1,7 @@
 package Controller;
 
 import Model.Nen;
-import Model.Shuriken; 
 import Model.States.Nen.ThrowingMode;
-import java.awt.Color; 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.SwingUtilities;
@@ -37,7 +35,7 @@ public class MouseController implements MouseListener {
     if(SwingUtilities.isLeftMouseButton(me) && nen.cState instanceof ThrowingMode )
        ((ThrowingMode)nen.cState).throwShuriken(me.getX(), me.getY());
     else if(SwingUtilities.isRightMouseButton(me))
-        nen.cState.nextState("ThrowingMode");
+       nen.cState.nextState("ThrowingMode"); 
  
     }
 

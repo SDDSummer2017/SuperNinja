@@ -6,6 +6,7 @@
 package Model;
 
 import Controller.Main;
+import StatusEffects.DamageEffect;
 import StatusEffects.StatusEffect;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -40,10 +41,15 @@ public class HitBox implements Collision, Renderable, Updateable {
         this.statusEffects = new ArrayList<>();
         for(StatusEffect se : statusEffects)
             this.statusEffects.add(se); 
-    }   
+    }    
  
     public void translate(double x, double y){
         collisionBox = new Rectangle2D.Double(x, y, width, length);
+    }
+    
+    public void translate(double x, double y, double width, double height)
+    {
+        collisionBox = new Rectangle2D.Double(x, y, width, height);
     }
      
     @Override
@@ -55,12 +61,8 @@ public class HitBox implements Collision, Renderable, Updateable {
        g2.fill(collisionBox); 
        g2.setColor(Color.black); 
        
-    }
+    } 
     
-    public void hadHitBox(){
-        
-    }
-
     @Override
     public void update() {} 
     

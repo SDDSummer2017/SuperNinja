@@ -8,8 +8,7 @@ package Model.States.Sage;
 import Controller.Main;
 import EventHandling.Observer;
 import Model.GameFigure;
-import Model.States.MotionState;
-import Model.States.Terro.Neutral;
+import Model.States.MotionState; 
 import java.util.ArrayList;
 
 /**
@@ -40,8 +39,11 @@ public class Teleport extends MotionState {
 
     @Override
     public void nextState(String s) {
-        
-        gameFigure.mState = new NeutralMotion(gameFigure, observers);
+        if(s.equals("NeutralMotion"))
+        {
+            gameFigure.cState = new SoulFlame(gameFigure, observers);
+            gameFigure.mState = new NeutralMotion(gameFigure, observers);
+        }
     }
     
     

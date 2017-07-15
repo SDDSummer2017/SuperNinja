@@ -21,7 +21,7 @@ import java.util.Random;
 public class Chant extends CombatState{
 
     private final static int SOUL_FLAME_CHANT_TIME = 5000;
-    private final static int FLAME_CANNON_CHANT_TIME = 2000;
+   // private final static int FLAME_CANNON_CHANT_TIME = 2000;
     private final static int FLAME_DRAGON_CHANT_TIME = 8000;
     private long chantTime;
     
@@ -44,19 +44,32 @@ public class Chant extends CombatState{
           if(System.currentTimeMillis() - initTime >= FLAME_DRAGON_CHANT_TIME)
               nextState("FlameDragon");
         }
-        else if(nextSpell == Spell.FLAME_CANNON)
+        else if(nextSpell == Spell.SOUL_FLAME)        
+        if(System.currentTimeMillis() - initTime >= SOUL_FLAME_CHANT_TIME)
         {
-            if(System.currentTimeMillis() - initTime >= FLAME_CANNON_CHANT_TIME)
-                nextState("FlameCannon");
-            
-        }else if(nextSpell == Spell.SOUL_FLAME)        
-            if(System.currentTimeMillis() - initTime >= SOUL_FLAME_CHANT_TIME)
-            {
-                if(canCastFlameCannon())
-                    nextSpell = Spell.FLAME_CANNON;
-                else if(nextSpell == Spell.SOUL_FLAME)
-                    nextState("SoulFlame");
-            }
+            if(canCastFlameCannon())
+                nextSpell = Spell.FLAME_CANNON;
+            else if(nextSpell == Spell.SOUL_FLAME)
+                nextState("SoulFlame");
+        }
+//        if(nextSpell == Spell.FLAME_DRAGON)
+//        {
+//          if(System.currentTimeMillis() - initTime >= FLAME_DRAGON_CHANT_TIME)
+//              nextState("FlameDragon");
+//        }
+//        else if(nextSpell == Spell.FLAME_CANNON)
+//        {
+//            if(System.currentTimeMillis() - initTime >= FLAME_CANNON_CHANT_TIME)
+//                nextState("FlameCannon");
+//            
+//        }else if(nextSpell == Spell.SOUL_FLAME)        
+//            if(System.currentTimeMillis() - initTime >= SOUL_FLAME_CHANT_TIME)
+//            {
+//                if(canCastFlameCannon())
+//                    nextSpell = Spell.FLAME_CANNON;
+//                else if(nextSpell == Spell.SOUL_FLAME)
+//                    nextState("SoulFlame");
+//            }
          
     }
 
@@ -75,6 +88,7 @@ public class Chant extends CombatState{
         Random rand = new Random(); 
         int  n = rand.nextInt(10) + 1;
         
+        if(previousState instanceof FlameDragon)
         if(n >= 7)
             nextSpell = Spell.FLAME_DRAGON;
         else
