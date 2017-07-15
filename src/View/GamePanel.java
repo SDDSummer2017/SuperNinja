@@ -6,7 +6,6 @@ import Controller.QuadTree;
  
 import EventHandling.CollisionHandler;
  
-import Level.Platform;
  
 import Model.Collision;
 import java.awt.Color;
@@ -16,20 +15,18 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JPanel;
 import Model.GameFigure;
-import Model.HitBox;
+import Model.Nen;
 import view.Camera;
 import static Model.Nen.getImage;
  
  
-import Model.Shuriken;
 import java.awt.Graphics2D;
  
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import javax.swing.KeyStroke;
 
 public class GamePanel extends JPanel {
-
+    
     public static final int CAMERA_WIDTH = 1000;
     public static final int CAMERA_HEIGHT = 740;
     
@@ -54,6 +51,8 @@ public class GamePanel extends JPanel {
                 + "Background.jpg");
         camera = new Camera(WORLD_WIDTH, WORLD_HEIGHT, CAMERA_WIDTH, CAMERA_HEIGHT);
         tree = new QuadTree(7, 5, 0, 0, WORLD_WIDTH, WORLD_HEIGHT);
+         
+        
     }
 
     /*
@@ -118,5 +117,61 @@ public class GamePanel extends JPanel {
         }
  
     }
+    
+      public boolean checkWallLeftJump(){
+        QuadTree jump = new QuadTree(7, 5, 0, 0, WORLD_WIDTH, WORLD_HEIGHT);
+        GameFigure nen = Main.gameData.nen;
+        for(GameFigure gf : Main.gameData.level.terrain)
+            jump.insert(gf);
+        jump.insert(nen);
+        
+        ArrayList<Collision> possibleJumps = jump.getList(nen);
+        
+       
+        for(Collision c : possibleJumps)
+        {
+            if(c instanceof Nen)
+                System.out.println("Nen : (" + c.getCollisionBox().getX() + ", " + c.getCollisionBox().getY() + ") "); 
+            else
+                System.out.println("Terrian : (" + c.getCollisionBox().getX() + ", " + c.getCollisionBox().getY() + ") ");
+            
+            if(Math.abs(c.getCollisionBox().getX() - (nen.x + nen.getCollisionBox().width )) <= 30 && 
+                    nen.y  >=  c.getCollisionBox().getY() && 
+                    nen.y  <= c.getCollisionBox().getY() + c.getCollisionBox().height)
+                if(!(c instanceof Nen))
+                    return true;
+           
+        }
+        
+            return false;
+       }
+      
+        public boolean checkWallRightJump(){
+            QuadTree jump = new QuadTree(7, 5, 0, 0, WORLD_WIDTH, WORLD_HEIGHT);
+            GameFigure nen = Main.gameData.nen;
+            for(GameFigure gf : Main.gameData.level.terrain)
+                jump.insert(gf);
+            jump.insert(nen);
+
+            ArrayList<Collision> possibleJumps = jump.getList(nen);
+
+
+            for(Collision c : possibleJumps)
+            {
+                if(c instanceof Nen)
+                    System.out.println("Nen : (" + c.getCollisionBox().getX() + ", " + c.getCollisionBox().getY() + ") "); 
+                else
+                    System.out.println("Terrian : (" + c.getCollisionBox().getX() + ", " + c.getCollisionBox().getY() + ") ");
+
+                if(Math.abs(c.getCollisionBox().getX() + c.getCollisionBox().getWidth() - nen.x) <= 30 && 
+                        nen.y  >=  c.getCollisionBox().getY() && 
+                        nen.y  <= c.getCollisionBox().getY() + c.getCollisionBox().height)
+                    if(!(c instanceof Nen))
+                        return true;
+
+            }
+                return false;
+        }    
+        
 }
  

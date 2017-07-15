@@ -17,10 +17,15 @@ import java.util.ArrayList;
  */
 public class NeutralCombat extends CombatState {
 
+    private static int THROWING_MODE_DELAY = 3000;
+    private long throwCoolDown;
+    
      public NeutralCombat(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers) ;
+        gameFigure.damage = 0;  
+        throwCoolDown = System.currentTimeMillis(); 
         
-        gameFigure.damage = 0; 
+        
     }
 
     @Override
@@ -34,8 +39,10 @@ public class NeutralCombat extends CombatState {
             gameFigure.cState = new LightAttack(gameFigure, this.observers);
         else if(s.equals("HeavyAttack"))
             gameFigure.cState = new HeavyAttack(gameFigure, this.observers);
+        else if(s.equals("ThrowingMode") && System.currentTimeMillis() - throwCoolDown > THROWING_MODE_DELAY)
+            gameFigure.cState = new ThrowingMode(gameFigure, this.observers);
+        
         gameFigure.cState.notifyObservers();
     }
-    
 }
  
