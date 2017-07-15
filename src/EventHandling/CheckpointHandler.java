@@ -54,6 +54,7 @@ public class CheckpointHandler implements Observer{
                     gameData.nen.y = gameData.level.nenStartY;
                     gameData.titleCard = new TitleCard(gamePanel);
                     gameData.notifyObservers("Level Two");
+                    
                    
                 }
         
@@ -78,7 +79,8 @@ public class CheckpointHandler implements Observer{
                 gameData.level.addGameData(new Kisara(((Spawner)checkpoint).x + 35, ((Spawner)checkpoint).y, 100));
             }
             }
-            ((Spawner)checkpoint).spawned = true; 
+            ((Spawner)checkpoint).spawned = true;
+            
         }
          
     }

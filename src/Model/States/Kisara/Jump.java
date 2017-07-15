@@ -45,6 +45,9 @@ public class Jump extends MotionState{
             default:
                 break;
         }
+        
+        gameFigure.cState.notifyObservers();
+        gameFigure.mState.notifyObservers();
     }
     
 }
