@@ -6,6 +6,7 @@
 package Model;
 
 import Controller.Main;
+import static Controller.Main.gameData;
 import StatusEffects.DamageEffect;
 import View.GamePanel;
 import java.awt.Color;
@@ -21,6 +22,8 @@ public class ProjectileWindmillShuriken extends Projectiles{
     
     public boolean direction;
     public boolean finnished;
+    public double secondX;
+    public double secondY;
     
     public ProjectileWindmillShuriken(double x, double y, double tx, double ty, Color color, boolean isGoodGuy, int d, double s) {
         super(x, y, tx, ty, color, isGoodGuy, d, s);
@@ -32,6 +35,8 @@ public class ProjectileWindmillShuriken extends Projectiles{
         this.size = 30;
         this.currentLocation = new Vector2f((float)super.x, (float)super.y);
         this.targetPath = new Vector2f((float)targetX,(float)targetY);
+        secondY = ty;
+        Nen n = Main.gameData.nen;
         targetPath.sub(currentLocation);
         targetPath.scale((float) Math.sqrt((double)(GamePanel.CAMERA_HEIGHT * GamePanel.CAMERA_HEIGHT) *
                 (double)(GamePanel.CAMERA_WIDTH * GamePanel.WIDTH)));
@@ -40,6 +45,13 @@ public class ProjectileWindmillShuriken extends Projectiles{
         
         hitbox = new HitBox(x, y, (int)super.size * 2, (int)super.size * 2, this, new DamageEffect(this, 10, 5000));
         Main.gameData.addGameData(hitbox);
+        if (n.x < this.x){
+            direction = true;
+        }
+        else{
+            direction = false;
+        }
+        
     }
     
     @Override
@@ -55,28 +67,36 @@ public class ProjectileWindmillShuriken extends Projectiles{
     @Override
     public void update() {       
         Nen n = Main.gameData.nen;
-       System.out.println("Windmill.y = " + super.y);
+       //System.out.println("Windmill.y = " + super.y);
         currentLocation.add(targetPath);
         
         super.x = currentLocation.x;
         super.y = currentLocation.y;
         hitbox.translate(super.x, super.y);
-        if (super.y + size >= 200){
-            if (super.x < n.x){
-                direction = true;
-            }
-            else{
-                direction = false;
-            }
-            
+        
+        if (super.y >= secondY){
             if (direction && !finnished){
-                this.targetX = n.x + 500;
+                this.currentLocation = new Vector2f((float)super.x, (float)super.y);
+                this.targetPath = new Vector2f((float)super.x - 500,(float)super.y);
+                this.targetPath.sub(currentLocation);
+                this.targetPath.scale((float) Math.sqrt((double)(GamePanel.CAMERA_HEIGHT * GamePanel.CAMERA_HEIGHT) *
+                (double)(GamePanel.CAMERA_WIDTH * GamePanel.WIDTH)));
+                this.targetPath.normalize();
+                this.targetPath.scale(moveDistance);
             }
             else if(!direction && !finnished){
-                this.targetX = n.x - 500;
+                this.currentLocation = new Vector2f((float)super.x, (float)super.y);
+                this.targetPath = new Vector2f((float)super.x + 500,(float)super.y);
+                this.targetPath.sub(currentLocation);
+                this.targetPath.scale((float) Math.sqrt((double)(GamePanel.CAMERA_HEIGHT * GamePanel.CAMERA_HEIGHT) *
+                (double)(GamePanel.CAMERA_WIDTH * GamePanel.WIDTH)));
+                this.targetPath.normalize();
+                this.targetPath.scale(moveDistance);
             }
             else if(finnished){
                 this.health = 0;
+                
+                gameData.removeGameData(this);
             }
             else{}
         }
