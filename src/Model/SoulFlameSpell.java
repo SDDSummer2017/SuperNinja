@@ -7,9 +7,12 @@ package Model;
 
 import Controller.Main;
 import StatusEffects.DamageEffect;
+import View.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import javax.vecmath.Vector2d;
 import javax.vecmath.Vector2f;
 
 /**
@@ -41,6 +44,7 @@ public class SoulFlameSpell extends Enemy {
         
         hitbox = new HitBox(x - size/2, y - size/2, 40, 40, this, new DamageEffect(this, 10, 5000));
         Main.gameData.addGameData(hitbox); 
+        
         
     }
     

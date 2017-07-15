@@ -32,26 +32,26 @@ public class Chant extends CombatState{
     public Chant(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
         determineNextSpell();
-        ((Sage)gameFigure).image = ((Sage)gameFigure).neutral;
+        ((Sage)gameFigure).image = ((Sage)gameFigure).staticImage;
     }
 
     @Override
     public void execute() { 
-         ((Sage)gameFigure).image = ((Sage)gameFigure).neutral;
-        
+         ((Sage)gameFigure).image = ((Sage)gameFigure).staticImage;
+  
         if(nextSpell == Spell.FLAME_DRAGON)
         {
           if(System.currentTimeMillis() - initTime >= FLAME_DRAGON_CHANT_TIME)
               nextState("FlameDragon");
         }
         else if(nextSpell == Spell.SOUL_FLAME)        
-        if(System.currentTimeMillis() - initTime >= SOUL_FLAME_CHANT_TIME)
-        {
-            if(canCastFlameCannon())
-                nextSpell = Spell.FLAME_CANNON;
-            else if(nextSpell == Spell.SOUL_FLAME)
-                nextState("SoulFlame");
-        }
+            if(System.currentTimeMillis() - initTime >= SOUL_FLAME_CHANT_TIME)
+            {
+                if(nextSpell == Spell.SOUL_FLAME)
+                    nextState("SoulFlame");
+            }
+         
+         
 //        if(nextSpell == Spell.FLAME_DRAGON)
 //        {
 //          if(System.currentTimeMillis() - initTime >= FLAME_DRAGON_CHANT_TIME)
@@ -88,7 +88,6 @@ public class Chant extends CombatState{
         Random rand = new Random(); 
         int  n = rand.nextInt(10) + 1;
         
-        if(previousState instanceof FlameDragon)
         if(n >= 7)
             nextSpell = Spell.FLAME_DRAGON;
         else

@@ -7,6 +7,7 @@ package Model.States.Sage;
 
 import EventHandling.Observer;
 import Model.GameFigure;
+import Model.Sage;
 import Model.States.CombatState;
 import java.util.ArrayList;
 
@@ -19,6 +20,7 @@ public class NeutralCombat extends CombatState {
     
     public NeutralCombat(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
+        ((Sage)gameFigure).image = ((Sage)gameFigure).staticImage;
     }
 
     @Override

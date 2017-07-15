@@ -9,6 +9,7 @@ import Controller.Main;
 import EventHandling.Observer;
 import Model.Enemy;
 import Model.GameFigure;
+import Model.Sage;
 import Model.SoulFlameSpell;
  
 import Model.States.CombatState; 
@@ -27,6 +28,7 @@ public class SoulFlame extends CombatState {
         super(gameFigure, observers); 
         ((Enemy)gameFigure).image = ((Enemy)gameFigure).neutral; 
         Main.gameData.addGameData(new SoulFlameSpell(gameFigure.x , gameFigure.y, Main.gameData.nen.x, Main.gameData.nen.y));
+        ((Sage)gameFigure).image = ((Sage)gameFigure).throwImage;
     }
 
     @Override

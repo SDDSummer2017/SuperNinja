@@ -44,7 +44,7 @@ public class Sage extends Enemy {
         super.block = getImage(imagePath + separator + "images" + separator
                 + "Block.png");
         super.neutral = getImage(imagePath + separator + "images" + separator
-                + "Static.png");
+                + "Neutral.png");
         super.throwImage = getImage(imagePath + separator + "images" + separator
                 + "Throw.png");
         super.staticImage = getImage(imagePath + separator + "images" + separator
@@ -54,9 +54,7 @@ public class Sage extends Enemy {
     @Override
     public void render(Graphics g) {
         g.drawImage(image, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-       super.render(g);
-       
-       ((Graphics2D)g).draw(getCollisionBox()); 
+       super.render(g); 
     }
 
     @Override

@@ -8,6 +8,7 @@ package Model.States.Sage;
 import Controller.Main;
 import EventHandling.Observer;
 import Model.GameFigure;
+import Model.Sage;
 import Model.States.MotionState; 
 import java.util.ArrayList;
 
@@ -24,7 +25,7 @@ public class Teleport extends MotionState {
             distance = -250;
         else
             distance = 250;
-        System.out.print("Teleport state");
+        ((Sage)gameFigure).image = ((Sage)gameFigure).movement;
             
     }
 

@@ -10,6 +10,7 @@ import EventHandling.Observer;
 import Model.FlameDragonSpell;
 import Model.GameFigure;
 import Model.HitBox;
+import Model.Sage;
 import Model.States.CombatState;
 import StatusEffects.DamageEffect;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class FlameDragon extends CombatState {
            direction = 1; 
        
        spell = new FlameDragonSpell(gameFigure.x, gameFigure.y, 50, direction);
+       ((Sage)gameFigure).image = ((Sage)gameFigure).throwImage;
        Main.gameData.addGameData(spell);
     }
 
