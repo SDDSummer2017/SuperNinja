@@ -60,7 +60,7 @@ public class Rai extends Enemy {
         
     @Override
     public void render(Graphics g) {
-        g.drawImage(image, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+      
         super.render(g);
         
         Image frameImage;
