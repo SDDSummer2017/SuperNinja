@@ -27,7 +27,7 @@ public class SoulFlame extends CombatState {
     public SoulFlame(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers); 
         ((Enemy)gameFigure).image = ((Enemy)gameFigure).neutral; 
-        Main.gameData.addGameData(new SoulFlameSpell(gameFigure.x , gameFigure.y, Main.gameData.nen.x, Main.gameData.nen.y));
+        Main.gameData.addGameData(new SoulFlameSpell(gameFigure.x , gameFigure.y, Main.gameData.nen.x + Main.gameData.nen.size/2, Main.gameData.nen.y + Main.gameData.nen.size/2));
         ((Sage)gameFigure).image = ((Sage)gameFigure).throwImage;
     }
 
