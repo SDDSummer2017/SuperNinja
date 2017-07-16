@@ -55,7 +55,7 @@ public class FlameDragonSpell extends Enemy {
             double y_displacement = h.getCollisionBox().y;
             double incX = incrementX(x_displacement);
             double incY = incrementY(incX); 
-            h.translate(incX, incY + y_displacement); 
+            h.translate(incX, (incY * direction * -1) + y_displacement); 
         }
         remove();
     }
