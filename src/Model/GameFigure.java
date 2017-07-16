@@ -178,11 +178,11 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
                 deathAnimation[i] = getImage(deathPath + separator + "Dead__00" + i + ".png");
             }
         }
-        //Projectile Animation
+        /*        //Projectile Animation
         for(int i=0;i<runAnimation.length;i++){
-            projectileAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Projectile" + separator
-                + "Projectile__00" + i + ".png");          
-        }
+        projectileAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Projectile" + separator
+        + "Projectile__00" + i + ".png");
+        }*/
     }
     public boolean fileExists(String path){
         return new File(path).exists();
