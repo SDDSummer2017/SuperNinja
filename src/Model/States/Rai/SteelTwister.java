@@ -52,7 +52,7 @@ public class SteelTwister extends CombatState{
             hitBox.translate(gameFigure.x - gameFigure.size / 4, gameFigure.y + (gameFigure.size / 2));
         }
         
-        if((System.currentTimeMillis()  - initTime >= DURATION) && Math.abs(n.x - gameFigure.x) <= 50){
+        if((System.currentTimeMillis()  - initTime >= DURATION) || Math.abs(n.x - gameFigure.x) >= 50){
             nextState("Default");
         }
     }
