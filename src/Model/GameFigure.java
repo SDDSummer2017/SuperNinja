@@ -43,7 +43,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     public boolean isGoodGuy;
       //Animation Attributes
     public int moveFrameIndex, idleFrameIndex, jumpFrameIndex, attackFrameIndex, deathFrameIndex;
-    public boolean jump, movingLeft, movingRight ;
+    public boolean jump, movingLeft, movingRight, diedFacingRight;
     public Image staticImage;
     public final Image[] runAnimation, idleAnimation, jumpAnimation, dashAnimation, deathAnimation; 
     public final Image[] lightAttackAnimation, heavyAttackAnimation, rangeAttackAnimation;
@@ -107,6 +107,8 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         this.idleAnimation = new Image[animationLength];
         this.jumpAnimation = new Image[animationLength];
         this.staticImage = null;
+        
+        this.diedFacingRight = false;
         
         this.loadAnimations(name);
     }

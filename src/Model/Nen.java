@@ -74,8 +74,12 @@ public class Nen extends GameFigure {
             idleFrameIndex = 0;
             jumpFrameIndex = 0;
             
+            
             //Select frame image based on which direction Nen is facing
-            frameImage = (isFacingRight) ? deathAnimation[deathFrameIndex] : GameFigure.flipImageHorizontally(deathAnimation[deathFrameIndex]);
+            if (deathFrameIndex == 0 ){
+                diedFacingRight = isFacingRight;
+            }
+            frameImage = (diedFacingRight) ? deathAnimation[deathFrameIndex] : GameFigure.flipImageHorizontally(deathAnimation[deathFrameIndex]);
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             deathFrameIndex = (deathFrameIndex == deathAnimation.length-1) ? deathFrameIndex : deathFrameIndex + 1;                 
