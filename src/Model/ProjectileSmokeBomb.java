@@ -42,7 +42,7 @@ public class ProjectileSmokeBomb extends Projectiles{
         targetPath.normalize();
         targetPath.scale(moveDistance);
         
-        hitbox = new HitBox(x, y, (int)super.size * 2, (int)super.size * 2, this, new DamageEffect(this, 10, 5000));
+        hitbox = new HitBox(x, y, (int)super.size * 2, (int)super.size * 2, this, new DamageEffect(this, 0, 5000));
         Main.gameData.addGameData(hitbox);
     }
     
@@ -72,9 +72,11 @@ public class ProjectileSmokeBomb extends Projectiles{
         //System.out.println("Grow is Called in ProjectileSmokeBomb");
         if (super.size + growth >= 100){
             finnished = true;
+            Main.gameData.removeGameData(hitbox);
+            Main.gameData.removeGameData(this);
         }
         else{
-            ProjectileSmokeBomb a = new ProjectileSmokeBomb(this.x, this.y - growth, this.x, this.y, BLUE, false, 0, this.size + growth);
+            ProjectileSmokeBomb a = new ProjectileSmokeBomb(this.x, this.y - (2 * growth), this.x, this.y, BLUE, false, 0, this.size + growth);
             a.size = this.size + growth;
             Main.gameData.addGameData(a);
             Main.gameData.removeGameData(this);
