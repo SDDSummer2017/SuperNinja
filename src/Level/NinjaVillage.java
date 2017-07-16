@@ -112,19 +112,19 @@ public class NinjaVillage extends Level {
  
        
  
-       Rai rai = new Rai((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100);
+       Rai rai = new Rai((GamePanel.CAMERA_WIDTH), 440, 100);
        addGameData(rai);
       
        rai.cState.registerObserver(new SoundHandler(""));
        rai.mState.registerObserver(new SoundHandler(""));
        
-       Kisara kisara = new Kisara((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100); 
+       Kisara kisara = new Kisara((GamePanel.CAMERA_WIDTH), 440 - 90, 100); 
        addGameData(kisara);   
        kisara.cState.registerObserver(new SoundHandler(""));
        kisara.mState.registerObserver(new SoundHandler(""));
        
        
-       Terro terro = new Terro((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100);
+       Terro terro = new Terro((GamePanel.CAMERA_WIDTH), 440 - 90, 100);
        addGameData(terro);
       
        terro.cState.registerObserver(new SoundHandler(""));

@@ -57,7 +57,8 @@ public class ThrowingMode extends CombatState{
         }
     }
     
-    public boolean getCoolDown(){
+    public boolean getCoolDown
+        (){
         if(System.currentTimeMillis() - lastEntered >= COOL_DOWN)
             return true;
         else
