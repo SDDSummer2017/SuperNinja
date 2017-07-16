@@ -1,5 +1,6 @@
 package Model;
 
+import Controller.Main;
 import EventHandling.Observer;
 import Model.States.Nen.NeutralCombat;
 import Model.States.Nen.NeutralMotion;
@@ -8,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import View.GamePanel;
 import EventHandling.SoundHandler; 
+import Model.States.Death;
 import Model.States.Nen.Dash;
 import Model.States.Nen.Move;
 import Model.States.Nen.Jump;
@@ -164,8 +166,16 @@ public class Nen extends GameFigure {
     @Override
     public void update() {
  
-        //Apply Status Effect
-        super.update();
+        
+        //super.update();
+        
+        //Eventually all this will be moved to gameFigure
+        effectsManager.applyEffects(this);
+        
+        if(this.health <= 0) 
+        {
+            cState = new Death(this, cState.observers);
+        }   
         
         if(cState instanceof NeutralCombat)
             mState.execute();
