@@ -9,6 +9,7 @@ import EventHandling.Observer;
 import Model.States.CombatState;
 import Model.States.MotionState;
 import Model.States.Rai.Default;
+import Model.States.Rai.Movement;
 import Model.States.Rai.Neutral;
 import View.GamePanel;
 import java.awt.Color;
@@ -29,7 +30,7 @@ public class Rai extends Enemy {
     public int c; // used as a display count for placeholders only
     
     public Rai(double x, double y, double size) {
-        super(x, y, size);
+        super(x, y, size, 10, "Enemy");
         
         ArrayList<Observer> observers = new ArrayList<>();
         super.mState = new Neutral(this, observers);
@@ -55,6 +56,44 @@ public class Rai extends Enemy {
                 + "Throw.png");
         super.staticImage = getImage(imagePath + separator + "images" + separator
                 + "Static.png");
+    }
+        
+    @Override
+    public void render(Graphics g) {
+        g.drawImage(image, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+        super.render(g);
+        
+        Image frameImage;
+        
+        if(mState instanceof Movement)
+        {
+            //If we are moving, reset the idle animtion frame index
+            idleFrameIndex = 0;
+            jumpFrameIndex = 0;
+            attackFrameIndex = 0;
+            
+            //Select frame image based on which direction Nen is facing
+            frameImage = (isFacingRight) ? runAnimation[moveFrameIndex] : GameFigure.flipImageHorizontally(runAnimation[moveFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            moveFrameIndex = (moveFrameIndex == runAnimation.length-1) ? 0 : moveFrameIndex + 1;
+        }
+
+        else
+        {
+            //If they are standing still we need to reset the frameCounter
+            moveFrameIndex = 0;               
+            jumpFrameIndex = 0;
+            attackFrameIndex = 0;
+
+            //Select frame image based on which direction Nen is facing
+            frameImage = (isFacingRight) ? idleAnimation[idleFrameIndex] : GameFigure.flipImageHorizontally(idleAnimation[idleFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            idleFrameIndex = (idleFrameIndex == idleAnimation.length-1) ? 0 : idleFrameIndex + 1;
+        
+        }
+    
     }
     
     // the following count functions are only used for the placeholders until animation
@@ -111,12 +150,6 @@ public class Rai extends Enemy {
     @Override
     public void setImage(Image i){
         this.image = i;
-    }
-    
-    @Override
-    public void render(Graphics g) {
-        g.drawImage(image, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-       super.render(g);
     }
 
     @Override

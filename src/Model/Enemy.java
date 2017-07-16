@@ -38,6 +38,11 @@ public abstract class Enemy extends GameFigure {
         super(x, y, size, false);
         image = null;
     }
+    //
+    public Enemy(double x, double y, double size, int aLength, String name) {
+        super(x, y, size, aLength, name, false);
+        image = null;
+    }
 
     public void setMState(MotionState state){}
     

@@ -15,6 +15,8 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
  
@@ -40,10 +42,10 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     public HitBox hitbox;
     public boolean isGoodGuy;
       //Animation Attributes
-    public int moveFrameIndex, idleFrameIndex, jumpFrameIndex, attackFrameIndex;
-    public boolean jump, movingLeft, movingRight ;
+    public int moveFrameIndex, idleFrameIndex, jumpFrameIndex, attackFrameIndex, deathFrameIndex;
+    public boolean jump, movingLeft, movingRight, diedFacingRight;
     public Image staticImage;
-    public final Image[] runAnimation, idleAnimation, jumpAnimation, dashAnimation; 
+    public final Image[] runAnimation, idleAnimation, jumpAnimation, dashAnimation, deathAnimation; 
     public final Image[] lightAttackAnimation, heavyAttackAnimation, rangeAttackAnimation;
     
  
@@ -69,7 +71,8 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
  
         maxHealth = health; 
   
-        this.moveFrameIndex = this.idleFrameIndex = this.jumpFrameIndex = 0;
+        this.moveFrameIndex = this.idleFrameIndex = this.jumpFrameIndex = this.deathFrameIndex = 0;
+        this.deathAnimation = null;
         this.runAnimation = null;
         this.dashAnimation = null;
         this.lightAttackAnimation = null;
@@ -95,6 +98,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
  
         maxHealth = health;
  
+        this.deathAnimation = new Image[animationLength];
         this.runAnimation = new Image[animationLength];
         this.dashAnimation = new Image[animationLength];
         this.lightAttackAnimation = new Image[animationLength];
@@ -104,50 +108,77 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         this.jumpAnimation = new Image[animationLength];
         this.staticImage = null;
         
+        this.diedFacingRight = false;
+        
         this.loadAnimations(name);
     }
     //Prviate so that it can be called from constructor
     private void loadAnimations(String name){
-        String imagePath = System.getProperty("user.dir");
+        String baseDirectory = System.getProperty("user.dir");
         String separator = System.getProperty("file.separator");
+        String imagePath = baseDirectory + separator + "images" + separator + name;
+        
+
+        String movePath = imagePath + separator + "Run";
+        String idlePath = imagePath + separator + "Idle";
+        String dashPath = imagePath + separator + "Dash"; 
+        String jumpPath = imagePath + separator + "Jump";
+        String deathPath = imagePath + separator + "Death";
+        String lightAttackPath = imagePath + separator + "Light_Attack";
+        String heavyAttackPath = imagePath + separator + "Heavy_Attack";
+        String rangeAttackPath = imagePath + separator + "Range_Attack";
+        
+        
         Image img;
         //Move Animation
         for(int i=0;i<runAnimation.length;i++){
-            runAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Run" + separator
-                + "Run__00" + i + ".png");          
+            runAnimation[i] = getImage(movePath + separator + "Run__00" + i + ".png");          
         }
         //Idle Animation 
         for(int i=0;i<idleAnimation.length;i++){
-            idleAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Idle" + separator
-                + "Idle__00" + i + ".png");
+            idleAnimation[i] = getImage(idlePath + separator + "Idle__00" + i + ".png");
         }
+        
         //Evade Animation 
-        for(int i=0;i<dashAnimation.length;i++){
-            dashAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Dash" + separator
-                + "Slide__00" + i + ".png");
+        if (fileExists(dashPath)){
+            for(int i=0;i<dashAnimation.length;i++){
+                dashAnimation[i] = getImage(dashPath + separator +  "Slide__00" + i + ".png");
+            }
         }
         //Jump Animation
-        for(int i=0;i<jumpAnimation.length;i++){
-            jumpAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Jump" + separator
-                + "Jump__00" + i + ".png");
+        if(fileExists(jumpPath)){
+            for(int i=0;i<jumpAnimation.length;i++){
+                jumpAnimation[i] = getImage(jumpPath + separator + "Jump__00" + i + ".png");
+            }
         }
         //Light Attack Animation
-        for(int i=0;i<lightAttackAnimation.length;i++){
-            lightAttackAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Light_Attack" + separator
-                + "Attack__00" + i + ".png");
+        if (fileExists(lightAttackPath)){
+            for(int i=0;i<lightAttackAnimation.length;i++){
+                lightAttackAnimation[i] = getImage(lightAttackPath + separator + "Attack__00" + i + ".png");
+            }
         }
         //Heavy Attack Right Animation
-        for(int i=0;i<heavyAttackAnimation.length;i++){
-            heavyAttackAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Heavy_Attack" + separator
-                + "Attack__00" + i + ".png");
-        }      
+        if (fileExists(heavyAttackPath)){
+            for(int i=0;i<heavyAttackAnimation.length;i++){
+                heavyAttackAnimation[i] = getImage(heavyAttackPath + separator + "Attack__00" + i + ".png");
+            }  
+        }
         //Ranged Attack Animation
-        for(int i=0;i<rangeAttackAnimation.length;i++){
-            rangeAttackAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Range_Attack" + separator
-                + "Throw__00" + i + ".png");
+        if (fileExists(rangeAttackPath)){
+            for(int i=0;i<rangeAttackAnimation.length;i++){
+                rangeAttackAnimation[i] = getImage(rangeAttackPath + separator + "Throw__00" + i + ".png");
+            }
+        }
+        //Death Animation
+        if (fileExists(deathPath)){
+            for(int i=0;i<deathAnimation.length;i++){
+                deathAnimation[i] = getImage(deathPath + separator + "Dead__00" + i + ".png");
+            }
         }
     }
-    
+    public boolean fileExists(String path){
+        return new File(path).exists();
+    }
     public static Image getImage(String fileName) {
         Image image = null;
         try {
@@ -158,7 +189,6 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         }
         return image;
     }
-    
     public static Image flipImageHorizontally(Image img)
     {
        
