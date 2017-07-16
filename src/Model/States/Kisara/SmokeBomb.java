@@ -33,15 +33,15 @@ public class SmokeBomb extends CombatState{
         Nen n = Main.gameData.nen;
         kis.image = kis.throwImage;
         kis.setImage(kis.image);
-        System.out.println("SmokeBomb");
+        //System.out.println("SmokeBomb");
         if (n.x > gameFigure.x){
             //kisara is to the left of nen
-            Main.gameData.addGameData(new ProjectileSmokeBomb(kis.x, kis.y, kis.x + 10, kis.y + 90, BLUE, false, 10, 3));
+            Main.gameData.addGameData(new ProjectileSmokeBomb(kis.x, kis.y, kis.x + 10, kis.y + 90, BLUE, false, 0, 3));
             gameFigure.x -= 2 * Math.abs(n.x - gameFigure.x);
             nextState("Default");
         }
         else{
-            Main.gameData.addGameData(new ProjectileSmokeBomb(kis.x, kis.y, kis.x - 10, kis.y + 90, BLUE, false, 10, 3));
+            Main.gameData.addGameData(new ProjectileSmokeBomb(kis.x, kis.y, kis.x - 10, kis.y + 90, BLUE, false, 0, 3));
             gameFigure.x += 2 * Math.abs(n.x - gameFigure.x);
             nextState("Default");
         }

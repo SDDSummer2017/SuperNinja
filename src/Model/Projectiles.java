@@ -43,6 +43,7 @@ public abstract class Projectiles extends GameFigure{
     
     @Override
     public void render(Graphics g) {}
+    
     @Override
     public void update() {super.update();}
 

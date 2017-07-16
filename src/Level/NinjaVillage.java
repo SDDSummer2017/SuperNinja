@@ -125,20 +125,18 @@ public class NinjaVillage extends Level {
         
         rai.cState.registerObserver(new SoundHandler(""));
         rai.mState.registerObserver(new SoundHandler(""));
-        */
-        /*Kisara kisara = new Kisara((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100);
+       */
+        Kisara kisara = new Kisara((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100);
         addGameData(kisara);
         
         kisara.cState.registerObserver(new SoundHandler(""));
         kisara.mState.registerObserver(new SoundHandler(""));
-        */
-            
+         
         Terro terro = new Terro((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100);
         addGameData(terro);
         
         terro.cState.registerObserver(new SoundHandler(""));
         terro.mState.registerObserver(new SoundHandler(""));
-        
         
        
         //Get event handlers for game logic.

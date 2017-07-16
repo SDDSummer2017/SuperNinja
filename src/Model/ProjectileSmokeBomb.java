@@ -9,6 +9,7 @@ import Controller.Main;
 import StatusEffects.DamageEffect;
 import View.GamePanel;
 import java.awt.Color;
+import static java.awt.Color.BLUE;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import javax.vecmath.Vector2f;
@@ -20,6 +21,9 @@ import javax.vecmath.Vector2f;
 public class ProjectileSmokeBomb extends Projectiles{
 
     public boolean finnished;
+    public double secondX;
+    public double secondY;
+    private static final int growth = 8;
     
     public ProjectileSmokeBomb(double x, double y, double tx, double ty, Color color, boolean isGoodGuy, int d, double s) {
         super(x, y, tx, ty, color, isGoodGuy, d, s);
@@ -27,8 +31,9 @@ public class ProjectileSmokeBomb extends Projectiles{
         this.targetX = tx;
         this.targetY = ty;
         this.color = color;
-        this.damage = 0;
-        this.size = 3;
+        super.damage = 0;
+        super.size = s;
+        secondY = ty;
         this.currentLocation = new Vector2f((float)super.x, (float)super.y);
         this.targetPath = new Vector2f((float)targetX,(float)targetY);
         targetPath.sub(currentLocation);
@@ -48,26 +53,32 @@ public class ProjectileSmokeBomb extends Projectiles{
     }
     
     @Override
-    public void update() {       
-       
+    public void update() {
         currentLocation.add(targetPath);
-        
         super.x = currentLocation.x;
         super.y = currentLocation.y;
         hitbox.translate(super.x, super.y);
-        if (super.y + size >= 600 && !finnished){
+        if (this.y >= secondY && !finnished){
             grow();
         }
         else if(finnished){
             this.health = 0;
+            Main.gameData.removeGameData(hitbox);
         }
         else{}
     }
 
     public void grow(){
-        this.size += 8;
-        if (this.size >= 100){
+        //System.out.println("Grow is Called in ProjectileSmokeBomb");
+        if (super.size + growth >= 100){
             finnished = true;
+        }
+        else{
+            ProjectileSmokeBomb a = new ProjectileSmokeBomb(this.x, this.y - growth, this.x, this.y, BLUE, false, 0, this.size + growth);
+            a.size = this.size + growth;
+            Main.gameData.addGameData(a);
+            Main.gameData.removeGameData(this);
+            Main.gameData.removeGameData(hitbox);
         }
     }
     

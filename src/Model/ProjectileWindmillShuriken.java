@@ -94,8 +94,8 @@ public class ProjectileWindmillShuriken extends Projectiles{
                 this.targetPath.scale(moveDistance);
             }
             else if(finnished){
-                this.health = 0;
-                
+                super.health = 0;
+                Main.gameData.removeGameData(hitbox);
                 gameData.removeGameData(this);
             }
             else{}
