@@ -111,6 +111,7 @@ public class NinjaVillage extends Level {
         
  
        
+ 
        Rai rai = new Rai((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100);
        addGameData(rai);
       
@@ -135,6 +136,7 @@ public class NinjaVillage extends Level {
        sage.cState.registerObserver(new SoundHandler(""));
        sage.mState.registerObserver(new SoundHandler(""));
        
+ 
        
         //Get event handlers for game logic.
         ArrayList<Object> observers = new ArrayList<>(); 

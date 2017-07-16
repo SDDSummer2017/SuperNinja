@@ -10,6 +10,7 @@ import EventHandling.Observer;
 import Model.GameFigure;
 import static Model.GameFigure.GRAVITY;
 import Model.Nen;
+import Model.ProjectileWindmillShuriken;
 import Model.Shuriken;
 import Model.States.CombatState;
 import Model.Terro;
@@ -48,7 +49,7 @@ public class WindmillShuriken extends CombatState{
         gameFigure.y -= GRAVITY;
         a = ter.getCount();
         if(a >= 10){
-            Main.gameData.addGameData(new Shuriken(ter.x, ter.y, nenX, nenY, BLUE, false));
+            Main.gameData.addGameData(new ProjectileWindmillShuriken(ter.x, ter.y, nenX, nenY, BLUE, false, 30, 30));
             nextState("Default");
         }
         else{

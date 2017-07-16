@@ -52,7 +52,7 @@ public class ThrowingMode extends CombatState{
             lastThrown = System.currentTimeMillis();
             throwCount++; 
             Main.gameData.addGameData(new Shuriken(gameFigure.x + gameFigure.size/2, 
-                   gameFigure.y + gameFigure.size/2, tx, ty, Color.yellow, true)); 
+                   gameFigure.y + gameFigure.size/2, tx, ty, Color.yellow, true, 10, 3)); 
             
         }
     }

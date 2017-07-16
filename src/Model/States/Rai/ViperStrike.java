@@ -9,9 +9,11 @@ import Controller.Main;
 import Controller.TimerListener;
 import EventHandling.Observer;
 import Model.GameFigure;
+import Model.HitBox;
 import Model.Nen;
 import Model.Rai;
 import Model.States.CombatState;
+import StatusEffects.DamageEffect;
 import java.util.ArrayList;
 
 /**
@@ -20,14 +22,23 @@ import java.util.ArrayList;
  */
 public class ViperStrike extends CombatState {
 
+    private static final int DURATION = 500;
+    private static final int OUT = 225;
+    private static final int IN = 450;
+    private static final int DAMAGE = 10;
+    private static final int DISPLACEMENTDISTANCE = 10;
     public TimerListener t;
+    public int displacement;
     
     public ViperStrike(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
         motionState = gameFigure.mState;
         previousState = gameFigure.cState;
         int a = 0;
-        
+        gameFigure.damage = DAMAGE;
+        hitBox =  new HitBox(gameFigure.x + (gameFigure.size/2), (gameFigure.y + gameFigure.size / 2), 30, 10, gameFigure, new DamageEffect(gameFigure, DAMAGE ,5000));
+        Main.gameData.addGameData(hitBox);
+        direction = 0;
     }
 
     @Override
@@ -40,38 +51,50 @@ public class ViperStrike extends CombatState {
         rai.setImage(rai.image);
         Nen n = Main.gameData.nen;
         int a = rai.getCount();
-        
-        /*        if (a >= 100 && (((n.x + n.size) <= gameFigure.x) && (n.x + n.size >= gameFigure.x - gameFigure.size / 2))
-        || (n.x >= gameFigure.x + (gameFigure.size)) && (n.x <= (gameFigure.x + (gameFigure.size / 2) * 3))){
-        this.nextState("SteelTwister");
-        }
-        else if (a >= 150){
-        this.nextState("Default");
+        if (n.x > gameFigure.x){
+            direction = 1;
         }
         else{
-        rai.setCount(a++);
-        }*/
-        //System.out.println("GameFigure.cState = " + previousState);
-        //System.out.println("GameFigure.mState = " + motionState);
-        if(a >= 10){
-           // System.out.println("SteelTwister state called");
+            direction = 0;
+        }
+        if(direction > 0)
+            if(System.currentTimeMillis() - initTime  >= OUT && System.currentTimeMillis() - initTime <= IN)
+            {
+                displacement += DISPLACEMENTDISTANCE;
+                hitBox.translate(gameFigure.x + (gameFigure.size/2) + displacement, gameFigure.y + (gameFigure.size / 2));  
+            }
+            else if(System.currentTimeMillis() - initTime > IN){ 
+                displacement -= DISPLACEMENTDISTANCE;
+                hitBox.translate(gameFigure.x + (gameFigure.size/2) + displacement, gameFigure.y + (gameFigure.size / 2));
+            }
+            else{
+                hitBox.translate(gameFigure.x + (gameFigure.size/2), gameFigure.y + (gameFigure.size / 2));
+            }
+        else{
+            if(System.currentTimeMillis() - initTime  >= OUT && System.currentTimeMillis() - initTime <= IN){
+                displacement += DISPLACEMENTDISTANCE;
+                hitBox.translate(gameFigure.x - displacement, gameFigure.y + gameFigure.size / 2);  
+            } 
+            else if(System.currentTimeMillis()  - initTime > IN){ 
+                displacement -= DISPLACEMENTDISTANCE;
+                hitBox.translate(gameFigure.x + displacement, gameFigure.y + (gameFigure.size / 2));
+            }
+            else{
+                hitBox.translate(gameFigure.x, gameFigure.y + (gameFigure.size / 2));
+            }
+        }
+        if((System.currentTimeMillis()  - initTime >= DURATION) && Math.abs(n.x - gameFigure.x) <= 50){
             a = 0;
             rai.setCount(a);
             nextState("SteelTwister");
-        //    System.out.println("Next input is SteelTwister");
             
         }
-        else if(a >= 15){
-         //   System.out.println("Default state called");
+        else if(System.currentTimeMillis() - initTime >= DURATION){
             a = 0;
             rai.setCount(a);
             nextState("Default");
-        //    System.out.println("Next input is Default");
         }
-        else{
-            a++;
-            rai.setCount(a);
-        }
+        else{}
         gameFigure.mState = new Neutral(this.gameFigure, observers);
     }
 
@@ -79,12 +102,15 @@ public class ViperStrike extends CombatState {
     public void nextState(String s) {
      //   System.out.println("Next input is " + s);
         if(s.equals("SteelTwister")){
+            Main.gameData.removeGameData(hitBox);
             gameFigure.cState = new SteelTwister(this.gameFigure, observers);
         }
         else if(s.equals("Hit")){
+            Main.gameData.removeGameData(hitBox);
             gameFigure.cState = new Hit(this.gameFigure, observers);
         }
         else if(s.equals("Default")){
+            Main.gameData.removeGameData(hitBox);
             gameFigure.cState = new Default(this.gameFigure, observers);
         }
         /* attackBlocked will be implemented when nen Block state is implemented
