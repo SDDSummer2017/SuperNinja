@@ -66,7 +66,19 @@ public class Nen extends GameFigure {
         
         Image frameImage;
         
-        if(cState instanceof LightAttack){
+        if(this.health <= 0){
+            attackFrameIndex = 0;
+            moveFrameIndex = 0;
+            idleFrameIndex = 0;
+            jumpFrameIndex = 0;
+            
+            //Select frame image based on which direction Nen is facing
+            frameImage = (isFacingRight) ? deathAnimation[deathFrameIndex] : GameFigure.flipImageHorizontally(deathAnimation[deathFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            deathFrameIndex = (deathFrameIndex == deathAnimation.length-1) ? deathFrameIndex : deathFrameIndex + 1;                 
+        }
+        else if(cState instanceof LightAttack){
             moveFrameIndex = 0;
             idleFrameIndex = 0;
             jumpFrameIndex = 0;
