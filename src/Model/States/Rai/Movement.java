@@ -37,9 +37,11 @@ public class Movement extends MotionState{
         rai.image = rai.movement;
         rai.setImage(rai.image);
         if (n.x < gameFigure.x){
+            gameFigure.isFacingRight = false;
             gameFigure.x -= 5;
         }
-        else if(n.x > gameFigure.x){ 
+        else if(n.x > gameFigure.x){
+            gameFigure.isFacingRight = true;
             gameFigure.x += 5;
         }
         if(gameFigure.cState instanceof Block || gameFigure.cState instanceof Hit || gameFigure.cState instanceof ViperStrike){

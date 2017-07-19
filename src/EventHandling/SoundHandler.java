@@ -62,7 +62,7 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
 
           if(state instanceof Model.States.Kisara.SmokeBomb)
          {
-             this.playSound("SoundEffects/Ninja Jump 1.WAV");
+             this.playSound("SoundEffects/Ninja Jump 2.WAV");
          }
            if(state instanceof Model.States.Kisara.Evade)
          {

@@ -10,6 +10,7 @@ import EventHandling.Observer;
 import Model.GameFigure;
 import Model.HitBox;
 import Model.States.CombatState;
+import StatusEffects.DamageEffect;
 import java.util.ArrayList;
 
 /**
@@ -34,8 +35,6 @@ public class HeavyAttack extends CombatState {
     private long time = 0;
     public HeavyAttack(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers); 
-       // hitBox = new HitBox(0, 0, 0, 0,);
-        //Main.gameData.allies.add(hitBox);
         gameFigure.damage = 50;
         
     }
@@ -47,14 +46,15 @@ public class HeavyAttack extends CombatState {
                 if(System.currentTimeMillis() - time >= PAUSE_DURATION)
                 {
                     nextState("Finished");
-                     this.notifyObservers("HeavyAttackFinished");
-                    Main.gameData.addGameData(hitBox);
+                    this.notifyObservers("HeavyAttackFinished");
+                    Main.gameData.removeGameData(hitBox);
                 }
             }else if(isFrontStep)
             {
                 frontStep += FRONT_STEP_RATE;
                 gameFigure.x += FRONT_STEP_RATE * direction;
                 createHitBox();
+                translateHitBox();
                 if(frontStep >= FRONT_STEP)
                     time = System.currentTimeMillis();
                 
@@ -74,18 +74,40 @@ public class HeavyAttack extends CombatState {
             } 
     }
     
-    public void createHitBox(){
-       
-        Main.gameData.removeGameData(hitBox);
-//        if(direction > 0)
-//            hitBox = new HitBox(gameFigure.x + gameFigure.size/2, gameFigure.y + gameFigure.size/2, ATTACK_WIDTH, ATTACK_HEIGHT, gameFigure);
-//        else 
-//            hitBox = new HitBox(gameFigure.x + gameFigure.size/2 - ATTACK_WIDTH, gameFigure.y + gameFigure.size/2, ATTACK_WIDTH, ATTACK_HEIGHT, gameFigure);
-//        Main.gameData.allies.add(hitBox);
+    public void createHitBox(){    
+        if(hitBox == null)
+        {
+            if(direction > 0)
+                hitBox = new HitBox(gameFigure.x + gameFigure.size/2, gameFigure.y + gameFigure.size/2,
+                        ATTACK_WIDTH, ATTACK_HEIGHT, gameFigure, new DamageEffect(gameFigure, 50, 5000));
+            else 
+                hitBox = new HitBox(gameFigure.x + gameFigure.size/2 - ATTACK_WIDTH, gameFigure.y + gameFigure.size/2, 
+                        ATTACK_WIDTH, ATTACK_HEIGHT, gameFigure, new DamageEffect(gameFigure, 50, 5000));
+        
+            Main.gameData.addGameData(hitBox);
+        }
     }
+    
+    public void translateHitBox(){
+        if(direction > 0)
+            hitBox.translate(gameFigure.x + gameFigure.size/2, gameFigure.y + gameFigure.size/2);
+        else
+            hitBox.translate(gameFigure.x + gameFigure.size/2 - ATTACK_WIDTH, gameFigure.y + gameFigure.size/2);
+    }
+    
  
     public boolean getFrontStep(){
         return isFrontStep;
+    }
+    
+    public boolean comboCondition(){
+        if(isFrontStep && frontStep >= FRONT_STEP && System.currentTimeMillis() - time <= PAUSE_DURATION)
+        {
+            Main.gameData.removeGameData(hitBox);
+            return true;
+        }else 
+            return false;
+            
     }
     
     @Override
@@ -93,6 +115,7 @@ public class HeavyAttack extends CombatState {
         
         if(s.equals("Finished"))
             gameFigure.cState = new NeutralCombat(gameFigure, observers);
-        
+        else if(s.equals("HeavyAttack") && comboCondition())
+            gameFigure.cState = new GroundShatter(gameFigure, observers);
     } 
 }

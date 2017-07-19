@@ -11,7 +11,7 @@ import java.util.Random;
 
 
 public class KeyController implements KeyListener {
-    //It worked
+     
     Nen nen = Main.gameData.nen;
  
    
@@ -20,16 +20,32 @@ public class KeyController implements KeyListener {
         switch (e.getKeyCode()){
             case  KeyEvent.VK_LEFT:
                     nen.isFacingRight = false;
+//                if(nen.mState.getClass() == Jump.class)
+//                {
+//                    boolean performWallJump = Main.gamePanel.checkWallRightJump();
+//                    if(performWallJump)
+//                        nen.mState.nextState("WallJump");     
+//                }
                 
                if(nen.mState.getClass() != Move.class)
                 {
+
                      nen.mState.nextState("Move");
                 }
                 
                 break;
             case KeyEvent.VK_RIGHT:
                 nen.isFacingRight = true;
-               
+                
+//                if(nen.mState.getClass() == Jump.class)
+//                {
+//                    boolean performWallJump = Main.gamePanel.checkWallLeftJump();
+//                    if(performWallJump)
+//                        nen.mState.nextState("WallJump");
+//                    
+//                        
+//                }
+                
                 if(nen.mState.getClass() != Move.class)
                 {
                      nen.mState.nextState("Move");
@@ -68,7 +84,21 @@ public class KeyController implements KeyListener {
                      nen.cState.nextState("HeavyAttack");
                 }
                 break;
-       
+            case KeyEvent.VK_SPACE:
+                if(nen.mState.getClass() == Jump.class && nen.isFacingRight)
+                {
+                    boolean performWallJump = Main.gamePanel.checkWallLeftJump();
+                    if(performWallJump)
+                        nen.mState.nextState("WallJump");
+                    
+                        
+                }else if(nen.mState.getClass() == Jump.class && !nen.isFacingRight)
+                {
+                    boolean performWallJump = Main.gamePanel.checkWallRightJump();
+                    if(performWallJump)
+                        nen.mState.nextState("WallJump"); 
+                }
+                break;
         }
     }
 

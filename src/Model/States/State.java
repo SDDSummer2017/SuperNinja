@@ -17,7 +17,7 @@ import EventHandling.StateObserver;
  */
 public abstract class State implements Subject {
     protected GameFigure gameFigure;
-    protected ArrayList<Observer> observers; 
+    public ArrayList<Observer> observers; 
     
     public State(GameFigure gameFigure, ArrayList<Observer> observers)
     {
