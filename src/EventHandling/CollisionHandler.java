@@ -6,6 +6,7 @@
 package EventHandling;
 
 import Controller.Main;
+import Level.Checkpoint;
 import Level.Platform;
 import Level.VictoryCheckPoint;
 import Model.Collision;
@@ -45,7 +46,10 @@ public class CollisionHandler implements CollisionObserver {
            Main.gameData.level.removables.add(object1);
             Main.gameData.level.removables.add(((Shuriken) object1).hitbox);
        }
-       
+       if(object1 instanceof Checkpoint && object2 instanceof Nen)
+       {
+            ((Checkpoint)object1).notifyObservers();
+       }
         
        
     }

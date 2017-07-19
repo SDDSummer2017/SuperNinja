@@ -72,7 +72,10 @@ public class Evade extends MotionState{
                 break;    
             default:
                 break;
+                
         }
+        gameFigure.cState.notifyObservers();
+        gameFigure.mState.notifyObservers();
     }
     
 }

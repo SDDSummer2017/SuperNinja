@@ -11,6 +11,7 @@ import EventHandling.SoundHandler;
 import EventHandling.Subject;
 import Level.Fireball;
 import Level.Level;
+import Level.NinjaTower;
 import Level.NinjaVillage;
 import Level.TitleCard;
 import Physics.Acceleration;
@@ -47,7 +48,7 @@ public class GameData implements Subject, Updateable, Renderable  {
     public Thread musicThread; 
         
     public GameData()  {
-        nen = new Nen(GamePanel.CAMERA_WIDTH / 2, GamePanel.CAMERA_HEIGHT - nenSize, nenSize);
+      
         
         lfriction = new Force(.05, new Acceleration(0, -1)); 
         rfriction = new Force(.05, new Acceleration(0, 1)); 
@@ -58,6 +59,7 @@ public class GameData implements Subject, Updateable, Renderable  {
         enemyTimer.setInitialDelay(3000);
         gameThread = new Thread(Main.animator);
         level = new NinjaVillage(this); 
+        nen = new Nen(level.nenStartX, level.nenStartY - nenSize, nenSize);
         addGameData(nen);
         observers = new ArrayList<Observer>(); 
         this.registerObserver(new PhysicsHandler());

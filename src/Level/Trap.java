@@ -28,8 +28,9 @@ public class Trap extends Platform {
 
     @Override
     public void render(Graphics g) {
-        super.render(g);
         g.setColor(Color.red);
+        super.render(g);
+       
     }
 
     @Override

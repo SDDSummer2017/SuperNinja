@@ -51,8 +51,9 @@ public class NinjaVillage extends Level {
         //This constructor is where level development currently happens. 
         this.width = 10240;
         this.height = 2560; 
- 
-       
+        this.nenStartX = 128; 
+        this.nenStartY = 535;
+        
         this.tiles = Collections.synchronizedList(new ArrayList<Tile>());  
         this.terrain = Collections.synchronizedList(new ArrayList<GameFigure>()); 
         
@@ -64,8 +65,7 @@ public class NinjaVillage extends Level {
         this.addables = Collections.synchronizedList(new ArrayList<>());
          
  
-        gameData.nen.x = GamePanel.CAMERA_WIDTH / 2;
-        gameData.nen.y = GamePanel.CAMERA_HEIGHT - gameData.nenSize;
+        
         this.tiles = Collections.synchronizedList(new ArrayList<Tile>()); 
      
         
