@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class ShadowStrike extends CombatState{
 
     public int a;
-    private static final int DURATION = 500;
+    private static final int DURATION = 1000;
     private static final int OUT = 225;
     private static final int IN = 450;
     private static final int DAMAGE = 10;

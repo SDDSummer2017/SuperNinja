@@ -31,11 +31,28 @@ public class CollisionHandler implements CollisionObserver {
     public void onNotify(Collision object1, Collision object2) {  
         
         // this if statment block detects collision between any gameFigure and hitbox
-       if(object1 instanceof HitBox && object2 instanceof GameFigure) 
-           applyStatusEffects((GameFigure)object2, (HitBox)object1);
-       
-       else if(object1 instanceof GameFigure && object2 instanceof HitBox)
-           applyStatusEffects((GameFigure)object1, (HitBox)object2); 
+       if(object1 instanceof HitBox && object2 instanceof GameFigure){ 
+            applyStatusEffects((GameFigure)object2, (HitBox)object1);
+            try {
+                if(((GameFigure)object2).isGoodGuy && !((HitBox)object1).isGoodGuy){
+                    ((GameFigure)object2).cState.nextState("Hit");
+                }
+                else if (!((GameFigure)object2).isGoodGuy && ((HitBox)object1).isGoodGuy){
+                    ((GameFigure)object2).cState.nextState("Hit");
+                }
+           } catch (Exception e) {} 
+       }
+       else if(object1 instanceof GameFigure && object2 instanceof HitBox){
+            applyStatusEffects((GameFigure)object1, (HitBox)object2);
+            try{
+                if(((GameFigure)object1).isGoodGuy && !((HitBox)object2).isGoodGuy){
+                    ((GameFigure)object1).cState.nextState("Hit");
+                }
+                else if (!((GameFigure)object1).isGoodGuy && ((HitBox)object2).isGoodGuy){
+                    ((GameFigure)object1).cState.nextState("Hit");
+                }
+            } catch(Exception e){}
+        }
        
        if(object1 instanceof VictoryCheckPoint && object2 instanceof Nen)
        {

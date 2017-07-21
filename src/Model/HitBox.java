@@ -25,6 +25,7 @@ public class HitBox implements Collision, Renderable, Updateable {
     private Rectangle2D.Double collisionBox;
     public ArrayList<StatusEffect> statusEffects; 
     public GameFigure gameFigure;
+    public boolean isGoodGuy;
     
     public HitBox(double x, double y, double size) {  
         collisionBox = new Rectangle2D.Double(x, y, width, length);
@@ -37,7 +38,7 @@ public class HitBox implements Collision, Renderable, Updateable {
         this.length = length;
         this.width = width; 
         this.collisionBox = new Rectangle2D.Double(x, y, width, length);
-        
+        this.isGoodGuy = this.gameFigure.isGoodGuy;
         this.statusEffects = new ArrayList<>();
         for(StatusEffect se : statusEffects)
             this.statusEffects.add(se); 

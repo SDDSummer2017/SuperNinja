@@ -7,6 +7,7 @@ package Model.States.Kisara;
 
 import EventHandling.Observer;
 import Model.GameFigure;
+import Model.Kisara;
 import Model.States.CombatState;
 import java.util.ArrayList;
 
@@ -18,18 +19,45 @@ public class Hit extends CombatState{
 
     public Hit(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
-        motionState = gameFigure.mState;
-        previousState = gameFigure.cState;
     }
 
     @Override
     public void execute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Kisara kis = (Kisara) this.gameFigure;
+        kis.image = kis.hit;
+        kis.setImage(kis.image);
+        if (this.gameFigure.health <= 0){
+            nextState("Death");
+        }
+        else if ((System.currentTimeMillis() - initTime >= 1000)){
+            nextState("Neutral");
+        }
+        else{
+            //apply a knockback
+            if(this.gameFigure.isFacingRight){
+                this.gameFigure.x -= 2;
+            }
+            else{
+                this.gameFigure.x += 2;
+            }
+            
+            this.gameFigure.mState = new Neutral(this.gameFigure, observers);
+        }
     }
 
     @Override
     public void nextState(String s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        switch (s) {
+            case "Neutral":
+                gameFigure.mState = new Neutral(this.gameFigure, observers);
+                gameFigure.cState = new Default(this.gameFigure, observers);
+                break;
+            case "Death":
+                gameFigure.cState = new Death(this.gameFigure, observers);
+                break;
+            default:
+                break;
+        }
     }
     
 }

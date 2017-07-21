@@ -8,6 +8,7 @@ package Model.States.Terro;
 import EventHandling.Observer;
 import Model.GameFigure;
 import Model.States.CombatState;
+import Model.Terro;
 import java.util.ArrayList;
 
 /**
@@ -22,12 +23,41 @@ public class Hit extends CombatState {
 
     @Override
     public void execute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Terro ter = (Terro) this.gameFigure;
+        ter.image = ter.hit;
+        ter.setImage(ter.image);
+        if (this.gameFigure.health <= 0){
+            nextState("Death");
+        }
+        else if ((System.currentTimeMillis() - initTime >= 1000)){
+            nextState("Neutral");
+        }
+        else{
+            //apply a knockback
+            if(this.gameFigure.isFacingRight){
+                this.gameFigure.x -= 2;
+            }
+            else{
+                this.gameFigure.x += 2;
+            }
+            
+            this.gameFigure.mState = new Neutral(this.gameFigure, observers);
+        }
     }
 
     @Override
     public void nextState(String s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        switch (s) {
+            case "Neutral":
+                gameFigure.mState = new Neutral(this.gameFigure, observers);
+                gameFigure.cState = new Default(this.gameFigure, observers);
+                break;
+            case "Death":
+                gameFigure.cState = new Death(this.gameFigure, observers);
+                break;
+            default:
+                break;
+        }
     }
     
 }

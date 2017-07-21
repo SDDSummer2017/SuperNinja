@@ -34,7 +34,7 @@ public class Movement extends MotionState{
         ter.setImage(ter.image);
         boolean a;
         a = ter.getDirection(); //false for left true for right
-        
+        gameFigure.isFacingRight = ter.getDirection();
         //add extra condition where the movement continues until it reaches the edge of the displayed window and 100pixels distance from Terro
         if (ter.airborn){}
         else{

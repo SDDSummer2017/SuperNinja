@@ -44,7 +44,7 @@ public class Shuriken extends Projectiles {
     @Override
     public void render(Graphics g) {
         g.setColor(color);
-        g.fillOval((int)x - (int)super.size, (int)y - (int)super.size, (int)super.size * 2, (int)super.size * 2);   
+        g.fillOval((int)x, (int)y, (int)super.size * 2, (int)super.size * 2);   
     }
     @Override
     public void update() {       
@@ -71,7 +71,7 @@ public class Shuriken extends Projectiles {
 
     @Override
     public Rectangle2D.Double getCollisionBox() {
-        return new Rectangle2D.Double(super.x - super.size, super.y - super.size, super.size * 2, super.size * 2);
+        return new Rectangle2D.Double(super.x, super.y, super.size * 2, super.size * 2);
     }
 
     
