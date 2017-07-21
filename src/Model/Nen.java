@@ -28,14 +28,19 @@ public class Nen extends GameFigure {
     private int hitBox_Y = 0;
     private int hitBox_width = 0;
     private int hitBox_height = 0;
+    private final int idleAnimationDelay = 2; 
+    private int idleAnimationDelayCounter;
     
     private final SoundHandler soundHandler = new SoundHandler("");
   
  
     public Nen(int x, int y, int size) {
-       super(x, y, size,
-                10,  // animation length
+       
+        super(x, y, size,
+                8,  // animation length
                 "Nen", true); //name for animation image file path
+        this.idleAnimationDelayCounter = 0;
+        
         this.hitBox_width = size;
         this.hitBox_height = size;
         this.health = 100;
@@ -68,6 +73,7 @@ public class Nen extends GameFigure {
         
         Image frameImage;
         
+        //DEATH 
         if(this.health <= 0){
             attackFrameIndex = 0;
             moveFrameIndex = 0;
@@ -84,6 +90,7 @@ public class Nen extends GameFigure {
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             deathFrameIndex = (deathFrameIndex == deathAnimation.length-1) ? deathFrameIndex : deathFrameIndex + 1;                 
         }
+        //LIGHT ATTACK
         else if(cState instanceof LightAttack){
             moveFrameIndex = 0;
             idleFrameIndex = 0;
@@ -95,6 +102,7 @@ public class Nen extends GameFigure {
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             attackFrameIndex = (attackFrameIndex == lightAttackAnimation.length-1) ? 0 : attackFrameIndex + 1;                 
         }
+        //HEAVY ATTACK
         else if(cState instanceof HeavyAttack){
             moveFrameIndex = 0;
             idleFrameIndex = 0;
@@ -106,6 +114,7 @@ public class Nen extends GameFigure {
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             attackFrameIndex = (attackFrameIndex == heavyAttackAnimation.length-1) ? 0 : attackFrameIndex + 1;                      
         }
+        //RUN
         else if(mState instanceof Move)
         {
             //If we are moving, reset the idle animtion frame index
@@ -119,6 +128,7 @@ public class Nen extends GameFigure {
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             moveFrameIndex = (moveFrameIndex == runAnimation.length-1) ? 0 : moveFrameIndex + 1;
         }
+        //JUMP
         else if(mState instanceof Jump){
             moveFrameIndex = 0;
             idleFrameIndex = 0;
@@ -130,6 +140,7 @@ public class Nen extends GameFigure {
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             jumpFrameIndex = (jumpFrameIndex == jumpAnimation.length-1) ? 0 : jumpFrameIndex + 1;
         }
+        //DASH
         else if(mState instanceof Dash)
         {
             //If we are moving, reset the idle animtion frame index
@@ -144,6 +155,7 @@ public class Nen extends GameFigure {
             moveFrameIndex = (moveFrameIndex == dashAnimation.length-1) ? 0 : moveFrameIndex + 1;
         }
         else
+        //IDLE
         {
             //If they are standing still we need to reset the frameCounter
             moveFrameIndex = 0;               
@@ -154,7 +166,13 @@ public class Nen extends GameFigure {
             frameImage = (isFacingRight) ? idleAnimation[idleFrameIndex] : GameFigure.flipImageHorizontally(idleAnimation[idleFrameIndex]);
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-            idleFrameIndex = (idleFrameIndex == idleAnimation.length-1) ? 0 : idleFrameIndex + 1;
+            if (idleAnimationDelayCounter == idleAnimationDelay){
+               idleFrameIndex = (idleFrameIndex == idleAnimation.length-1) ? 0 : idleFrameIndex + 1;
+               idleAnimationDelayCounter = 0;
+            }
+            else {
+                idleAnimationDelayCounter++;
+            }
         
         }
 

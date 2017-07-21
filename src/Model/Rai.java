@@ -30,7 +30,7 @@ public class Rai extends Enemy {
     public int c; // used as a display count for placeholders only
     
     public Rai(double x, double y, double size) {
-        super(x, y, size, 10, "Enemy");
+        super(x, y, size, 8, "Rai");
         
         ArrayList<Observer> observers = new ArrayList<>();
         super.mState = new Neutral(this, observers);

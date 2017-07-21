@@ -135,11 +135,11 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         Image img;
         //Move Animation
         for(int i=0;i<runAnimation.length;i++){
-            runAnimation[i] = getImage(movePath + separator + "Run__00" + i + ".png");          
+            runAnimation[i] = getImage(movePath + separator + "Run_" + i + ".png");          
         }
         //Idle Animation 
         for(int i=0;i<idleAnimation.length;i++){
-            idleAnimation[i] = getImage(idlePath + separator + "Idle__00" + i + ".png");
+            idleAnimation[i] = getImage(idlePath + separator + "Idle_" + i + ".png");
         }
         
         //Evade Animation 
