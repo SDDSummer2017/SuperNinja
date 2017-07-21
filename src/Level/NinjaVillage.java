@@ -112,11 +112,11 @@ public class NinjaVillage extends Level {
  
 //       
 //
-        Rai rai = new Rai((GamePanel.CAMERA_WIDTH), 440, 100);
-        addGameData(rai);
-
-        rai.cState.registerObserver(new SoundHandler(""));
-        rai.mState.registerObserver(new SoundHandler(""));
+//        Rai rai = new Rai((GamePanel.CAMERA_WIDTH), 440, 100);
+//        addGameData(rai);
+//
+//        rai.cState.registerObserver(new SoundHandler(""));
+//        rai.mState.registerObserver(new SoundHandler(""));
 //
 //        Kisara kisara = new Kisara((GamePanel.CAMERA_WIDTH), 440 - 90, 100); 
 //        addGameData(kisara);   

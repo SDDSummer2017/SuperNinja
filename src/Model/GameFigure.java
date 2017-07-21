@@ -47,7 +47,6 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     public Image staticImage;
     public final Image[] runAnimation, idleAnimation, jumpAnimation, dashAnimation, deathAnimation; 
     public final Image[] lightAttackAnimation, heavyAttackAnimation, rangeAttackAnimation;
-    public final Image[] projectileAnimation;
     
  
     //Static game figure constructor (no animation)
@@ -81,7 +80,6 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         this.rangeAttackAnimation = null;
         this.idleAnimation = null;
         this.jumpAnimation = null;
-        this.projectileAnimation = null;
         this.staticImage = null;
         this.forces = new ArrayList<Force>();
         
@@ -108,7 +106,6 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         this.rangeAttackAnimation = new Image[animationLength];
         this.idleAnimation = new Image[animationLength];
         this.jumpAnimation = new Image[animationLength];
-        this.projectileAnimation = new Image[animationLength];
         this.staticImage = null;
         
         this.diedFacingRight = false;
@@ -134,12 +131,17 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         
         Image img;
         //Move Animation
-        for(int i=0;i<runAnimation.length;i++){
-            runAnimation[i] = getImage(movePath + separator + "Run_" + i + ".png");          
+        if (fileExists(movePath)){        
+            for(int i=0;i<runAnimation.length;i++){
+                runAnimation[i] = getImage(movePath + separator + "Run_" + i + ".png");          
+            }
         }
+        
         //Idle Animation 
-        for(int i=0;i<idleAnimation.length;i++){
-            idleAnimation[i] = getImage(idlePath + separator + "Idle_" + i + ".png");
+        if (fileExists(idlePath)){
+            for(int i=0;i<idleAnimation.length;i++){
+                idleAnimation[i] = getImage(idlePath + separator + "Idle_" + i + ".png");
+            } 
         }
         
         //Evade Animation 
@@ -169,7 +171,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         //Ranged Attack Animation
         if (fileExists(rangeAttackPath)){
             for(int i=0;i<rangeAttackAnimation.length;i++){
-                rangeAttackAnimation[i] = getImage(rangeAttackPath + separator + "Throw__00" + i + ".png");
+                rangeAttackAnimation[i] = getImage(rangeAttackPath + separator + "Throw_" + i + ".png");
             }
         }
         //Death Animation
@@ -178,39 +180,9 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
                 deathAnimation[i] = getImage(deathPath + separator + "Dead__00" + i + ".png");
             }
         }
-        /*        //Projectile Animation
-        for(int i=0;i<runAnimation.length;i++){
-        projectileAnimation[i] = getImage(imagePath + separator + "images" + separator + name + separator + "Projectile" + separator
-        + "Projectile__00" + i + ".png");
-        }*/
     }
     public boolean fileExists(String path){
         return new File(path).exists();
-    }
-    public static Image getImage(String fileName) {
-        Image image = null;
-        try {
-            image = ImageIO.read(new File(fileName));
-        } catch (IOException ioe) {
-            System.out.println("Error: Cannot open image:" + fileName);
-            JOptionPane.showMessageDialog(null, "Error: Cannot open image:" + fileName);
-        }
-        return image;
-    }
-    public static Image flipImageHorizontally(Image img)
-    {
-       
-        AffineTransform at;
-        AffineTransformOp ato;
-        BufferedImage bi;   
-        
-        at = AffineTransform.getScaleInstance(-1, 1);     
-        at.translate(-img.getWidth(null), 0);
-        ato = new AffineTransformOp(at, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-        
-        bi = (BufferedImage) img;
-        img = ato.filter(bi, null); 
-        return img;
     }
     
     public Point2D.Double getLocation(){
@@ -241,5 +213,33 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
        x += velocity.dx; 
        y += velocity.dy; 
        
-    } 
+    }
+    /******************************************
+     * STATIC METHODS
+    ******************************************/
+    public static Image getImage(String fileName) {
+        Image image = null;
+        try {
+            image = ImageIO.read(new File(fileName));
+        } catch (IOException ioe) {
+            System.out.println("Error: Cannot open image:" + fileName);
+            JOptionPane.showMessageDialog(null, "Error: Cannot open image:" + fileName);
+        }
+        return image;
+    }
+    public static Image flipImageHorizontally(Image img)
+    {
+       
+        AffineTransform at;
+        AffineTransformOp ato;
+        BufferedImage bi;   
+        
+        at = AffineTransform.getScaleInstance(-1, 1);     
+        at.translate(-img.getWidth(null), 0);
+        ato = new AffineTransformOp(at, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+        
+        bi = (BufferedImage) img;
+        img = ato.filter(bi, null); 
+        return img;
+    }
 }

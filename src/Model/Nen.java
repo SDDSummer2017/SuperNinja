@@ -16,6 +16,7 @@ import Model.States.Nen.Jump;
  
 import Model.States.Nen.LightAttack;
 import Model.States.Nen.HeavyAttack;
+import Model.States.Nen.ThrowingMode;
 import Physics.Velocity;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -72,14 +73,10 @@ public class Nen extends GameFigure {
     public void render(Graphics g) {
         
         Image frameImage;
-        
+        System.out.println("attack frame index: " + attackFrameIndex);
         //DEATH 
         if(this.health <= 0){
-            attackFrameIndex = 0;
-            moveFrameIndex = 0;
-            idleFrameIndex = 0;
-            jumpFrameIndex = 0;
-            
+            resetAnimationFrames("death");
             
             //Select frame image based on which direction Nen is facing
             if (deathFrameIndex == 0 ){
@@ -90,11 +87,19 @@ public class Nen extends GameFigure {
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             deathFrameIndex = (deathFrameIndex == deathAnimation.length-1) ? deathFrameIndex : deathFrameIndex + 1;                 
         }
+        //Ranged ATTACK
+        else if(cState instanceof ThrowingMode){
+            resetAnimationFrames("attack");
+            
+            //Select frame image based on which direction Nen is facing
+            frameImage = (isFacingRight) ? rangeAttackAnimation[attackFrameIndex] : GameFigure.flipImageHorizontally(rangeAttackAnimation[attackFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            attackFrameIndex = (attackFrameIndex == rangeAttackAnimation.length-1) ? 0 : attackFrameIndex + 1;                 
+        }
         //LIGHT ATTACK
         else if(cState instanceof LightAttack){
-            moveFrameIndex = 0;
-            idleFrameIndex = 0;
-            jumpFrameIndex = 0;
+            resetAnimationFrames("attack");
             
             //Select frame image based on which direction Nen is facing
             frameImage = (isFacingRight) ? lightAttackAnimation[attackFrameIndex] : GameFigure.flipImageHorizontally(lightAttackAnimation[attackFrameIndex]);
@@ -104,9 +109,7 @@ public class Nen extends GameFigure {
         }
         //HEAVY ATTACK
         else if(cState instanceof HeavyAttack){
-            moveFrameIndex = 0;
-            idleFrameIndex = 0;
-            jumpFrameIndex = 0;
+            resetAnimationFrames("attack");
             
             //Select frame image based on which direction Nen is facing
             frameImage = (isFacingRight) ? heavyAttackAnimation[attackFrameIndex] : GameFigure.flipImageHorizontally(heavyAttackAnimation[attackFrameIndex]);
@@ -118,9 +121,7 @@ public class Nen extends GameFigure {
         else if(mState instanceof Move)
         {
             //If we are moving, reset the idle animtion frame index
-            idleFrameIndex = 0;
-            jumpFrameIndex = 0;
-            attackFrameIndex = 0;
+            resetAnimationFrames("move");
             
             //Select frame image based on which direction Nen is facing
             frameImage = (isFacingRight) ? runAnimation[moveFrameIndex] : GameFigure.flipImageHorizontally(runAnimation[moveFrameIndex]);
@@ -130,9 +131,7 @@ public class Nen extends GameFigure {
         }
         //JUMP
         else if(mState instanceof Jump){
-            moveFrameIndex = 0;
-            idleFrameIndex = 0;
-            attackFrameIndex = 0;
+            resetAnimationFrames("jump");
                       
             //Select frame image based on which direction Nen is facing
             frameImage = (isFacingRight) ? jumpAnimation[jumpFrameIndex] : GameFigure.flipImageHorizontally(jumpAnimation[jumpFrameIndex]);
@@ -144,9 +143,7 @@ public class Nen extends GameFigure {
         else if(mState instanceof Dash)
         {
             //If we are moving, reset the idle animtion frame index
-            idleFrameIndex = 0;
-            jumpFrameIndex = 0;
-            attackFrameIndex = 0;
+            resetAnimationFrames("move");
             
             //Select frame image based on which direction Nen is facing
             frameImage = (isFacingRight) ? dashAnimation[moveFrameIndex] : GameFigure.flipImageHorizontally(dashAnimation[moveFrameIndex]);
@@ -158,9 +155,7 @@ public class Nen extends GameFigure {
         //IDLE
         {
             //If they are standing still we need to reset the frameCounter
-            moveFrameIndex = 0;               
-            jumpFrameIndex = 0;
-            attackFrameIndex = 0;
+            resetAnimationFrames("idle");
 
             //Select frame image based on which direction Nen is facing
             frameImage = (isFacingRight) ? idleAnimation[idleFrameIndex] : GameFigure.flipImageHorizontally(idleAnimation[idleFrameIndex]);
@@ -182,6 +177,13 @@ public class Nen extends GameFigure {
         g.setColor(Color.green);
         g.fillRect(3, GamePanel.CAMERA_HEIGHT - (int) this.health - 2, 10, (int) this.health);
         ((Graphics2D)g).draw(getCollisionBox());
+    }
+    private void resetAnimationFrames(String currentAnimation){
+//        System.out.println("Animation Reset Called from: " + currentAnimation);
+        if (!"idle".equals(currentAnimation))idleFrameIndex = 0;
+        if (!"move".equals(currentAnimation))moveFrameIndex = 0;
+        if (!"jump".equals(currentAnimation))jumpFrameIndex = 0;
+        if (!"attack".equals(currentAnimation))attackFrameIndex = 0;
     }
     
     
