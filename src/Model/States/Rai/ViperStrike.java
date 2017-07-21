@@ -36,7 +36,7 @@ public class ViperStrike extends CombatState {
         previousState = gameFigure.cState;
         int a = 0;
         gameFigure.damage = DAMAGE;
-        hitBox =  new HitBox(gameFigure.x + (gameFigure.size/2), (gameFigure.y + gameFigure.size / 2), 30, 10, gameFigure, new DamageEffect(gameFigure, DAMAGE ,5000));
+        hitBox =  new HitBox(gameFigure.x + (gameFigure.size/2), (gameFigure.y + gameFigure.size / 2), 30, 10, gameFigure, new DamageEffect(gameFigure, DAMAGE ,1000));
         Main.gameData.addGameData(hitBox);
         direction = 0;
     }
