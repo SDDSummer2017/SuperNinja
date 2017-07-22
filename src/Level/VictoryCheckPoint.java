@@ -16,8 +16,8 @@ import java.awt.Graphics2D;
  */
 public class VictoryCheckPoint extends Checkpoint {
     
-    public VictoryCheckPoint(double x, double y) {
-        super(x, y);
+    public VictoryCheckPoint(double x, double y, Tile tile) {
+        super(x, y, tile);
     }
     
     @Override 
@@ -31,9 +31,10 @@ public class VictoryCheckPoint extends Checkpoint {
     @Override
      public void render(Graphics g) {
          Graphics2D g2 = (Graphics2D)g;
-        g2.setColor(Color.yellow);
-        g2.draw(collisionBox);
-        g2.fill(collisionBox);
+//        g2.setColor(Color.yellow);
+//        g2.draw(collisionBox);
+//        g2.fill(collisionBox);
+        super.render(g);
         super.health = 1000;
             
     

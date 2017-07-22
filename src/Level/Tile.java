@@ -29,6 +29,16 @@ public class Tile implements Renderable   {
         this.tileModel = tileModel; 
     }
     
+    
+    public Tile(int x, int y, TileModel tileModel, AnimatedTileModel animatedTileModel)
+    {
+        this.x = x; 
+        this.y = y; 
+        this.tileModel = tileModel; 
+        this.animatedTileModel = animatedTileModel;
+    }
+    
+    
     public void render(Graphics g) {
        
                 if(animatedTileModel != null)

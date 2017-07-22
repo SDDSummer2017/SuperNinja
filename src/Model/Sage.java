@@ -32,7 +32,7 @@ public class Sage extends Enemy {
         super.mState = new NeutralMotion(this, observers);
         super.cState = new Chant(this, observers);
         this.health = 70; 
-        
+        this.maxHealth = health;
         String imagePath = System.getProperty("user.dir");
         String separator = System.getProperty("file.separator");
         super.attack1 = getImage(imagePath + separator + "images" + separator

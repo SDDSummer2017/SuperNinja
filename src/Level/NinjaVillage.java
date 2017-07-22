@@ -19,6 +19,7 @@ import Model.Terro;
 import Model.Updateable;
 import View.GamePanel; 
 import java.awt.Graphics; 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +37,8 @@ public class NinjaVillage extends Level {
 
     BufferedImage img = null;
     TileModel ground;
-    
+    TileModel portal; 
+    AnimatedTileModel portals; 
     public NinjaVillage(GameData gameData)
     {
         //This constructor is where level development currently happens. 
@@ -54,7 +56,7 @@ public class NinjaVillage extends Level {
         this.updatables = Collections.synchronizedList(new ArrayList<Updateable>());   
         this.removables = Collections.synchronizedList(new ArrayList<>());
         this.addables = Collections.synchronizedList(new ArrayList<>());
-         
+ 
  
         
         this.tiles = Collections.synchronizedList(new ArrayList<Tile>()); 
@@ -65,14 +67,34 @@ public class NinjaVillage extends Level {
        //Load Resources
         
        try {
-            img = ImageIO.read(new File("images/tiles/Rendered Textures/Walls/Wall 1 NE.png"));
+            img = ImageIO.read(new File("images/tiles/Rendered Textures/Walls/Wall 2 SE.png"));
             ground = new TileModel(img); 
             } 
         catch (IOException ex) {
             Logger.getLogger(NinjaVillage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
          
-        
+       
+       try {
+            img = ImageIO.read(new File("images/portal.png"));
+            portal = new TileModel(img); 
+            } 
+        catch (IOException ex) {
+            Logger.getLogger(NinjaVillage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+        ArrayList<Image> portalTiles = new ArrayList<>(); 
+        for(int i = 1; i < 3; i++)
+        {
+             try {
+            img = ImageIO.read(new File("images/portal" + i + ".png"));
+            portalTiles.add(img);
+            } 
+        catch (IOException ex) {
+            Logger.getLogger(NinjaVillage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+         
+        }
+       
        //Load Game Content
     
         for(int i = 0; i < 80; i++)
@@ -81,29 +103,29 @@ public class NinjaVillage extends Level {
            
             if(i%10 == 0 && i != 0)
             {
-                this.terrain.add(new Trap(i * 128, 525.0, this));
+                this.terrain.add(new Trap(i * 128, 525.0, this, new Tile(i * 128, 525, ground)));
             }
             else
             {
-                 this.terrain.add(new Platform(i * 128.0, 535.0));
+                 this.terrain.add(new Platform(i * 128.0, 535.0, new Tile(i * 128, 535, ground)));
             }
             if(i%3 == 0)
             {
                // this.terrain.add(new Platform(i * 128.0, 200)); 
             }
             
-              if(i%4 == 0)
+              if(i%4 == 0 && i%20 != 0)
             {
-                this.terrain.add(new Platform(i * 128.0, 300)); 
+                this.terrain.add(new Platform(i * 128.0, 300, new Tile(i * 128, 300, ground))); 
             }
             
             if(i%4==0 && i%10==0)
             {
-                this.terrain.add(new Platform(i*128, 172));
+                this.terrain.add(new Platform(i*128, 172, new Tile(i * 128, 172, ground)));
             }
                 if(i%20 == 0 && i != 0)
             {
-                VictoryCheckPoint v = new VictoryCheckPoint(i * 128.0, 300);
+                VictoryCheckPoint v = new VictoryCheckPoint(i * 128.0, 300, new Tile(i * 128, 300, portal, new AnimatedTileModel(i * 128, 300, portalTiles)));
                 v.registerObserver(checkpointHandler);
                 this.terrain.add(v); 
             }
