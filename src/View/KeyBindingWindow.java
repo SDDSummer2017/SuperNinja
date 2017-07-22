@@ -29,8 +29,7 @@ public class KeyBindingWindow extends JFrame {
 	private KeyBinding ml;
 	private KeyBinding j;
 	private KeyBinding wj;
-	private KeyBinding c;
-        private ArrayList<KeyBinding> list = new ArrayList<>();
+	private ArrayList<KeyBinding> list = new ArrayList<>();
 	private JButton save;
 	private JButton exit;  
         
@@ -68,11 +67,8 @@ public class KeyBindingWindow extends JFrame {
 		
 		j = new KeyBinding();
 		j.setColumns(10);
-                
-		c = new KeyBinding();
-		c.setColumns(10); 
 		
-                wj = new KeyBinding();
+		wj = new KeyBinding();
 		
 		list.add(la);
 		list.add(ha);
@@ -80,16 +76,13 @@ public class KeyBindingWindow extends JFrame {
 		list.add(ml);
 		list.add(j);
 		list.add(wj);
-		list.add(c);
-                
+		
 		la.addKeyListener(new MyKeyListener(la, list)); 
 		ha.addKeyListener(new MyKeyListener(ha, list));
 		mr.addKeyListener(new MyKeyListener(mr, list));
 		ml.addKeyListener(new MyKeyListener(ml, list));
 		j.addKeyListener(new MyKeyListener(j, list));
 		wj.addKeyListener(new MyKeyListener(wj, list));
-                c.addKeyListener(new MyKeyListener(c, list));
-                
                 
                 la.setText(KeyEvent.getKeyText(KeyEvent.VK_F));
                 ha.setText(KeyEvent.getKeyText(KeyEvent.VK_D));
@@ -97,7 +90,6 @@ public class KeyBindingWindow extends JFrame {
                 ml.setText(KeyEvent.getKeyText(KeyEvent.VK_LEFT));
                 j.setText(KeyEvent.getKeyText(KeyEvent.VK_UP));
                 wj.setText(KeyEvent.getKeyText(KeyEvent.VK_SPACE));
-                c.setText(KeyEvent.getKeyText(KeyEvent.VK_DOWN));
                 
                 la.oldKeyCode = KeyEvent.VK_F;
                 ha.oldKeyCode = KeyEvent.VK_D;
@@ -105,16 +97,14 @@ public class KeyBindingWindow extends JFrame {
                 mr.oldKeyCode = KeyEvent.VK_RIGHT;
                 j.oldKeyCode = KeyEvent.VK_UP;
                 wj.oldKeyCode = KeyEvent.VK_SPACE;
-                c.oldKeyCode = KeyEvent.VK_DOWN;
                 
                 la.newKeyCode = KeyEvent.VK_F;
                 ha.newKeyCode = KeyEvent.VK_D;
                 ml.newKeyCode = KeyEvent.VK_LEFT;
                 mr.newKeyCode = KeyEvent.VK_RIGHT;
                 j.newKeyCode = KeyEvent.VK_UP;
-                wj.newKeyCode = KeyEvent.VK_SPACE; 
-                c.newKeyCode = KeyEvent.VK_DOWN;
-                    
+                wj.oldKeyCode = KeyEvent.VK_SPACE; 
+               
 		wj.setColumns(10);
 		
 		save = new JButton("Save Changes");
@@ -130,9 +120,7 @@ public class KeyBindingWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) { 
 				window.dispose();
 			}
-		});  
-		
-		JLabel clbl = new JLabel("Crouch");
+		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -140,28 +128,25 @@ public class KeyBindingWindow extends JFrame {
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(save)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(exit, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-									.addComponent(label_2)
-									.addComponent(lblLightAttack, Alignment.LEADING)
-									.addComponent(label6, Alignment.LEADING)
-									.addComponent(lblMoveLeft, Alignment.LEADING)
-									.addComponent(lblJump, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-									.addComponent(lblWalljump, Alignment.LEADING))
-								.addComponent(clbl, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE))
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(label_2)
+								.addComponent(lblLightAttack, Alignment.LEADING)
+								.addComponent(label6, Alignment.LEADING)
+								.addComponent(lblMoveLeft, Alignment.LEADING)
+								.addComponent(lblJump, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblWalljump, Alignment.LEADING))
 							.addGap(18)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(c, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(la, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(ha, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(mr, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(ml, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(j, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(wj, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+								.addComponent(wj, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(save)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(exit, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(112, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
@@ -194,17 +179,13 @@ public class KeyBindingWindow extends JFrame {
 						.addComponent(mr, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(c, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(clbl))
-					.addPreferredGap(ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(save)
 						.addComponent(exit))
-					.addGap(67))
+					.addContainerGap(106, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);
 	}
-        
+	
 	class MyKeyListener extends KeyAdapter{
 		KeyBinding txtField;
 		ArrayList<KeyBinding> otherFields = new ArrayList<>();
@@ -235,7 +216,6 @@ public class KeyBindingWindow extends JFrame {
             newKeyCodes.put(ml.oldKeyCode, ml.newKeyCode);
             newKeyCodes.put(j.oldKeyCode, j.newKeyCode);
             newKeyCodes.put(wj.oldKeyCode, wj.newKeyCode);
-            newKeyCodes.put(c.oldKeyCode, c.newKeyCode);
             controller.rebindKeys(newKeyCodes);
         }
         
@@ -246,7 +226,6 @@ public class KeyBindingWindow extends JFrame {
             ml.oldKeyCode = ml.newKeyCode;
             j.oldKeyCode = j.newKeyCode;
             wj.oldKeyCode = wj.newKeyCode;
-            c.oldKeyCode = c.newKeyCode;
         }
         
         private class KeyBinding extends JTextField{

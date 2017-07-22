@@ -7,7 +7,6 @@ package Model;
 
 import Controller.Main;
 import StatusEffects.DamageEffect;
-import StatusEffects.DotEffect;
 import View.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -20,7 +19,7 @@ import javax.vecmath.Vector2f;
  *
  * @author Garrett A. Clement
  */
-public class SoulFlameSpell extends Projectiles {
+public class SoulFlameSpell extends Enemy {
    
     
     private final Color color;
@@ -33,8 +32,7 @@ public class SoulFlameSpell extends Projectiles {
     
     
     public SoulFlameSpell(double x, double y, double tx, double ty) {
-        super(x, y, tx, ty, Color.RED, false, 25, 40);
-        //super(x, y, 40);
+        super(x, y, 40);
         this.targetX = tx;
         this.targetY = ty; 
         this.color  = Color.RED;
@@ -44,7 +42,7 @@ public class SoulFlameSpell extends Projectiles {
         targetPath.normalize();
         targetPath.scale(moveDistance);
         
-        hitbox = new HitBox(x - size/2, y - size/2, 40, 40, this, new DamageEffect(this, 15, 5000), new DotEffect(this, 2, 5000, 1000));
+        hitbox = new HitBox(x - size/2, y - size/2, 40, 40, this, new DamageEffect(this, 10, 5000));
         Main.gameData.addGameData(hitbox); 
         
         

@@ -29,7 +29,7 @@ public class Crouch extends MotionState {
 
     @Override
     public void nextState(String s) { 
-        if(s.equals("Stand"))
+        if(s.equals("NeutralMotion"))
         { 
             ((Nen)gameFigure).setCollisionOffsetsAndSize(0, 0, (int)gameFigure.size, (int)gameFigure.size);
             gameFigure.mState = new NeutralMotion(this.gameFigure, this.observers);

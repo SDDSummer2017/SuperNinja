@@ -18,8 +18,6 @@ public class JumpCommand extends Command {
     }
 
     
-    @Override
-    public void release(GameFigure gameFigure){}
     
     @Override
     public void execute(GameFigure gameFigure) { 
