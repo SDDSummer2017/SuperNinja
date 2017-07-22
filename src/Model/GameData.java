@@ -79,7 +79,7 @@ public class GameData implements Subject, Updateable, Renderable  {
         this.registerObserver(new SoundHandler(""));
         this.notifyObservers("Level One");
         nen.registerObserver(new PlayerHudHandler(this, nen));
-    
+        
        
 
 
