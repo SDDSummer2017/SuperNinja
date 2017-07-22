@@ -10,6 +10,7 @@ import Model.States.CombatState;
 import Model.States.MotionState;
 import Model.States.Terro.Default;
 import Model.States.Terro.Jump;
+import Model.States.Terro.Movement;
 import Model.States.Terro.Neutral;
 import Model.States.Terro.ShurikenThrow;
 import Model.States.Terro.WindmillShuriken;
@@ -36,7 +37,8 @@ public class Terro extends Enemy{
    ArrayList<Observer> observers = new ArrayList<>();
    
     public Terro(double x, double y, double size) {
-        super(x, y, size);
+        super(x, y, size, 8, "Terro");
+        
         
         
         super.mState = new Neutral(this, observers);
@@ -139,8 +141,69 @@ public class Terro extends Enemy{
     
     @Override
     public void render(Graphics g) {
+        
+        Image frameImage;
         g.drawImage(image, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-        super.render(g);
+        super.render(g);    
+        
+        //DEATH 
+        if(this.health <= 0){
+            resetAnimationFrames("death");
+            
+            //Select frame image based on which direction Nen is facing
+            if (deathFrameIndex == 0 ){
+                diedFacingRight = isFacingRight;
+            }
+            frameImage = (diedFacingRight) ? deathAnimation[deathFrameIndex] : GameFigure.flipImageHorizontally(deathAnimation[deathFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            deathFrameIndex = (deathFrameIndex == deathAnimation.length-1) ? deathFrameIndex : deathFrameIndex + 1;                 
+        }
+         
+        //HEAVY ATTACK (Windmill Shuriken)
+        else if(cState instanceof WindmillShuriken){
+            resetAnimationFrames("attack");
+            
+            //Select frame image based on which direction Nen is facing
+            frameImage = (isFacingRight) ? heavyAttackAnimation[attackFrameIndex] : GameFigure.flipImageHorizontally(heavyAttackAnimation[attackFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            attackFrameIndex = (attackFrameIndex == heavyAttackAnimation.length-1) ? 0 : attackFrameIndex + 1;                      
+        }
+        else if(mState instanceof Movement)
+        {
+            //If we are moving, reset the idle animtion frame index
+            idleFrameIndex = 0;
+            jumpFrameIndex = 0;
+            attackFrameIndex = 0;
+            
+            //Select frame image based on which direction Nen is facing
+            frameImage = (isFacingRight) ? runAnimation[moveFrameIndex] : GameFigure.flipImageHorizontally(runAnimation[moveFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            moveFrameIndex = (moveFrameIndex == runAnimation.length-1) ? 0 : moveFrameIndex + 1;
+        }
+
+        else
+        {
+            //If they are standing still we need to reset the frameCounter
+            moveFrameIndex = 0;               
+            jumpFrameIndex = 0;
+            attackFrameIndex = 0;
+
+            //Select frame image based on which direction Nen is facing
+            frameImage = (isFacingRight) ? idleAnimation[idleFrameIndex] : GameFigure.flipImageHorizontally(idleAnimation[idleFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            idleFrameIndex = (idleFrameIndex == idleAnimation.length-1) ? 0 : idleFrameIndex + 1;
+        
+        }     
+    }
+    private void resetAnimationFrames(String currentAnimation){
+        if (!"idle".equals(currentAnimation))idleFrameIndex = 0;
+        if (!"move".equals(currentAnimation))moveFrameIndex = 0;
+        if (!"jump".equals(currentAnimation))jumpFrameIndex = 0;
+        if (!"attack".equals(currentAnimation))attackFrameIndex = 0;
     }
 
     @Override

@@ -26,14 +26,14 @@ public class LightAttack extends CombatState {
     private static final int MID_TIME = 150;
     private static final int HIGH_TIME = 300;  
     private static final int DAMAGE = 10;
+    
     public LightAttack(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
         gameFigure.damage = 10; 
-       hitBox =  new HitBox(gameFigure.x + (gameFigure.size/2), gameFigure.y, 75, 10, gameFigure, new DamageEffect(gameFigure, DAMAGE ,5000));
-       Main.gameData.addGameData(hitBox);
-        
-
+        hitBox =  new HitBox(gameFigure.x + (gameFigure.size/2), gameFigure.y, 75, 10, gameFigure, new DamageEffect(gameFigure, DAMAGE ,5000));
+        Main.gameData.addGameData(hitBox);
     }
+    
     @Override
     public void execute() {    
         if(System.currentTimeMillis() - initTime >= DURATION)

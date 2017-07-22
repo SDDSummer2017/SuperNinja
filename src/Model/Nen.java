@@ -73,7 +73,7 @@ public class Nen extends GameFigure {
     public void render(Graphics g) {
         
         Image frameImage;
-        System.out.println("attack frame index: " + attackFrameIndex);
+        
         //DEATH 
         if(this.health <= 0){
             resetAnimationFrames("death");
@@ -89,13 +89,20 @@ public class Nen extends GameFigure {
         }
         //Ranged ATTACK
         else if(cState instanceof ThrowingMode){
-            resetAnimationFrames("attack");
             
-            //Select frame image based on which direction Nen is facing
-            frameImage = (isFacingRight) ? rangeAttackAnimation[attackFrameIndex] : GameFigure.flipImageHorizontally(rangeAttackAnimation[attackFrameIndex]);
+            resetAnimationFrames("attack");
+            //Check if we are actually thowing or just in "throwing mode". If we are actually throwing, we play the full throw animation, if we are 
+            //just in throw mode we just loop on the first frame of the throw animation
+            if (((ThrowingMode)cState).throwing == true){
+                frameImage = (isFacingRight) ? rangeAttackAnimation[attackFrameIndex] : GameFigure.flipImageHorizontally(rangeAttackAnimation[attackFrameIndex]);
+                attackFrameIndex = (attackFrameIndex == rangeAttackAnimation.length-1) ? 0 : attackFrameIndex + 1;
+            }
+            else{
+               frameImage = (isFacingRight) ? rangeAttackAnimation[0] : GameFigure.flipImageHorizontally(rangeAttackAnimation[0]); 
+            }
+            
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-            attackFrameIndex = (attackFrameIndex == rangeAttackAnimation.length-1) ? 0 : attackFrameIndex + 1;                 
         }
         //LIGHT ATTACK
         else if(cState instanceof LightAttack){

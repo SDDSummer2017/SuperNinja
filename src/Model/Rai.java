@@ -11,6 +11,8 @@ import Model.States.MotionState;
 import Model.States.Rai.Default;
 import Model.States.Rai.Movement;
 import Model.States.Rai.Neutral;
+import Model.States.Rai.SteelTwister;
+import Model.States.Rai.ViperStrike;
 import View.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -61,11 +63,43 @@ public class Rai extends Enemy {
     @Override
     public void render(Graphics g) {
       
-        super.render(g);
-        
         Image frameImage;
+        super.render(g);    
         
-        if(mState instanceof Movement)
+        //DEATH 
+        if(this.health <= 0){
+            resetAnimationFrames("death");
+            
+            //Select frame image based on which direction Nen is facing
+            if (deathFrameIndex == 0 ){
+                diedFacingRight = isFacingRight;
+            }
+            frameImage = (diedFacingRight) ? deathAnimation[deathFrameIndex] : GameFigure.flipImageHorizontally(deathAnimation[deathFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            deathFrameIndex = (deathFrameIndex == deathAnimation.length-1) ? deathFrameIndex : deathFrameIndex + 1;                 
+        }
+        //LIGHT ATTACK (Steel Twister)
+        else if(cState instanceof SteelTwister){
+            resetAnimationFrames("attack");
+            
+            //Select frame image based on which direction Nen is facing
+            frameImage = (isFacingRight) ? lightAttackAnimation[attackFrameIndex] : GameFigure.flipImageHorizontally(lightAttackAnimation[attackFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            attackFrameIndex = (attackFrameIndex == lightAttackAnimation.length-1) ? 0 : attackFrameIndex + 1;                 
+        }
+        //HEAVY ATTACK (Viper Strike)
+        else if(cState instanceof ViperStrike){
+            resetAnimationFrames("attack");
+            
+            //Select frame image based on which direction Nen is facing
+            frameImage = (isFacingRight) ? heavyAttackAnimation[attackFrameIndex] : GameFigure.flipImageHorizontally(heavyAttackAnimation[attackFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            attackFrameIndex = (attackFrameIndex == heavyAttackAnimation.length-1) ? 0 : attackFrameIndex + 1;                      
+        }
+        else if(mState instanceof Movement)
         {
             //If we are moving, reset the idle animtion frame index
             idleFrameIndex = 0;
@@ -94,6 +128,12 @@ public class Rai extends Enemy {
         
         }
     
+    }
+    private void resetAnimationFrames(String currentAnimation){
+        if (!"idle".equals(currentAnimation))idleFrameIndex = 0;
+        if (!"move".equals(currentAnimation))moveFrameIndex = 0;
+        if (!"jump".equals(currentAnimation))jumpFrameIndex = 0;
+        if (!"attack".equals(currentAnimation))attackFrameIndex = 0;
     }
     
     // the following count functions are only used for the placeholders until animation

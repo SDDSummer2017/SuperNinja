@@ -1,4 +1,4 @@
-package Model.States.Nen;
+ package Model.States.Nen;
 
 
 import Controller.Main;
@@ -23,11 +23,13 @@ import java.util.ArrayList;
  */
 public class ThrowingMode extends CombatState{
 
+    public boolean throwing;
+    
     private final static int MAX_THROWS = 5;
     private final static int THROW_DELAY = 250;
+    private final static int THROW_DURATION = 500;
     private static int COOL_DOWN = 3000;
-    private static long lastEntered;
-     
+    private static long lastEntered, throwStart;     
     private int throwCount = 0;
     private long lastThrown; 
     
@@ -35,15 +37,21 @@ public class ThrowingMode extends CombatState{
     public ThrowingMode(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
         lastEntered = System.currentTimeMillis();
+        throwing = false;
     }
 
     @Override
-    public void execute() { 
+    public void execute() {         
+        if(System.currentTimeMillis() - throwStart >= THROW_DURATION)
+            throwing = false;      
+        
         if(throwCount >= 5)
             nextState("ThrowingMode");
     }
     
     public void throwShuriken(int tx, int ty){
+        throwStart = System.currentTimeMillis();
+        throwing = true;
         if(throwCount > 5)
             return;
         

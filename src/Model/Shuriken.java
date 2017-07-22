@@ -34,6 +34,7 @@ public class Shuriken extends Projectiles {
         targetPath.sub(currentLocation);
         targetPath.scale((float) Math.sqrt((double)(GamePanel.CAMERA_HEIGHT * GamePanel.CAMERA_HEIGHT) *
                 (double)(GamePanel.CAMERA_WIDTH * GamePanel.WIDTH)));
+
         targetPath.normalize();
         targetPath.scale(moveDistance);
         
