@@ -20,7 +20,7 @@ public class KeyController implements KeyListener {
         keyCommands.add(new MoveRightCommand(KeyEvent.VK_RIGHT));
         keyCommands.add(new JumpCommand(KeyEvent.VK_UP));
         keyCommands.add(new WallJumpCommand(KeyEvent.VK_SPACE));
-        
+        keyCommands.add(new CrouchCommand(KeyEvent.VK_DOWN));
     }
     @Override
     public void keyPressed(KeyEvent e) {   
@@ -31,24 +31,30 @@ public class KeyController implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-        if(e.getKeyChar() == 'f' || e.getKeyChar() == 'F')
-                nen.cState.nextState("LightAttack"); 
-    }
+    public void keyTyped(KeyEvent e) {}
     
 
     @Override
     public void keyReleased(KeyEvent e) {
         for(Command c : keyCommands)
-            c.release(nen);
+            if(e.getKeyCode() == c.getKeyCode() && c instanceof MoveLeftCommand 
+               || e.getKeyCode() == c.keyCode && c instanceof MoveRightCommand
+                || e.getKeyCode() == c.keyCode && c instanceof CrouchCommand )
+                c.release(nen);
+                
         
         switch (e.getKeyCode()){
  
             case KeyEvent.VK_ESCAPE:
                 if(window == null)
+                {
                     window = new KeyBindingWindow(this);
-                else
+;                   placeWindow(window);
+                }else
+                {
                     window.setVisible(!window.isVisible()); 
+                    placeWindow(window);
+                }
         }
     } 
     
@@ -56,4 +62,11 @@ public class KeyController implements KeyListener {
          for(Command c : keyCommands)  
              c.setKeyCode(newKeyCodes.get(c.keyCode));
     }
+     
+     private void placeWindow(KeyBindingWindow window){
+                 window.setLocation(Main.mainWindow.size().width/2  - window.getSize().width/2,
+       Main.mainWindow.size().height/2 - window.getSize().height/2);
+//        window.setLocation(Main.gamePanel.size().width/2 - window.getSize().width/2,
+//       Main.gamePanel.size().height/2 - window.getSize().height/2);
+     }
 }

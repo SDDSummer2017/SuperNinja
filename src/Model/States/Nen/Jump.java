@@ -1,5 +1,6 @@
 package Model.States.Nen;
 
+import Controller.Main;
 import EventHandling.Observer;
 import Model.GameFigure;
 import Model.States.MotionState;
@@ -12,12 +13,9 @@ import java.util.ArrayList;
  *
  * @author Garrett A. Clement
  */
-public class Jump extends MotionState {
-    private boolean init = true; 
+public class Jump extends MotionState { 
     private boolean isMoving = false;
-    private boolean jumpMade;
-    private final int JUMP_LIMIT = 200;
-    private int jumpHeight = 1;
+    private boolean jumpMade; 
     private int dy = 20;
     private Force jumpForce; 
     public Jump(GameFigure gameFigure, ArrayList<Observer> observers) {
@@ -32,6 +30,7 @@ public class Jump extends MotionState {
 
     @Override
     public void execute() {
+
         
         if(gameFigure.airborn == false && jumpMade == false){
             gameFigure.forces.add(jumpForce);
@@ -50,10 +49,23 @@ public class Jump extends MotionState {
     }
 
     public void move(){
+        int result   ;     
+        
         if(gameFigure.isFacingRight)
-            gameFigure.x += 10;
-        else
-            gameFigure.x -= 10;
+        {
+            result = Main.gamePanel.handler.rightCollision(10);
+            if(result == -1)
+                gameFigure.x += 10;
+            else
+                gameFigure.x += result; 
+        }else
+        {
+            result = Main.gamePanel.handler.leftCollision(-10);
+            if(result == -1)
+                gameFigure.x += -10;
+            else
+                gameFigure.x += result;
+        }
     }
     
     @Override
@@ -72,6 +84,8 @@ public class Jump extends MotionState {
         }
         else if(s.equals("WallJump"))
         {
+            jumpMade = true;
+            gameFigure.airborn = true;
             if(gameFigure.isFacingRight)
                 gameFigure.mState = new WallJump(gameFigure, observers, -1);
             else

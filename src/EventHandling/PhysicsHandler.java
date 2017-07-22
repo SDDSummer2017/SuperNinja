@@ -76,22 +76,25 @@ public class PhysicsHandler implements CollisionObserver {
                         }
                      else
                      {
-                         if(  gameFigureTwo.x < gameFigureOne.x)
+                         if(gameFigureTwo.x < gameFigureOne.x && withinBox(gameFigureTwo, gameFigureOne))
                         {
-                                 
-                        
-                         ((Nen) gameFigureTwo).x+= -35; 
+                                 ((Nen) gameFigureTwo).velocity.dx =0; 
+                                
+                                 gameFigureTwo.x = gameFigureOne.getCollisionBox().getX() - gameFigureTwo.getCollisionBox().width ;
                          
-                         //           ((Nen) gameFigureTwo).forces.add(new Force(9, new Acceleration(-.49, 0 )));
-                   
-                              
+                         
+                                ((Nen) gameFigureTwo).forces.add(new Force(9, new Acceleration(-.49, 0 )));
+                              ((Nen) gameFigureTwo).x -= 35;
+                           
                         
                         }
-                        else if(gameFigureTwo.x < gameFigureOne.x + 128)
+                        else if(gameFigureTwo.x < gameFigureOne.x + 128 && withinBox(gameFigureTwo, gameFigureOne))
                             {
-                    
-                                   //((Nen) gameFigureTwo).forces.add(new Force(9, new Acceleration(0.49, 0 )));
-                                   ((Nen) gameFigureTwo).x += 35;
+                     
+                                
+                               //  gameFigureTwo.x = gameFigureOne.getCollisionBox().getX() + gameFigureTwo.getCollisionBox().width + ((Nen) gameFigureTwo).getCollisionBox().width ;
+                                   ((Nen) gameFigureTwo).forces.add(new Force(9, new Acceleration(0.49, 0 )));
+                                  ((Nen) gameFigureTwo).x += 35;
                            
                             } 
                      
@@ -122,6 +125,45 @@ public class PhysicsHandler implements CollisionObserver {
         
     }
 
+    public boolean withinBox(GameFigure g1, GameFigure g2){
+        if(!(g1 instanceof Nen) && !(g2 instanceof Nen ))
+            return false;
+        
+        GameFigure tmp = g1;
+        if(g2 instanceof Nen)
+        {
+            g1 = g2;
+            g2 = g1;
+        }
+        
+        if(g1.getCollisionBox().getY() <= g2.getCollisionBox().getHeight() + g2.getCollisionBox().getY() -15
+                && g1.getCollisionBox().getY() + g1.getCollisionBox().getHeight() >= g2.getCollisionBox().getY())
+            return true;
+        else
+            return false; 
+    }
+//    public boolean withinBox(GameFigure g1, GameFigure g2){
+//        if(!(g1 instanceof Nen) && !(g2 instanceof Nen ))
+//            return false;
+//        
+//        GameFigure tmp = g1;
+//        if(g2 instanceof Nen)
+//        {
+//            g1 = g2;
+//            g2 = g1;
+//        }
+//        
+//        if(g1.getCollisionBox().getY() <= g2.getCollisionBox().getHeight() + g2.getCollisionBox().getY() -15
+//                && g1.getCollisionBox().getY() >= g2.getCollisionBox().getY())
+//            return true;
+//        else
+//            return false;
+//        
+//        
+//        
+//        
+//    }
+    
     @Override
     public void onNotify(Collision object1, Collision object2) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
