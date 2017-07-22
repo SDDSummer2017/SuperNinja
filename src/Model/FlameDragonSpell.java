@@ -14,7 +14,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 /**
- *
+ * Flame DRAGON!
  * @author Garrett A. Clement
  */
 public class FlameDragonSpell extends Enemy {
