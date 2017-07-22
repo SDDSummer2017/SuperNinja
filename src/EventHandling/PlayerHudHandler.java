@@ -12,6 +12,7 @@ import Level.NinjaVillage;
 import Level.TitleCard;
 import Model.GameData;
 import Model.Nen;
+import Model.States.Death;
 import Model.States.Nen.NeutralCombat;
 import View.HealthBar;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class PlayerHudHandler implements PlayerObserver {
             
             if(!gameData.level.renderables.contains(healthBar)){gameData.addGameData(healthBar);} 
         
-            if(nen.health <= 0)
+            if(nen.cState instanceof Death)
             {
                     
                      if(gameData.level instanceof NinjaVillage)

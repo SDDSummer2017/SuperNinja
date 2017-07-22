@@ -82,12 +82,12 @@ public class NinjaVillage extends Level {
         catch (IOException ex) {
             Logger.getLogger(NinjaVillage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
-        ArrayList<Image> portalTiles = new ArrayList<>(); 
-        for(int i = 1; i < 3; i++)
+        ArrayList<TileModel> portalTiles = new ArrayList<>(); 
+        for(int i = 0; i < 7; i++)
         {
              try {
             img = ImageIO.read(new File("images/portal" + i + ".png"));
-            portalTiles.add(img);
+            portalTiles.add(new TileModel(img));
             } 
         catch (IOException ex) {
             Logger.getLogger(NinjaVillage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
