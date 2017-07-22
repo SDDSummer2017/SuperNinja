@@ -69,6 +69,7 @@ public class GroundShatter extends CombatState {
         }else{
             Main.gameData.removeGameData(hitBox);
             nextState("NeutralCombat");
+            this.notifyObservers("HeavyAttackFinished");
         }
     }
        
