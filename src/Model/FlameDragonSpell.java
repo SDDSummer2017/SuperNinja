@@ -7,17 +7,19 @@ package Model;
 
 import Controller.Main;
 import StatusEffects.DamageEffect;
+import StatusEffects.DotEffect;
 import View.GamePanel;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 /**
- * Flame DRAGON!
+ * Just trying to merge
  * @author Garrett A. Clement
  */
-public class FlameDragonSpell extends Enemy {
+public class FlameDragonSpell extends Projectiles {
     ArrayList<HitBox> dragonBody;
     
     double pi = Math.PI;
@@ -25,10 +27,11 @@ public class FlameDragonSpell extends Enemy {
     double amplitude = 20;
     double direction;
     public FlameDragonSpell(double x, double y, double size, int direction) {
-        super(x, y, size); 
+        super(x, y, 0, 0, Color.RED, false, 30, 40);
+        //super(x, y, size); 
         this.direction = direction;
         dragonBody = new ArrayList<>();
-        hitbox = new HitBox(x, y, 50, 50, this, new DamageEffect(this, 30, 5000));
+        hitbox = new HitBox(x, y, 50, 50, this, new DamageEffect(this, 30, 5000), new DotEffect(this, 2, 5000, 1000));
         dragonBody.add(hitbox);
         Main.gameData.addGameData(hitbox);
         
