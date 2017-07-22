@@ -25,8 +25,8 @@ import java.util.function.ObjDoubleConsumer;
 public abstract class Level implements Renderable, Updateable {
     public int nenStartX; 
     public int nenStartY;
-    protected int width; 
-    protected int height; 
+    public int width; 
+    public int height; 
     protected GameData gameData; 
     protected CheckpointHandler checkpointHandler;
     //TODO: 2d Array of Tiles 

@@ -26,21 +26,12 @@ public class Jump extends MotionState {
         jumpMade = false; 
         if(previousState instanceof Move)
             isMoving = true;
-        jumpForce = new Force(gameFigure.mass, new Acceleration( 0 , -.75));
+        if(!(previousState instanceof WallJump))
+            jumpForce = new Force(gameFigure.mass, new Acceleration( 0 , -.75));
     } 
 
     @Override
     public void execute() {
-//        if(JUMP_LIMIT >= jumpHeight)
-//        { 
-//            jumpMade = true;
-//            gameFigure.y -= dy;
-//        }else if(jumpMade && !gameFigure.airborn)
-//            nextState("JumpMade"); 
-// 
-        //jumpHeight += dy - gameFigure.GRAVITY;
-        
-        
         
         if(gameFigure.airborn == false && jumpMade == false){
             gameFigure.forces.add(jumpForce);
@@ -60,9 +51,9 @@ public class Jump extends MotionState {
 
     public void move(){
         if(gameFigure.isFacingRight)
-            gameFigure.x += 5;
+            gameFigure.x += 10;
         else
-            gameFigure.x -= 5;
+            gameFigure.x -= 10;
     }
     
     @Override
@@ -78,6 +69,13 @@ public class Jump extends MotionState {
         else if(s.equals("JumpMade")){
             gameFigure.mState = new NeutralMotion(gameFigure, observers);
             this.notifyObservers("landed");
+        }
+        else if(s.equals("WallJump"))
+        {
+            if(gameFigure.isFacingRight)
+                gameFigure.mState = new WallJump(gameFigure, observers, -1);
+            else
+                gameFigure.mState = new WallJump(gameFigure, observers, 1);
         }
             
     }

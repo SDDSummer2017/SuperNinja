@@ -4,37 +4,28 @@
  * and open the template in the editor.
  */ 
 package Level; 
-import Controller.Main;
-import EventHandling.SoundHandler; 
 import Model.Collision;
-import Model.GameFigure;
-import Model.HitBox;
  
 import EventHandling.CheckpointHandler;
-import EventHandling.Observer;
 import EventHandling.SoundHandler;
-import EventHandling.PhysicsHandler;
 import Model.GameData;
 import Model.GameFigure;
 import Model.Kisara;
-import Model.Nen;
  
 import Model.Rai;
 import Model.Renderable;
+import Model.Sage;
 import Model.Terro;
 import Model.Updateable;
 import View.GamePanel; 
-import com.sun.javafx.geom.AreaOp;
 import java.awt.Graphics; 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import jdk.nashorn.internal.runtime.arrays.ArrayLikeIterator;
  
 
 /**
@@ -120,26 +111,32 @@ public class NinjaVillage extends Level {
         
  
        
-       Rai rai = new Rai((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100);
-       addGameData(rai);
-      
-       rai.cState.registerObserver(new SoundHandler(""));
-       rai.mState.registerObserver(new SoundHandler(""));
-       
-       Kisara kisara = new Kisara((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100); 
+        
+        Rai rai = new Rai((GamePanel.CAMERA_WIDTH), 440, 100);
+        addGameData(rai);
+        
+        rai.cState.registerObserver(new SoundHandler(""));
+        rai.mState.registerObserver(new SoundHandler(""));
+        
+       Kisara kisara = new Kisara((GamePanel.CAMERA_WIDTH), 440 - 90, 100); 
        addGameData(kisara);   
        kisara.cState.registerObserver(new SoundHandler(""));
        kisara.mState.registerObserver(new SoundHandler(""));
        
        
-       Terro terro = new Terro((GamePanel.CAMERA_WIDTH), GamePanel.CAMERA_HEIGHT - 90, 100);
+       Terro terro = new Terro((GamePanel.CAMERA_WIDTH), 440 - 90, 100);
        addGameData(terro);
-      
+       
        terro.cState.registerObserver(new SoundHandler(""));
        terro.mState.registerObserver(new SoundHandler(""));
        
+       Sage sage = new Sage( 800, 440, 100);
+       addGameData(sage);
        
+       sage.cState.registerObserver(new SoundHandler(""));
+       sage.mState.registerObserver(new SoundHandler(""));
        
+ 
        
         //Get event handlers for game logic.
         ArrayList<Object> observers = new ArrayList<>(); 

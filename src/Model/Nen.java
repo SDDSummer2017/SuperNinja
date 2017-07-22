@@ -1,5 +1,6 @@
 package Model;
 
+import Controller.Main;
 import EventHandling.Observer;
 import EventHandling.PlayerHudHandler;
 import Model.States.Nen.NeutralCombat;
@@ -9,7 +10,9 @@ import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import View.GamePanel;
 import EventHandling.SoundHandler; 
+ 
 import EventHandling.Subject;
+import Model.States.Death;
 import Model.States.Nen.Dash;
 import Model.States.Nen.Move;
 import Model.States.Nen.Jump;
@@ -69,7 +72,23 @@ public class Nen extends GameFigure implements Subject{
         
         Image frameImage;
         
-        if(cState instanceof LightAttack){
+        if(this.health <= 0){
+            attackFrameIndex = 0;
+            moveFrameIndex = 0;
+            idleFrameIndex = 0;
+            jumpFrameIndex = 0;
+            
+            
+            //Select frame image based on which direction Nen is facing
+            if (deathFrameIndex == 0 ){
+                diedFacingRight = isFacingRight;
+            }
+            frameImage = (diedFacingRight) ? deathAnimation[deathFrameIndex] : GameFigure.flipImageHorizontally(deathAnimation[deathFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            deathFrameIndex = (deathFrameIndex == deathAnimation.length-1) ? deathFrameIndex : deathFrameIndex + 1;                 
+        }
+        else if(cState instanceof LightAttack){
             moveFrameIndex = 0;
             idleFrameIndex = 0;
             jumpFrameIndex = 0;
@@ -155,8 +174,16 @@ public class Nen extends GameFigure implements Subject{
     @Override
     public void update() {
  
-        //Apply Status Effect
-        super.update();
+        
+        //super.update();
+        
+        //Eventually all this will be moved to gameFigure
+        effectsManager.applyEffects(this);
+        
+        if(this.health <= 0) 
+        {
+            cState = new Death(this, cState.observers);
+        }   
         
         if(cState instanceof NeutralCombat)
             mState.execute();
