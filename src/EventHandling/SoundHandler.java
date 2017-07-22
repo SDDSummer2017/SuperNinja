@@ -32,6 +32,7 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
         fxPanel = new JFXPanel();
     }
 
+     
     
     //Our onNotify methods take a variety of arguments for different situations.
     //Add conditions inside these and play the appropriate sounds inside theses methods. 

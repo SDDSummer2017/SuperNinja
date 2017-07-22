@@ -12,6 +12,8 @@ import Level.NinjaVillage;
 import Level.TitleCard;
 import Model.GameData;
 import Model.Nen;
+import Model.States.Nen.NeutralCombat;
+import java.util.ArrayList;
 
 /**
  *
@@ -46,6 +48,9 @@ public class PlayerHudHandler implements PlayerObserver {
                     gameData.nen.x = gameData.level.nenStartX;
                     gameData.nen.y = gameData.level.nenStartY - 100;
                     nen.health = 100;
+                    ArrayList<Observer> o = new ArrayList<Observer>();
+                    o.add(new SoundHandler(""));
+                    nen.cState = new NeutralCombat(nen, o); 
                     gameData.titleCard = new TitleCard(Main.gamePanel, "Game Over!");
                     
                   
