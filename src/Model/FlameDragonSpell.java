@@ -16,7 +16,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 /**
- *
+ * Just trying to merge
  * @author Garrett A. Clement
  */
 public class FlameDragonSpell extends Projectiles {
