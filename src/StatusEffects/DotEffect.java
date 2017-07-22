@@ -8,7 +8,7 @@ package StatusEffects;
 import Model.GameFigure;
 
 /**
- *
+ * Working on merge
  * @author Garrett A. Clement
  */
 public class DotEffect extends StatusEffect {
