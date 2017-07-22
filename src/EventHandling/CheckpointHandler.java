@@ -52,7 +52,7 @@ public class CheckpointHandler implements Observer{
                     gameData.level.addGameData(gameData.nen);
                     gameData.nen.x = gameData.level.nenStartX;
                     gameData.nen.y = gameData.level.nenStartY;
-                    gameData.titleCard = new TitleCard(gamePanel);
+                    gameData.titleCard = new TitleCard(gamePanel, "Level Complete");
                     gameData.notifyObservers("Level Two");
                     
                    

@@ -1,6 +1,7 @@
 package Model;
 
 import EventHandling.Observer;
+import EventHandling.PlayerHudHandler;
 import Model.States.Nen.NeutralCombat;
 import Model.States.Nen.NeutralMotion;
 import java.awt.Color;
@@ -8,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import View.GamePanel;
 import EventHandling.SoundHandler; 
+import EventHandling.Subject;
 import Model.States.Nen.Dash;
 import Model.States.Nen.Move;
 import Model.States.Nen.Jump;
@@ -18,17 +20,18 @@ import Physics.Velocity;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.ArrayList;
-public class Nen extends GameFigure {
+public class Nen extends GameFigure implements Subject{
    
+     
     private int jumpHeight = 0;
     private int dy = -7;
     private int hitBox_X = 0;
     private int hitBox_Y = 0;
     private int hitBox_width = 0;
     private int hitBox_height = 0;
-    
+      ArrayList<Observer> observers;
     private final SoundHandler soundHandler = new SoundHandler("");
-  
+    public boolean removeSelf = false; 
  
     public Nen(int x, int y, int size) {
        super(x, y, size,
@@ -42,9 +45,9 @@ public class Nen extends GameFigure {
         velocity.dx = 0;
         velocity.dy = 0;
         forces = new ArrayList<>();
-        ArrayList<Observer> observers = new ArrayList<Observer>();
-        mState = new NeutralMotion(this, observers);
-        cState = new NeutralCombat(this, observers);
+        observers = new ArrayList<Observer>();
+        mState = new NeutralMotion(this, new ArrayList<Observer>());
+        cState = new NeutralCombat(this, new ArrayList<Observer>());
        
      
         mState.registerObserver(soundHandler);
@@ -159,6 +162,11 @@ public class Nen extends GameFigure {
             mState.execute();
         else
             cState.execute();
+        if(this.removeSelf)
+        {
+            observers.clear(); 
+        }
+        notifyObservers();
     }
 
     public void translate(int dx, int dy) {
@@ -199,6 +207,36 @@ public class Nen extends GameFigure {
     @Override
     public Rectangle2D.Double getCollisionBox() {
         return new Rectangle2D.Double(super.x + hitBox_X, super.y + hitBox_Y, hitBox_width, hitBox_height);
+    }
+
+    @Override
+    public void registerObserver(Observer observer) {
+       observers.add(observer);
+    }
+
+    @Override
+    public void deregisterObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+         for(Observer o : observers)
+         {
+             if(o instanceof PlayerHudHandler)
+             {
+                 ((PlayerHudHandler) o).onNotify(this);
+             } 
+         }
+         
+    }
+
+    @Override
+    public void notifyObservers(String event) {
+        for(Observer o : observers)
+         {
+            o.onNotify(event);
+         }
     }
 
 }
