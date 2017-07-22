@@ -13,6 +13,7 @@ import Level.TitleCard;
 import Model.GameData;
 import Model.Nen;
 import Model.States.Nen.NeutralCombat;
+import View.HealthBar;
 import java.util.ArrayList;
 
 /**
@@ -23,16 +24,20 @@ public class PlayerHudHandler implements PlayerObserver {
     
     private GameData gameData; 
     private Nen nen; 
-    
+    private HealthBar healthBar;
     public PlayerHudHandler(GameData gameData, Nen nen)
     {
         this.gameData = gameData; 
         this.nen = nen; 
-        
+        this.healthBar = new HealthBar(Main.gamePanel); 
+        gameData.addGameData(healthBar);
     }
 
     @Override
     public void onNotify(Nen nen) {
+            
+            if(!gameData.level.renderables.contains(healthBar)){gameData.addGameData(healthBar);} 
+        
             if(nen.health <= 0)
             {
                     
@@ -52,11 +57,15 @@ public class PlayerHudHandler implements PlayerObserver {
                     o.add(new SoundHandler(""));
                     nen.cState = new NeutralCombat(nen, o); 
                     gameData.titleCard = new TitleCard(Main.gamePanel, "Game Over!");
-                    
+                    gameData.addGameData(healthBar);
                   
                  
                     
-            } 
+            }
+            else
+            {
+                healthBar.setHealth((int) nen.health);
+            }
     }
 
     @Override
