@@ -18,6 +18,7 @@ import java.util.ArrayList;
 /**
  * Just trying to merge
  * @author Garrett A. Clement
+ * Created sprint 5
  */
 public class FlameDragonSpell extends Projectiles {
     ArrayList<HitBox> dragonBody;
