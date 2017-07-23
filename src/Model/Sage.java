@@ -7,9 +7,9 @@ package Model;
 
 import EventHandling.Observer;
 import Model.States.Sage.Chant;
-import Model.States.Sage.FlameCannon;
 import Model.States.Sage.FlameDragon;
 import Model.States.Sage.NeutralMotion;
+import Model.States.Sage.SoulFlame;
 import Model.States.Sage.Teleport;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -76,7 +76,7 @@ public class Sage extends Enemy {
             deathFrameIndex = (deathFrameIndex == deathAnimation.length-1) ? deathFrameIndex : deathFrameIndex + 1;                 
         }
         //LIGHT ATTACK (Steel Twister)
-        else if(cState instanceof FlameCannon){
+        else if(cState instanceof SoulFlame){
             resetAnimationFrames("attack");
             
             //Select frame image based on which direction Nen is facing
