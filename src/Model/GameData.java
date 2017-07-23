@@ -47,10 +47,12 @@ public class GameData implements Subject, Updateable, Renderable  {
     private final Force rfriction;
     private CheckpointHandler checkpointHandler;
     public Thread musicThread; 
+    public AnimationStore a_store;
         
     public GameData()  {
       
         
+        a_store = new AnimationStore();
         lfriction = new Force(.05, new Acceleration(0, -1)); 
         rfriction = new Force(.05, new Acceleration(0, 1)); 
         gravity = new  Force(9, new Acceleration(0, .49));
