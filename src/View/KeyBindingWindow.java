@@ -122,12 +122,14 @@ public class KeyBindingWindow extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
                            bindKeys();
                            storeNewKeyBindings(); 
+                           window.dispose();
 			}
 		});
 		
 		exit = new JButton("Exit");
 		exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) { 
+                            setOldKeyText();
 				window.dispose();
 			}
 		});  
@@ -247,6 +249,18 @@ public class KeyBindingWindow extends JFrame {
             j.oldKeyCode = j.newKeyCode;
             wj.oldKeyCode = wj.newKeyCode;
             c.oldKeyCode = c.newKeyCode;
+        }
+        
+        public void setOldKeyText(){
+            la.setText(KeyEvent.getKeyText(la.oldKeyCode));
+            ha.setText(KeyEvent.getKeyText(ha.oldKeyCode));
+            mr.setText(KeyEvent.getKeyText(mr.oldKeyCode));
+            ml.setText(KeyEvent.getKeyText(ml.oldKeyCode));
+            j.setText(KeyEvent.getKeyText(j.oldKeyCode));
+            wj.setText(KeyEvent.getKeyText(wj.oldKeyCode));
+            c.setText(KeyEvent.getKeyText(c.oldKeyCode));
+            
+            
         }
         
         private class KeyBinding extends JTextField{
