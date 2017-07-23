@@ -58,6 +58,7 @@ public class GroundShatter extends CombatState {
         if(System.currentTimeMillis() - delay >= BREATH_TIME && attackFinished)
         {
             nextState("NeutralCombat");
+            this.notifyObservers("HeavyAttackFinished");
         }
         
         if(!shockWave.isFinished())

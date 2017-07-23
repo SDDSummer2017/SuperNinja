@@ -39,10 +39,11 @@ public class PlayerHudHandler implements PlayerObserver {
             
             if(!gameData.level.renderables.contains(healthBar)){gameData.addGameData(healthBar);} 
         
-            if(nen.cState instanceof Death && nen.deathFrameIndex >= 9)
+            
+            if(nen.cState instanceof Death && nen.deathFrameIndex > 4)
             {
                     
-                     if(gameData.level instanceof NinjaVillage)
+                     if(gameData.level instanceof NinjaVillage )
                      {
                          gameData.level = new NinjaVillage(gameData);
                      }
