@@ -58,6 +58,7 @@ public class Shuriken extends Projectiles {
         Nen n = Main.gameData.nen;
         if(Math.abs(n.x - this.x) >= 500){
             Main.gameData.removeGameData(this);
+            Main.gameData.removeGameData(hitbox);
         }
         
 //        synchronized (bullets) {
