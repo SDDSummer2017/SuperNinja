@@ -11,6 +11,7 @@ import StatusEffects.DamageEffect;
 import View.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 import javax.vecmath.Vector2f;
 
@@ -26,7 +27,7 @@ public class ProjectileWindmillShuriken extends Projectiles{
     public double secondY;
     
     public ProjectileWindmillShuriken(double x, double y, double tx, double ty, Color color, boolean isGoodGuy, int d, double s) {
-        super(x, y, tx, ty, color, isGoodGuy, d, s);
+        super(x, y, tx, ty, color, isGoodGuy, d, s, 8, "WindMillShuriken");
         finnished = false;
         this.targetX = tx;
         this.targetY = ty;
@@ -57,7 +58,14 @@ public class ProjectileWindmillShuriken extends Projectiles{
     @Override
     public void render(Graphics g) {
         g.setColor(color);
-        g.fillOval((int)x, (int)y, (int)super.size * 2, (int)super.size * 2);   
+        g.fillOval((int)x, (int)y, (int)super.size * 2, (int)super.size * 2);
+        Image frameImage;
+
+        //Select frame image based on which direction Nen is facing
+        frameImage = (isFacingRight) ? runAnimation[moveFrameIndex] : GameFigure.flipImageHorizontally(runAnimation[moveFrameIndex]);
+
+        g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+        moveFrameIndex = (moveFrameIndex == runAnimation.length-1) ? 0 : moveFrameIndex + 1;
     }
     
     public void setDirection(boolean b){

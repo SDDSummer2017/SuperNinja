@@ -49,7 +49,7 @@ public class Sage extends Enemy {
         if(this.health <= 0){
             resetAnimationFrames("death");
             
-            //Select frame image based on which direction Nen is facing
+            //Select frame image based on which direction the game figure is facing
             if (deathFrameIndex == 0 ){
                 diedFacingRight = isFacingRight;
             }
@@ -62,7 +62,6 @@ public class Sage extends Enemy {
         else if(cState instanceof SoulFlame){
             resetAnimationFrames("attack");
             
-            //Select frame image based on which direction Nen is facing
             frameImage = (isFacingRight) ? lightAttackAnimation[attackFrameIndex] : GameFigure.flipImageHorizontally(lightAttackAnimation[attackFrameIndex]);
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
@@ -72,7 +71,6 @@ public class Sage extends Enemy {
         else if(cState instanceof FlameDragon){
             resetAnimationFrames("attack");
             
-            //Select frame image based on which direction Nen is facing
             frameImage = (isFacingRight) ? heavyAttackAnimation[attackFrameIndex] : GameFigure.flipImageHorizontally(heavyAttackAnimation[attackFrameIndex]);
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
@@ -80,12 +78,8 @@ public class Sage extends Enemy {
         }
         else if(mState instanceof Teleport)
         {
-            //If we are moving, reset the idle animtion frame index
-            idleFrameIndex = 0;
-            jumpFrameIndex = 0;
-            attackFrameIndex = 0;
+            resetAnimationFrames("move");
             
-            //Select frame image based on which direction Nen is facing
             frameImage = (isFacingRight) ? runAnimation[moveFrameIndex] : GameFigure.flipImageHorizontally(runAnimation[moveFrameIndex]);
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
@@ -94,12 +88,8 @@ public class Sage extends Enemy {
 
         else
         {
-            //If they are standing still we need to reset the frameCounter
-            moveFrameIndex = 0;               
-            jumpFrameIndex = 0;
-            attackFrameIndex = 0;
-
-            //Select frame image based on which direction Nen is facing
+            resetAnimationFrames("idle");
+            
             frameImage = (isFacingRight) ? idleAnimation[idleFrameIndex] : GameFigure.flipImageHorizontally(idleAnimation[idleFrameIndex]);
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
