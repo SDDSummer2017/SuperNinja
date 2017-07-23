@@ -27,6 +27,10 @@ public class GroundShatter extends CombatState {
     private int shatter_h;
     private int shatter_w;
     private int cumulativeDistance;
+    private long delay;
+    private boolean attackFinished;
+    private static int BREATH_TIME = 500;
+    
     private ShockWave shockWave ;
     public GroundShatter(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
@@ -50,12 +54,19 @@ public class GroundShatter extends CombatState {
     @Override
  
     public void execute() {  
-         
+        
+        if(System.currentTimeMillis() - delay >= BREATH_TIME && attackFinished)
+        {
+            nextState("NeutralCombat");
+        }
+        
         if(!shockWave.isFinished())
+        {
             shockWave.update();
-        else{
+        }else if(!attackFinished){
+             delay = System.currentTimeMillis();
              Main.gameData.removeGameData(shockWave);
-             nextState("NeutralCombat");
+             attackFinished = true;
         }
     } 
     
