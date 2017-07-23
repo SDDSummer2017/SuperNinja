@@ -107,7 +107,39 @@ public class NinjaVillage extends Level {
             }
             else
             {
-                 this.terrain.add(new Platform(i * 128.0, 535.0, new Tile(i * 128, 535, ground)));
+                if(i == 2)
+                {
+                    Spawner s =  new Spawner(i * 128, 535, this, Kisara.class, new Tile( i * 128, i * 535, ground));
+                    s.registerObserver(checkpointHandler);
+                    
+                    this.terrain.add(s);
+                }
+                else if(i == 6)
+                {
+                     Spawner s =  new Spawner(i * 128, 535, this, Rai.class, new Tile( i * 128, i * 535, ground));
+                    s.registerObserver(checkpointHandler);
+                    
+                    this.terrain.add(s);
+                }
+                else if(i == 3)
+                {
+                    Spawner s =  new Spawner(i * 128, 535, this, Terro.class, new Tile( i * 128, i * 535, ground));
+                    s.registerObserver(checkpointHandler);
+                    
+                    this.terrain.add(s);
+                }
+                 else if(i == 7)
+                {
+                    Spawner s =  new Spawner(i * 128, 535, this, Sage.class, new Tile( i * 128, i * 535, ground));
+                    s.registerObserver(checkpointHandler);
+                    
+                    this.terrain.add(s);
+                }
+                else
+                {
+                    this.terrain.add(new Platform(i * 128.0, 535.0, new Tile(i * 128, 535, ground)));
+                }
+                 
             }
             if(i%3 == 0)
             {
@@ -134,29 +166,29 @@ public class NinjaVillage extends Level {
  
        
         
-        Rai rai = new Rai((GamePanel.CAMERA_WIDTH), 440, 100);
-        addGameData(rai);
-        
-        rai.cState.registerObserver(new SoundHandler(""));
-        rai.mState.registerObserver(new SoundHandler(""));
-        
-       Kisara kisara = new Kisara((GamePanel.CAMERA_WIDTH), 440 - 90, 100); 
-       addGameData(kisara);   
-       kisara.cState.registerObserver(new SoundHandler(""));
-       kisara.mState.registerObserver(new SoundHandler(""));
-       
-       
-       Terro terro = new Terro((GamePanel.CAMERA_WIDTH), 440 - 90, 100);
-       addGameData(terro);
-       
-       terro.cState.registerObserver(new SoundHandler(""));
-       terro.mState.registerObserver(new SoundHandler(""));
-       
-       Sage sage = new Sage( 800, 440, 100);
-       addGameData(sage);
-       
-       sage.cState.registerObserver(new SoundHandler(""));
-       sage.mState.registerObserver(new SoundHandler(""));
+//        Rai rai = new Rai((GamePanel.CAMERA_WIDTH), 440, 100);
+//        addGameData(rai);
+//        
+//        rai.cState.registerObserver(new SoundHandler(""));
+//        rai.mState.registerObserver(new SoundHandler(""));
+//        
+//       Kisara kisara = new Kisara((GamePanel.CAMERA_WIDTH), 440 - 90, 100); 
+//       addGameData(kisara);   
+//       kisara.cState.registerObserver(new SoundHandler(""));
+//       kisara.mState.registerObserver(new SoundHandler(""));
+//       
+//       
+//       Terro terro = new Terro((GamePanel.CAMERA_WIDTH), 440 - 90, 100);
+//       addGameData(terro);
+//       
+//       terro.cState.registerObserver(new SoundHandler(""));
+//       terro.mState.registerObserver(new SoundHandler(""));
+//       
+//       Sage sage = new Sage( 800, 440, 100);
+////       addGameData(sage);
+////       
+//       sage.cState.registerObserver(new SoundHandler(""));
+//       sage.mState.registerObserver(new SoundHandler(""));
        
  
        

@@ -19,6 +19,7 @@ import Model.GameData;
 import Model.GameFigure;
 import Model.Kisara;
 import Model.Rai;
+import Model.Sage;
 import Model.Terro;
 import View.GamePanel;
 import view.Camera;
@@ -73,15 +74,32 @@ public class CheckpointHandler implements Observer{
             if(((Spawner)checkpoint).spawned == false){
             if(((Spawner)checkpoint).enemy == Rai.class)
             {
-                gameData.level.addGameData(new Rai(((Spawner)checkpoint).x + 35, ((Spawner)checkpoint).y, 100));
+                Rai rai = new Rai(((Spawner)checkpoint).x + 35, ((Spawner)checkpoint).y - 100, 100);
+                rai.cState.registerObserver(new SoundHandler(""));
+                rai.mState.registerObserver(new SoundHandler(""));
+             
+                gameData.level.addGameData(rai);
             }
             else if(((Spawner)checkpoint).enemy  == Terro.class)
             {
-                gameData.level.addGameData(new Terro(((Spawner)checkpoint).x + 35, ((Spawner)checkpoint).y, 100));
+                Terro rai = new Terro(((Spawner)checkpoint).x + 35, ((Spawner)checkpoint).y -100, 100);
+                rai.cState.registerObserver(new SoundHandler(""));
+                rai.mState.registerObserver(new SoundHandler(""));
+                gameData.level.addGameData(rai);
             }
             else if(((Spawner)checkpoint).enemy  == Kisara.class)
             {
-                gameData.level.addGameData(new Kisara(((Spawner)checkpoint).x + 35, ((Spawner)checkpoint).y, 100));
+                Kisara rai = new Kisara(((Spawner)checkpoint).x + 35, ((Spawner)checkpoint).y - 100, 100);
+                rai.cState.registerObserver(new SoundHandler(""));
+                rai.mState.registerObserver(new SoundHandler(""));
+                gameData.level.addGameData(rai);
+            }
+             else if(((Spawner)checkpoint).enemy  == Sage.class)
+            {
+                Sage rai = new Sage(((Spawner)checkpoint).x + 35, ((Spawner)checkpoint).y -100, 100);
+                rai.cState.registerObserver(new SoundHandler(""));
+                rai.mState.registerObserver(new SoundHandler(""));
+                gameData.level.addGameData(rai);
             }
             }
             ((Spawner)checkpoint).spawned = true;
