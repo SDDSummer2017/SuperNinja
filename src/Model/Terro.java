@@ -53,24 +53,7 @@ public class Terro extends Enemy{
         //System.out.println("mState = " + super.mState);
         //System.out.println("cState = " + super.cState);
         
-        String imagePath = System.getProperty("user.dir");
-        String separator = System.getProperty("file.separator");
-        super.hit = getImage(imagePath + separator + "images" + separator
-                + "Terro_Hit.png");
-        super.attack1 = getImage(imagePath + separator + "images" + separator
-                + "TerroShurikenThrow.png");
-        super.attack2 = getImage(imagePath + separator + "images" + separator
-                + "TerroWindmillShuriken.png");
-        super.movement = getImage(imagePath + separator + "images" + separator
-                + "TerroMovement.png");
-        super.block = getImage(imagePath + separator + "images" + separator
-                + "TerroEvade.png");
-        super.neutral = getImage(imagePath + separator + "images" + separator
-                + "TerroNeutral.png");
-        super.throwImage = getImage(imagePath + separator + "images" + separator
-                + "TerroJump.png");
-        //super.staticImage = getImage(imagePath + separator + "images" + separator
-        //        + "TerroStatic.png");
+
     }
     //the following delayCount functions are used to delay the actions of Terro for attack
     public int getDelayCount(){
@@ -145,14 +128,13 @@ public class Terro extends Enemy{
     public void render(Graphics g) {
         
         Image frameImage;
-        g.drawImage(image, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
         super.render(g);    
         
         //DEATH 
         if(this.health <= 0){
             resetAnimationFrames("death");
             
-            //Select frame image based on which direction Nen is facing
+            //Select frame image based on which direction the game figure is facing
             if (deathFrameIndex == 0 ){
                 diedFacingRight = isFacingRight;
             }
@@ -166,7 +148,6 @@ public class Terro extends Enemy{
         else if(cState instanceof WindmillShuriken){
             resetAnimationFrames("attack");
             
-            //Select frame image based on which direction Nen is facing
             frameImage = (isFacingRight) ? heavyAttackAnimation[attackFrameIndex] : GameFigure.flipImageHorizontally(heavyAttackAnimation[attackFrameIndex]);
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
@@ -174,26 +155,26 @@ public class Terro extends Enemy{
         }
         else if(mState instanceof Movement)
         {
-            //If we are moving, reset the idle animtion frame index
-            idleFrameIndex = 0;
-            jumpFrameIndex = 0;
-            attackFrameIndex = 0;
+            resetAnimationFrames("move");
             
-            //Select frame image based on which direction Nen is facing
             frameImage = (isFacingRight) ? runAnimation[moveFrameIndex] : GameFigure.flipImageHorizontally(runAnimation[moveFrameIndex]);
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             moveFrameIndex = (moveFrameIndex == runAnimation.length-1) ? 0 : moveFrameIndex + 1;
         }
-
+        //JUMP
+        else if(mState instanceof Jump){
+            resetAnimationFrames("jump");
+                      
+            frameImage = (isFacingRight) ? jumpAnimation[jumpFrameIndex] : GameFigure.flipImageHorizontally(jumpAnimation[jumpFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            jumpFrameIndex = (jumpFrameIndex == jumpAnimation.length-1) ? 0 : jumpFrameIndex + 1;
+        }
         else
         {
-            //If they are standing still we need to reset the frameCounter
-            moveFrameIndex = 0;               
-            jumpFrameIndex = 0;
-            attackFrameIndex = 0;
+            resetAnimationFrames("idle");
 
-            //Select frame image based on which direction Nen is facing
             frameImage = (isFacingRight) ? idleAnimation[idleFrameIndex] : GameFigure.flipImageHorizontally(idleAnimation[idleFrameIndex]);
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);

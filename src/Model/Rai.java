@@ -12,6 +12,7 @@ import Model.States.Rai.Default;
 import Model.States.Rai.Movement;
 import Model.States.Rai.Neutral;
 import Model.States.Rai.SteelTwister;
+import Model.States.Rai.Throw;
 import Model.States.Rai.ViperStrike;
 import View.GamePanel;
 import java.awt.Color;
@@ -42,25 +43,6 @@ public class Rai extends Enemy {
         //System.out.println("mState = " + super.mState);
         //System.out.println("cState = " + super.cState);
         
-        String imagePath = System.getProperty("user.dir");
-        String separator = System.getProperty("file.separator");
-        
-        super.hit = getImage(imagePath + separator + "images" + separator
-        + "Rai_Hit.png");
-        super.attack1 = getImage(imagePath + separator + "images" + separator
-                + "ViperStrike.png");
-        super.attack2 = getImage(imagePath + separator + "images" + separator
-                + "SteelTwister.png");
-        super.movement = getImage(imagePath + separator + "images" + separator
-                + "Movement.png");
-        super.block = getImage(imagePath + separator + "images" + separator
-                + "Block.png");
-        super.neutral = getImage(imagePath + separator + "images" + separator
-                + "Neutral.png");
-        super.throwImage = getImage(imagePath + separator + "images" + separator
-                + "Throw.png");
-        super.staticImage = getImage(imagePath + separator + "images" + separator
-                + "Static.png");
     }
         
     @Override
@@ -73,7 +55,7 @@ public class Rai extends Enemy {
         if(this.health <= 0){
             resetAnimationFrames("death");
             
-            //Select frame image based on which direction Nen is facing
+            //Select frame image based on which direction the Game Figure is facing
             if (deathFrameIndex == 0 ){
                 diedFacingRight = isFacingRight;
             }
@@ -82,11 +64,19 @@ public class Rai extends Enemy {
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             deathFrameIndex = (deathFrameIndex == deathAnimation.length-1) ? deathFrameIndex : deathFrameIndex + 1;                 
         }
+        //RANGE ATTACK
+        else if(cState instanceof Throw){
+            resetAnimationFrames("attack");
+            
+            frameImage = (isFacingRight) ? rangeAttackAnimation[attackFrameIndex] : GameFigure.flipImageHorizontally(rangeAttackAnimation[attackFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            attackFrameIndex = (attackFrameIndex == rangeAttackAnimation.length-1) ? 0 : attackFrameIndex + 1;                 
+        }
         //LIGHT ATTACK (Steel Twister)
         else if(cState instanceof SteelTwister){
             resetAnimationFrames("attack");
             
-            //Select frame image based on which direction Nen is facing
             frameImage = (isFacingRight) ? lightAttackAnimation[attackFrameIndex] : GameFigure.flipImageHorizontally(lightAttackAnimation[attackFrameIndex]);
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
@@ -96,7 +86,6 @@ public class Rai extends Enemy {
         else if(cState instanceof ViperStrike){
             resetAnimationFrames("attack");
             
-            //Select frame image based on which direction Nen is facing
             frameImage = (isFacingRight) ? heavyAttackAnimation[attackFrameIndex] : GameFigure.flipImageHorizontally(heavyAttackAnimation[attackFrameIndex]);
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
@@ -104,12 +93,8 @@ public class Rai extends Enemy {
         }
         else if(mState instanceof Movement)
         {
-            //If we are moving, reset the idle animtion frame index
-            idleFrameIndex = 0;
-            jumpFrameIndex = 0;
-            attackFrameIndex = 0;
+            resetAnimationFrames("move");
             
-            //Select frame image based on which direction Nen is facing
             frameImage = (isFacingRight) ? runAnimation[moveFrameIndex] : GameFigure.flipImageHorizontally(runAnimation[moveFrameIndex]);
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
@@ -118,12 +103,8 @@ public class Rai extends Enemy {
 
         else
         {
-            //If they are standing still we need to reset the frameCounter
-            moveFrameIndex = 0;               
-            jumpFrameIndex = 0;
-            attackFrameIndex = 0;
+            resetAnimationFrames("idle");
 
-            //Select frame image based on which direction Nen is facing
             frameImage = (isFacingRight) ? idleAnimation[idleFrameIndex] : GameFigure.flipImageHorizontally(idleAnimation[idleFrameIndex]);
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);

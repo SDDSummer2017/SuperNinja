@@ -52,7 +52,7 @@ public class Shuriken extends Projectiles {
         //Select frame image based on which direction Nen is facing
         frameImage = (isFacingRight) ? runAnimation[moveFrameIndex] : GameFigure.flipImageHorizontally(runAnimation[moveFrameIndex]);
 
-        g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+        g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size * 2, (int) super.size * 2, null);
         moveFrameIndex = (moveFrameIndex == runAnimation.length-1) ? 0 : moveFrameIndex + 1;
     }
     @Override

@@ -10,6 +10,7 @@ import static Model.GameFigure.GRAVITY;
 import Model.States.CombatState;
 import Model.States.MotionState;
 import Model.States.Kisara.Default;
+import Model.States.Kisara.Jump;
 import Model.States.Kisara.Movement;
 import Model.States.Kisara.Neutral;
 import Model.States.Kisara.ShadowStrike;
@@ -48,26 +49,6 @@ public class Kisara extends Enemy{
         
         //false for left true for right in movementState
         this.direction = false;
-        
-        String imagePath = System.getProperty("user.dir");
-        String separator = System.getProperty("file.separator");
-       
-        super.hit = getImage(imagePath + separator + "images" + separator
-        + "Kisara_Hit.png");
-        super.attack1 = getImage(imagePath + separator + "images" + separator
-                + "Kisara_ShadowStrike.png");
-        super.attack2 = getImage(imagePath + separator + "images" + separator
-                + "Kisara_VanishingStrike.png");
-        super.movement = getImage(imagePath + separator + "images" + separator
-                + "Kisara_Movement.png");
-        super.block = getImage(imagePath + separator + "images" + separator
-                + "Kisara_SmokeBomb.png");
-        super.neutral = getImage(imagePath + separator + "images" + separator
-                + "Kisara_Neutral.png");
-        super.throwImage = getImage(imagePath + separator + "images" + separator
-                + "Kisara_Jump.png");
-        //super.staticImage = getImage(imagePath + separator + "images" + separator
-        //        + "TerroStatic.png");
     }
     
     //the following delayCount functions are used to delay the actions of Kisaras' for attack
@@ -145,13 +126,12 @@ public class Kisara extends Enemy{
         Image frameImage;
         
         super.render(g);
-        g.drawImage(image, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
         
         //DEATH 
         if(this.health <= 0){
             resetAnimationFrames("death");
             
-            //Select frame image based on which direction Nen is facing
+            //Select frame image based on which direction the game figure is facing
             if (deathFrameIndex == 0 ){
                 diedFacingRight = isFacingRight;
             }
@@ -164,7 +144,6 @@ public class Kisara extends Enemy{
         else if(cState instanceof ShadowStrike){
             resetAnimationFrames("attack");
             
-            //Select frame image based on which direction Nen is facing
             frameImage = (isFacingRight) ? lightAttackAnimation[attackFrameIndex] : GameFigure.flipImageHorizontally(lightAttackAnimation[attackFrameIndex]);
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
@@ -174,18 +153,24 @@ public class Kisara extends Enemy{
         else if(cState instanceof VanishingStrike){
             resetAnimationFrames("attack");
             
-            //Select frame image based on which direction Nen is facing
             frameImage = (isFacingRight) ? heavyAttackAnimation[attackFrameIndex] : GameFigure.flipImageHorizontally(heavyAttackAnimation[attackFrameIndex]);
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             attackFrameIndex = (attackFrameIndex == heavyAttackAnimation.length-1) ? 0 : attackFrameIndex + 1;                      
         }
+        //JUMP
+        else if(mState instanceof Jump){
+            resetAnimationFrames("jump");
+                      
+            frameImage = (isFacingRight) ? jumpAnimation[jumpFrameIndex] : GameFigure.flipImageHorizontally(jumpAnimation[jumpFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            jumpFrameIndex = (jumpFrameIndex == jumpAnimation.length-1) ? 0 : jumpFrameIndex + 1;
+        }
+        //MOVE
         else if(mState instanceof Movement)
         {
-            //If we are moving, reset the idle animtion frame index
-            idleFrameIndex = 0;
-            jumpFrameIndex = 0;
-            attackFrameIndex = 0;
+            resetAnimationFrames("move");
             
             //Select frame image based on which direction Nen is facing
             frameImage = (isFacingRight) ? runAnimation[moveFrameIndex] : GameFigure.flipImageHorizontally(runAnimation[moveFrameIndex]);
@@ -193,15 +178,10 @@ public class Kisara extends Enemy{
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             moveFrameIndex = (moveFrameIndex == runAnimation.length-1) ? 0 : moveFrameIndex + 1;
         }
-
+        //IDLE
         else
         {
-            //If they are standing still we need to reset the frameCounter
-            moveFrameIndex = 0;               
-            jumpFrameIndex = 0;
-            attackFrameIndex = 0;
-
-            //Select frame image based on which direction Nen is facing
+            resetAnimationFrames("idle");
             frameImage = (isFacingRight) ? idleAnimation[idleFrameIndex] : GameFigure.flipImageHorizontally(idleAnimation[idleFrameIndex]);
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
@@ -209,14 +189,8 @@ public class Kisara extends Enemy{
         
         }
       
-        
-//        g.setColor(Color.red);
-//        g.fillRect(3, GamePanel.CAMERA_HEIGHT- 102, 10, 100);
-//        g.setColor(Color.green);
-//        g.fillRect(3, GamePanel.CAMERA_HEIGHT - (int) this.health - 2, 10, (int) this.health);
     }
     private void resetAnimationFrames(String currentAnimation){
-//        System.out.println("Animation Reset Called from: " + currentAnimation);
         if (!"idle".equals(currentAnimation))idleFrameIndex = 0;
         if (!"move".equals(currentAnimation))moveFrameIndex = 0;
         if (!"jump".equals(currentAnimation))jumpFrameIndex = 0;
