@@ -153,7 +153,7 @@ public class CollisionHandler implements CollisionObserver {
                 {
                     if(c instanceof Checkpoint)
                         ((Checkpoint)c).notifyObservers();
-                    return -1 *(int)(nen.x + nen.getCollisionBox().getWidth() - c.getCollisionBox().getX()) - 1;
+                    return -1 *(int)(nen.x + nen.getCollisionBox().getWidth() - c.getCollisionBox().getX());
                             
                 }
         }
@@ -181,7 +181,7 @@ public class CollisionHandler implements CollisionObserver {
                 {
                         if(c instanceof Checkpoint)
                             ((Checkpoint)c).notifyObservers();
-                        return (int)(c.getCollisionBox().getX() + c.getCollisionBox().getWidth() - nen.x) + 1;
+                        return (int)(c.getCollisionBox().getX() + c.getCollisionBox().getWidth() - nen.x);
                 }
         }
         

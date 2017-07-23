@@ -83,8 +83,8 @@ public class PhysicsHandler implements CollisionObserver {
                                  gameFigureTwo.x = gameFigureOne.getCollisionBox().getX() - gameFigureTwo.getCollisionBox().width ;
                          
                          
-                                ((Nen) gameFigureTwo).forces.add(new Force(9, new Acceleration(-.49, 0 )));
-                              ((Nen) gameFigureTwo).x -= 35;
+                                //((Nen) gameFigureTwo).forces.add(new Force(9, new Acceleration(-.49, 0 )));
+                              //((Nen) gameFigureTwo).x -= 35;
                            
                         
                         }
@@ -93,8 +93,8 @@ public class PhysicsHandler implements CollisionObserver {
                      
                                 
                                //  gameFigureTwo.x = gameFigureOne.getCollisionBox().getX() + gameFigureTwo.getCollisionBox().width + ((Nen) gameFigureTwo).getCollisionBox().width ;
-                                   ((Nen) gameFigureTwo).forces.add(new Force(9, new Acceleration(0.49, 0 )));
-                                  ((Nen) gameFigureTwo).x += 35;
+                                  // ((Nen) gameFigureTwo).forces.add(new Force(9, new Acceleration(0.49, 0 )));
+                                  //((Nen) gameFigureTwo).x += 35;
                            
                             } 
                      
