@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import javax.vecmath.Vector2f;
 import View.GamePanel;
+import java.awt.Image;
 
 
 public class Shuriken extends Projectiles {
@@ -21,7 +22,8 @@ public class Shuriken extends Projectiles {
     
     
     public Shuriken(double x, double y, double tx, double ty, Color color, boolean isGoodGuy, int d, double s) {
-        super(x, y, tx, ty, color, isGoodGuy, d, s);
+//        super(x, y, tx, ty, color, isGoodGuy, d, s);
+        super(x, y, tx, ty, color, isGoodGuy, d, s, 8,"Shuriken");
         this.targetX = tx;
         this.targetY = ty;
         this.color = color;
@@ -43,8 +45,15 @@ public class Shuriken extends Projectiles {
     
     @Override
     public void render(Graphics g) {
-        g.setColor(color);
-        g.fillOval((int)x, (int)y, (int)super.size * 2, (int)super.size * 2);   
+//        g.setColor(color);
+//        g.fillOval((int)x - (int)super.size, (int)y - (int)super.size, (int)super.size * 2, (int)super.size * 2);
+        Image frameImage;
+
+        //Select frame image based on which direction Nen is facing
+        frameImage = (isFacingRight) ? runAnimation[moveFrameIndex] : GameFigure.flipImageHorizontally(runAnimation[moveFrameIndex]);
+
+        g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+        moveFrameIndex = (moveFrameIndex == runAnimation.length-1) ? 0 : moveFrameIndex + 1;
     }
     @Override
     public void update() {       

@@ -40,6 +40,15 @@ public abstract class Projectiles extends GameFigure{
         super.damage = d;
         super.health = 999; //sets health = to a high number so that the projectile will only be destroyed when specified
     }
+    public Projectiles(double x, double y, double tx, double ty, Color color, boolean isGoodGuy, int d, double s, int aLength, String name) {
+        super(x, y, s, aLength, name, isGoodGuy);
+        this.size = s;
+        this.targetX = tx;
+        this.targetY = ty;
+        this.color = color;
+        super.damage = d;
+        super.health = 999; //sets health = to a high number so that the projectile will only be destroyed when specified
+    }
     
     @Override
     public void render(Graphics g) {}
