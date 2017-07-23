@@ -196,7 +196,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         //Death Animation
         if (fileExists(deathPath)){
             for(int i=0;i<deathAnimation.length;i++){
-                deathAnimation[i] = getImage(deathPath + separator + "Death_" + i + ".png");
+                deathAnimation[i] = getImage(deathPath + separator + "Dead_" + i + ".png");
             }
         }
     }

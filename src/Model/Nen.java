@@ -44,7 +44,7 @@ public class Nen extends GameFigure implements Subject{
  
     public Nen(int x, int y, int size) {
        super(x, y, size,
-                10,  // animation length
+                8,  // animation length
                 "Nen", true); //name for animation image file path
         this.hitBox_width = size;
         this.hitBox_height = size;

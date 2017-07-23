@@ -29,7 +29,7 @@ public class Sage extends Enemy {
     public int c; // used as a display count for placeholders only
     
     public Sage(double x, double y, double size) {
-        super(x, y, size);
+        super(x, y, size, 8, "Sage");
         
         ArrayList<Observer> observers = new ArrayList<>();
         super.mState = new NeutralMotion(this, observers);
