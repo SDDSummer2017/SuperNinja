@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Model.States.Nen; 
+import Controller.Main;
 import EventHandling.Observer;
 import Model.GameFigure;
 import Model.States.CombatState;
@@ -27,11 +28,23 @@ public class Move extends MotionState {
     @Override
     public void execute() 
     { 
-        
+        int result;
        if(gameFigure.isFacingRight)
-            gameFigure.x += MOVE_RATE;
-       else
-            gameFigure.x -= MOVE_RATE;  
+       {
+           result = Main.gamePanel.handler.rightCollision(10);
+           if(result == -1)
+                gameFigure.x += MOVE_RATE;
+           else
+               gameFigure.x += result;
+       }else
+       {
+           result = Main.gamePanel.handler.leftCollision(-10);
+           if(result == -1)
+               gameFigure.x += -MOVE_RATE;
+           else
+               gameFigure.x += result;
+           
+       } 
         
        if(System.currentTimeMillis() - time >= 500 )
        {
