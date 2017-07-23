@@ -30,10 +30,10 @@ public class GroundShatter extends CombatState {
     private ShockWave shatter ;
     public GroundShatter(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
-//        shatter_x = (int)(gameFigure.x + gameFigure.size);
-//        shatter_y = (int)(gameFigure.y + gameFigure.size);
-//        shatter_h = 10;
-//        shatter_w = 30;
+        shatter_x = (int)(gameFigure.x + gameFigure.size);
+        shatter_y = (int)(gameFigure.y + gameFigure.size);
+        shatter_h = 10;
+        shatter_w = 30;
   
         if(Main.gameData.nen.isFacingRight)
             direction = 1;
