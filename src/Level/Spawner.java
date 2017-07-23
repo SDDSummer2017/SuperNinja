@@ -62,7 +62,7 @@ public class Spawner extends Checkpoint {
          Graphics2D g2 = (Graphics2D)g;
      
          super.render(g);
-        super.health = 1000;
+         super.health = 1000;
       
     }
 

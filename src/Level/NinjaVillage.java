@@ -135,10 +135,9 @@ public class NinjaVillage extends Level {
                     
                     this.terrain.add(s);
                 }
-                else
-                {
+             
                     this.terrain.add(new Platform(i * 128.0, 535.0, new Tile(i * 128, 535, ground)));
-                }
+                
                  
             }
             if(i%3 == 0)

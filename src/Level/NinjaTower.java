@@ -78,6 +78,7 @@ public class NinjaTower extends Level{
                        
                   Spawner s =  new Spawner(j * 275, i * 250, this, Kisara.class, new Tile(j * 275, i * 250, ground));
                   s.registerObserver(checkpointHandler);
+                   
                    this.terrain.add(s);
                    
                }
