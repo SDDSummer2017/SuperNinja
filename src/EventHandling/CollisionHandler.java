@@ -83,12 +83,7 @@ public class CollisionHandler implements CollisionObserver {
         
        
         for(Collision c : possibleJumps)
-        {
-            if(c instanceof Nen)
-                System.out.println("Nen : (" + c.getCollisionBox().getX() + ", " + c.getCollisionBox().getY() + ") "); 
-            else
-                System.out.println("Terrian : (" + c.getCollisionBox().getX() + ", " + c.getCollisionBox().getY() + ") ");
-            
+        {  
             if(Math.abs(c.getCollisionBox().getX() - (nen.x + nen.getCollisionBox().width )) <= 20 && 
                     nen.y  >=  c.getCollisionBox().getY() && 
                     nen.y  <= c.getCollisionBox().getY() + c.getCollisionBox().height)
@@ -111,12 +106,7 @@ public class CollisionHandler implements CollisionObserver {
 
 
             for(Collision c : possibleJumps)
-            {
-                if(c instanceof Nen)
-                    System.out.println("Nen : (" + c.getCollisionBox().getX() + ", " + c.getCollisionBox().getY() + ") "); 
-                else
-                    System.out.println("Terrian : (" + c.getCollisionBox().getX() + ", " + c.getCollisionBox().getY() + ") ");
-
+            {  
                 if(Math.abs(c.getCollisionBox().getX() + c.getCollisionBox().getWidth() - nen.x) <= 20 && 
                         nen.y  >=  c.getCollisionBox().getY() && 
                         nen.y  <= c.getCollisionBox().getY() + c.getCollisionBox().height)
@@ -146,7 +136,7 @@ public class CollisionHandler implements CollisionObserver {
                 {
                     if(c instanceof Checkpoint)
                         ((Checkpoint)c).notifyObservers();
-                        return -1 *(int)(nen.x + nen.getCollisionBox().getWidth() - c.getCollisionBox().getX());
+                    return -1 *(int)(nen.x + nen.getCollisionBox().getWidth() - c.getCollisionBox().getX());
                             
                 }
         }
@@ -174,7 +164,7 @@ public class CollisionHandler implements CollisionObserver {
                 {
                         if(c instanceof Checkpoint)
                             ((Checkpoint)c).notifyObservers();
-                            return (int)(c.getCollisionBox().getX() + c.getCollisionBox().getWidth() - nen.x);
+                        return (int)(c.getCollisionBox().getX() + c.getCollisionBox().getWidth() - nen.x);
                 }
         }
         
