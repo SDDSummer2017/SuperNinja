@@ -145,7 +145,6 @@ public class Kisara extends Enemy{
         Image frameImage;
         
         super.render(g);
-        g.drawImage(image, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
         
         //DEATH 
         if(this.health <= 0){
@@ -216,7 +215,6 @@ public class Kisara extends Enemy{
 //        g.fillRect(3, GamePanel.CAMERA_HEIGHT - (int) this.health - 2, 10, (int) this.health);
     }
     private void resetAnimationFrames(String currentAnimation){
-//        System.out.println("Animation Reset Called from: " + currentAnimation);
         if (!"idle".equals(currentAnimation))idleFrameIndex = 0;
         if (!"move".equals(currentAnimation))moveFrameIndex = 0;
         if (!"jump".equals(currentAnimation))jumpFrameIndex = 0;

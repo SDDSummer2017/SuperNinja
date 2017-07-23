@@ -27,61 +27,34 @@ public class GroundShatter extends CombatState {
     private int shatter_h;
     private int shatter_w;
     private int cumulativeDistance;
-    private ShockWave shatter ;
+    private ShockWave shockWave ;
     public GroundShatter(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
-        shatter_x = (int)(gameFigure.x + gameFigure.size);
-        shatter_y = (int)(gameFigure.y + gameFigure.size);
-        shatter_h = 10;
-        shatter_w = 30;
+//        shatter_x = (int)(gameFigure.x + gameFigure.size);
+//        shatter_y = (int)(gameFigure.y + gameFigure.size);
+//        shatter_h = 10;
+//        shatter_w = 30;
   
         if(Main.gameData.nen.isFacingRight)
             direction = 1;
         else
             direction = -1;
-        shatter = new ShockWave((int)(gameFigure.x + gameFigure.size), (int)(gameFigure.y + gameFigure.size), 
+        shockWave = new ShockWave((int)(gameFigure.x + gameFigure.size), (int)(gameFigure.y + gameFigure.size), 
                 30, 10, direction, true);
 
-        Main.gameData.addGameData(shatter);
+        Main.gameData.addGameData(shockWave);
         
         
     }
 
     @Override
  
-    public void execute() { 
-    
-        shatter_x += 10 * direction;
-        cumulativeDistance += 10; 
-
-        if(SHATTER_DISTANCE/2 == cumulativeDistance)
-            isRising = true;
-        else if(shatter_h <= SHATTER_HIGHT && !isRising)
-        {
-            shatter_h += 20;
-            shatter_y -= 20;
-        }else
-        {
-            shatter_y += 20;
-            shatter_h -= 20;
-        }
-        
-        if(cumulativeDistance <= SHATTER_DISTANCE)
-        { 
-            hitBox.translate(shatter_x, shatter_y, shatter_w, shatter_h);
-        }else{
-            Main.gameData.removeGameData(hitBox);
-            nextState("NeutralCombat");
-            this.notifyObservers("HeavyAttackFinished");
-        }
-    
-       
- 
+    public void execute() {  
          
-        if(!shatter.isFinished())
-            shatter.update();
+        if(!shockWave.isFinished())
+            shockWave.update();
         else{
-             Main.gameData.removeGameData(shatter);
+             Main.gameData.removeGameData(shockWave);
              nextState("NeutralCombat");
         }
     } 

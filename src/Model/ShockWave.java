@@ -63,6 +63,8 @@ public class ShockWave extends GameFigure {
         
         if(cumulativeDistance <= SHATTER_DISTANCE)
         { 
+            this.x = shatter_x;
+            this.y = shatter_y;
             hitbox.translate(shatter_x, shatter_y, shatter_w, shatter_h);
         }else{
             Main.gameData.removeGameData(hitbox);
@@ -86,9 +88,9 @@ public class ShockWave extends GameFigure {
         Image frameImage;
 
         //Select frame image based on which direction the game figure is facing
-        frameImage = (isFacingRight) ? runAnimation[moveFrameIndex] : GameFigure.flipImageHorizontally(runAnimation[moveFrameIndex]);
+        frameImage = (direction == 1) ? runAnimation[moveFrameIndex] : GameFigure.flipImageHorizontally(runAnimation[moveFrameIndex]);
 
-        g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+        g.drawImage(frameImage, (int) super.x, (int) super.y, (int) 100, (int) shatter_h, null);
         moveFrameIndex = (moveFrameIndex == runAnimation.length-1) ? 0 : moveFrameIndex + 1;
     }
     
