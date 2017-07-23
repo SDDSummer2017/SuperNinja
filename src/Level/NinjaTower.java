@@ -14,8 +14,13 @@ import Model.Renderable;
 import Model.Updateable;
 import View.GamePanel;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -23,6 +28,7 @@ import java.util.Collections;
  */
 public class NinjaTower extends Level{
 
+    private TileModel ground; 
     public NinjaTower(GameData gameData)
     {
             //This constructor is where level development currently happens. 
@@ -40,8 +46,15 @@ public class NinjaTower extends Level{
         this.updatables = Collections.synchronizedList(new ArrayList<Updateable>());   
         this.removables = Collections.synchronizedList(new ArrayList<>());
         this.addables = Collections.synchronizedList(new ArrayList<>());
-         
- 
+        Image img;
+        
+        try {
+            img = ImageIO.read(new File("images/tiles/Rendered Textures/Walls/Wall 2 SE.png"));
+            ground = new TileModel(img); 
+            } 
+        catch (IOException ex) {
+            Logger.getLogger(NinjaVillage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
   
         this.tiles = Collections.synchronizedList(new ArrayList<Tile>()); 
         
@@ -50,7 +63,7 @@ public class NinjaTower extends Level{
         
         for(int i = 0; i < 20; i++)
         {
-            this.terrain.add(new Platform(i * 128, this.height));
+            this.terrain.add(new Platform(i * 128, this.height, new Tile(i * 128, this.height, ground)));
         }
         
         for(int i = 0; i < 80; i++)
@@ -58,13 +71,14 @@ public class NinjaTower extends Level{
            for(int j = 0; j < 5; j++)
            {
                if(j % 2 == 0){
-               this.terrain.add(new Platform(j * 300, i * 350));}
+               this.terrain.add(new Platform(j * 300, i * 350, new Tile(j * 300, i * 350, ground)));}
                else
                {
                     
                        
-                  Spawner s =  new Spawner(j * 275, i * 250, this, Kisara.class);
+                  Spawner s =  new Spawner(j * 275, i * 250, this, Kisara.class, new Tile(j * 275, i * 250, ground));
                   s.registerObserver(checkpointHandler);
+                   
                    this.terrain.add(s);
                    
                }

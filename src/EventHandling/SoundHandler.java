@@ -32,6 +32,7 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
         fxPanel = new JFXPanel();
     }
 
+     
     
     //Our onNotify methods take a variety of arguments for different situations.
     //Add conditions inside these and play the appropriate sounds inside theses methods. 
@@ -45,6 +46,29 @@ public class SoundHandler extends ResourceHandler implements CollisionObserver, 
     public void onNotify(State state) {
         // System.out.println("An object has entered the: " + state.getClass().toString() + " state: playing a sound");
          
+         if(state instanceof Model.States.Sage.SoulFlame)
+         {
+             this.playSound("SoundEffects/Fireball.wav");
+         }
+         if(state instanceof Model.States.Sage.FlameDragon){
+            
+             this.playSound("SoundEffects/Dragon.wav");
+         }
+        
+          if(state instanceof Model.States.Sage.Teleport){
+            
+             this.playSound("SoundEffects/Teleport.wav");
+         }
+        
+          if(state instanceof Model.States.Sage.Chant)
+          {
+              this.playSound("SoundEffects/Chant.wav");
+          }
+          
+         if(state instanceof Model.States.Nen.GroundShatter)
+         {
+             this.playSound("SoundEffects/Blast.wav");
+         }
          if(state instanceof Model.States.Nen.Move){
             
              this.playSound("SoundEffects/walk.mp3");

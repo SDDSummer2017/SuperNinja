@@ -48,7 +48,7 @@ public class GamePanel extends JPanel {
         String imagePath = System.getProperty("user.dir");
         String separator = System.getProperty("file.separator");
         bgImage = getImage(imagePath + separator + "images" + separator
-                + "Background.jpg");
+                + "goth.jpg");
         camera = new Camera(WORLD_WIDTH, WORLD_HEIGHT, CAMERA_WIDTH, CAMERA_HEIGHT);
         tree = new QuadTree(7, 5, 0, 0, WORLD_WIDTH, WORLD_HEIGHT);
          
@@ -72,7 +72,7 @@ public class GamePanel extends JPanel {
         graphics.translate(-camera.camX + camera.offsetHelperX,-camera.camY + camera.offsetHelperY);
         graphics.clearRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
         //Render Background
-        graphics.drawImage(bgImage , 0, 0, GamePanel.CAMERA_WIDTH, GamePanel.CAMERA_HEIGHT, null);
+        graphics.drawImage(bgImage , camera.camX, camera.camY, GamePanel.CAMERA_WIDTH, GamePanel.CAMERA_HEIGHT, null);
  
        
         Main.gameData.render(graphics);

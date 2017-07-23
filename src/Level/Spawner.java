@@ -23,8 +23,8 @@ public class Spawner extends Checkpoint {
     public boolean spawned;
     private Level level; 
     public final Class<?> enemy;
-    public Spawner(double x, double y, Level level, Class<?> enemy) {
-        super(x, y);
+    public Spawner(double x, double y, Level level, Class<?> enemy, Tile tile) {
+        super(x, y, tile);
         this.level = level;
         this.enemy = enemy; 
     }
@@ -60,10 +60,9 @@ public class Spawner extends Checkpoint {
     public void render(Graphics g)
     {
          Graphics2D g2 = (Graphics2D)g;
-        g2.setColor(Color.magenta);
-        g2.draw(collisionBox);
-        g2.fill(collisionBox);
-        super.health = 1000;
+     
+         super.render(g);
+         super.health = 1000;
       
     }
 

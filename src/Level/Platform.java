@@ -16,23 +16,23 @@ import java.awt.geom.Rectangle2D;
  * @author abilb
  */
 public class Platform extends GameFigure{
-   
-    public Platform(double x, double y) {
+    public Tile tile; 
+    public Platform(double x, double y, Tile tile) {
         super(x, y, 128, false);
          collisionBox = new Rectangle2D.Double(x, y, 128, 128);
-         
+         this.tile = tile; 
            
     }
 
     @Override
     public void render(Graphics g) {
-         Graphics2D g2 = (Graphics2D)g;
-        g2.setColor(Color.green);
-        g2.draw(collisionBox);
-        g2.fill(collisionBox);
+         //Graphics2D g2 = (Graphics2D)g;
+//        g2.setColor(Color.green);
+//        g2.draw(collisionBox);
+//        g2.fill(collisionBox);
         super.health = 1000;
-        g2.setColor(Color.blue);
-        
+        //g2.setColor(Color.blue);
+        tile.render(g);
     
     }
 

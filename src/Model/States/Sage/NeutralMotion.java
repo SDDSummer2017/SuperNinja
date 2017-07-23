@@ -47,6 +47,7 @@ public class NeutralMotion extends MotionState {
     public void nextState(String s) { 
         if(s.equals("Teleport"))
             gameFigure.mState = new Teleport(gameFigure, observers);
+        gameFigure.mState.notifyObservers();
     }
     
 }

@@ -30,13 +30,14 @@ public class AnimatedTileModel implements Renderable {
         
         g.drawImage(tileModels.get(iterable).getTileImage() , x, y, null);
         
-        if(iterable < tileModels.size())
+        if(iterable < tileModels.size() - 1)
         {
-            iterable = 0; 
+            iterable++; 
+            
         }
         else
         {
-            iterable++; 
+            iterable = 0; 
         }
     }
     

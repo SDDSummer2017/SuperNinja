@@ -117,5 +117,7 @@ public class HeavyAttack extends CombatState {
             gameFigure.cState = new NeutralCombat(gameFigure, observers);
         else if(s.equals("HeavyAttack") && comboCondition())
             gameFigure.cState = new GroundShatter(gameFigure, observers);
+        gameFigure.cState.notifyObservers();
+      
     } 
 }

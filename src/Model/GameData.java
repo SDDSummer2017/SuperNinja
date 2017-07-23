@@ -7,6 +7,7 @@ import EventHandling.PhysicsHandler;
 import EventHandling.CollisionObserver;
 import EventHandling.MusicHandler;
 import EventHandling.Observer;
+import EventHandling.PlayerHudHandler;
 import EventHandling.SoundHandler;
 import EventHandling.Subject;
 import Level.Fireball;
@@ -32,7 +33,7 @@ public class GameData implements Subject, Updateable, Renderable  {
     private final int SIZE = 50;
  
     public ArrayList<Observer> observers; 
-    public final Nen nen;
+    public Nen nen;
  
     public Timer enemyTimer, bossTimer;
     public TitleCard titleCard; 
@@ -65,7 +66,7 @@ public class GameData implements Subject, Updateable, Renderable  {
         this.registerObserver(new PhysicsHandler());
         
 
- 
+        
     
  
      
@@ -77,9 +78,9 @@ public class GameData implements Subject, Updateable, Renderable  {
         this.registerObserver(m);
         this.registerObserver(new SoundHandler(""));
         this.notifyObservers("Level One");
+        nen.registerObserver(new PlayerHudHandler(this, nen));
+        
        
-    
-
 
 
        

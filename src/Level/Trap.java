@@ -19,8 +19,8 @@ public class Trap extends Platform {
  
     Level level;
     int iterable; 
-    public Trap(double x, double y, Level level) {
-        super(x, y);
+    public Trap(double x, double y, Level level, Tile tile) {
+        super(x, y, tile);
         this.level = level; 
         iterable = 0; 
  
@@ -28,7 +28,7 @@ public class Trap extends Platform {
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.red);
+       // g.setColor(Color.red);
         super.render(g);
        
     }

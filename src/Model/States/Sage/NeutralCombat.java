@@ -34,6 +34,7 @@ public class NeutralCombat extends CombatState {
     public void nextState(String s) { 
         if(s.equals("Chant"))
             gameFigure.cState = new Chant(gameFigure, observers);
+        gameFigure.cState.notifyObservers();
     }
     
 }

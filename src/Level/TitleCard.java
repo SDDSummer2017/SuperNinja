@@ -18,10 +18,12 @@ import java.awt.Graphics;
 public class TitleCard implements Renderable {
 
     GamePanel gamePanel;
+    String message; 
     public int iterable = 0;
-    public TitleCard(GamePanel gamePanel)
+    public TitleCard(GamePanel gamePanel, String message)
     {
         this.gamePanel = gamePanel; 
+        this.message = message;
     }
     
     @Override
@@ -31,9 +33,9 @@ public class TitleCard implements Renderable {
          g.setColor(Color.BLACK);
          g.fillRect(gamePanel.camera.camX, gamePanel.camera.camY,  gamePanel.getWidth(), gamePanel.getHeight()); 
          g.setColor(Color.yellow);
-         g.drawString("LEVEL COMPLETE!!!", gamePanel.camera.camX + (gamePanel.getWidth()/2), gamePanel.camera.camY  + (gamePanel.getHeight()/2));
+         g.drawString(message, gamePanel.camera.camX + (gamePanel.getWidth()/2), gamePanel.camera.camY  + (gamePanel.getHeight()/2));
          iterable++;
-        
+         
            
     }
     

@@ -48,7 +48,35 @@ public class GroundShatter extends CombatState {
     }
 
     @Override
-    public void execute() {  
+ 
+    public void execute() { 
+    
+        shatter_x += 10 * direction;
+        cumulativeDistance += 10; 
+
+        if(SHATTER_DISTANCE/2 == cumulativeDistance)
+            isRising = true;
+        else if(shatter_h <= SHATTER_HIGHT && !isRising)
+        {
+            shatter_h += 20;
+            shatter_y -= 20;
+        }else
+        {
+            shatter_y += 20;
+            shatter_h -= 20;
+        }
+        
+        if(cumulativeDistance <= SHATTER_DISTANCE)
+        { 
+            hitBox.translate(shatter_x, shatter_y, shatter_w, shatter_h);
+        }else{
+            Main.gameData.removeGameData(hitBox);
+            nextState("NeutralCombat");
+            this.notifyObservers("HeavyAttackFinished");
+        }
+    
+       
+ 
          
         if(!shatter.isFinished())
             shatter.update();
