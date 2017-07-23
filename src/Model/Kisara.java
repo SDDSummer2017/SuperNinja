@@ -48,26 +48,6 @@ public class Kisara extends Enemy{
         
         //false for left true for right in movementState
         this.direction = false;
-        
-        String imagePath = System.getProperty("user.dir");
-        String separator = System.getProperty("file.separator");
-       
-        super.hit = getImage(imagePath + separator + "images" + separator
-        + "Kisara_Hit.png");
-        super.attack1 = getImage(imagePath + separator + "images" + separator
-                + "Kisara_ShadowStrike.png");
-        super.attack2 = getImage(imagePath + separator + "images" + separator
-                + "Kisara_VanishingStrike.png");
-        super.movement = getImage(imagePath + separator + "images" + separator
-                + "Kisara_Movement.png");
-        super.block = getImage(imagePath + separator + "images" + separator
-                + "Kisara_SmokeBomb.png");
-        super.neutral = getImage(imagePath + separator + "images" + separator
-                + "Kisara_Neutral.png");
-        super.throwImage = getImage(imagePath + separator + "images" + separator
-                + "Kisara_Jump.png");
-        //super.staticImage = getImage(imagePath + separator + "images" + separator
-        //        + "TerroStatic.png");
     }
     
     //the following delayCount functions are used to delay the actions of Kisaras' for attack

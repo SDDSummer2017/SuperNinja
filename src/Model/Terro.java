@@ -53,24 +53,7 @@ public class Terro extends Enemy{
         //System.out.println("mState = " + super.mState);
         //System.out.println("cState = " + super.cState);
         
-        String imagePath = System.getProperty("user.dir");
-        String separator = System.getProperty("file.separator");
-        super.hit = getImage(imagePath + separator + "images" + separator
-                + "Terro_Hit.png");
-        super.attack1 = getImage(imagePath + separator + "images" + separator
-                + "TerroShurikenThrow.png");
-        super.attack2 = getImage(imagePath + separator + "images" + separator
-                + "TerroWindmillShuriken.png");
-        super.movement = getImage(imagePath + separator + "images" + separator
-                + "TerroMovement.png");
-        super.block = getImage(imagePath + separator + "images" + separator
-                + "TerroEvade.png");
-        super.neutral = getImage(imagePath + separator + "images" + separator
-                + "TerroNeutral.png");
-        super.throwImage = getImage(imagePath + separator + "images" + separator
-                + "TerroJump.png");
-        //super.staticImage = getImage(imagePath + separator + "images" + separator
-        //        + "TerroStatic.png");
+
     }
     //the following delayCount functions are used to delay the actions of Terro for attack
     public int getDelayCount(){
@@ -145,7 +128,6 @@ public class Terro extends Enemy{
     public void render(Graphics g) {
         
         Image frameImage;
-        g.drawImage(image, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
         super.render(g);    
         
         //DEATH 

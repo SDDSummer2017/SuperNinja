@@ -42,25 +42,6 @@ public class Rai extends Enemy {
         //System.out.println("mState = " + super.mState);
         //System.out.println("cState = " + super.cState);
         
-//        String imagePath = System.getProperty("user.dir");
-//        String separator = System.getProperty("file.separator");
-//        
-//        super.hit = getImage(imagePath + separator + "images" + separator
-//        + "Rai_Hit.png");
-//        super.attack1 = getImage(imagePath + separator + "images" + separator
-//                + "ViperStrike.png");
-//        super.attack2 = getImage(imagePath + separator + "images" + separator
-//                + "SteelTwister.png");
-//        super.movement = getImage(imagePath + separator + "images" + separator
-//                + "Movement.png");
-//        super.block = getImage(imagePath + separator + "images" + separator
-//                + "Block.png");
-//        super.neutral = getImage(imagePath + separator + "images" + separator
-//                + "Neutral.png");
-//        super.throwImage = getImage(imagePath + separator + "images" + separator
-//                + "Throw.png");
-//        super.staticImage = getImage(imagePath + separator + "images" + separator
-//                + "Static.png");
     }
         
     @Override

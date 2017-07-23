@@ -211,7 +211,6 @@ public class Nen extends GameFigure implements Subject{
     }
     
     private void resetAnimationFrames(String currentAnimation){
-//        System.out.println("Animation Reset Called from: " + currentAnimation);
         if (!"idle".equals(currentAnimation))idleFrameIndex = 0;
         if (!"move".equals(currentAnimation))moveFrameIndex = 0;
         if (!"jump".equals(currentAnimation))jumpFrameIndex = 0;
