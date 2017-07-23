@@ -11,19 +11,20 @@ import Model.GameFigure;
  *
  * @author Garrett A. Clement
  */
-public class JumpCommand extends Command {
+public class CrouchCommand extends Command {
 
-    public JumpCommand(int keyCode) {
+    public CrouchCommand(int keyCode) {
         super(keyCode);
     }
 
-    
-    @Override
-    public void release(GameFigure gameFigure){}
-    
     @Override
     public void execute(GameFigure gameFigure) { 
-        gameFigure.mState.nextState("Jump");
+        gameFigure.mState.nextState("Crouch");
     }
-
+    
+    @Override
+    public void release(GameFigure gameFigure){
+        gameFigure.mState.nextState("Stand");
+    }
+    
 }
