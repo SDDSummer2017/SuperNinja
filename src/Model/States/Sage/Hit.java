@@ -21,7 +21,8 @@ public class Hit extends CombatState{
     }
 
     @Override
-    public void execute() {
+    public void execute() { 
+        System.out.println("Hey I am in the sages hit state");
         if (this.gameFigure.health <= 0){
             nextState("Death");
         }
@@ -44,7 +45,7 @@ public class Hit extends CombatState{
     public void nextState(String s) {
         switch (s) {
             case "Neutral":
-                gameFigure.mState = new NeutralMotion(this.gameFigure, observers);
+                gameFigure.mState = new Teleport(this.gameFigure, observers);
                 gameFigure.cState = new NeutralCombat(this.gameFigure, observers);
                 break;
             case "Death":

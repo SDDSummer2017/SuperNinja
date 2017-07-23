@@ -50,27 +50,7 @@ public class Chant extends CombatState{
                 if(nextSpell == Spell.SOUL_FLAME)
                     nextState("SoulFlame");
             }
-         
-         
-//        if(nextSpell == Spell.FLAME_DRAGON)
-//        {
-//          if(System.currentTimeMillis() - initTime >= FLAME_DRAGON_CHANT_TIME)
-//              nextState("FlameDragon");
-//        }
-//        else if(nextSpell == Spell.FLAME_CANNON)
-//        {
-//            if(System.currentTimeMillis() - initTime >= FLAME_CANNON_CHANT_TIME)
-//                nextState("FlameCannon");
-//            
-//        }else if(nextSpell == Spell.SOUL_FLAME)        
-//            if(System.currentTimeMillis() - initTime >= SOUL_FLAME_CHANT_TIME)
-//            {
-//                if(canCastFlameCannon())
-//                    nextSpell = Spell.FLAME_CANNON;
-//                else if(nextSpell == Spell.SOUL_FLAME)
-//                    nextState("SoulFlame");
-//            }
-         
+  
     }
 
     @Override
@@ -82,6 +62,9 @@ public class Chant extends CombatState{
             gameFigure.cState = new FlameCannon(gameFigure, observers);
         else if(s.equals("FlameDragon"))
             gameFigure.cState = new FlameDragon(gameFigure, observers);
+        else if(s.equals("Hit"))
+            gameFigure.cState = new Hit(gameFigure, observers);
+        
         gameFigure.cState.notifyObservers();
     }
     
