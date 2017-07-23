@@ -11,12 +11,14 @@ import View.GamePanel;
 import EventHandling.SoundHandler; 
 import Model.States.Death;
 import Model.States.Nen.Dash;
+import Model.States.Nen.GroundShatter;
 import Model.States.Nen.Move;
 import Model.States.Nen.Jump;
  
 import Model.States.Nen.LightAttack;
 import Model.States.Nen.HeavyAttack;
 import Model.States.Nen.ThrowingMode;
+import Model.States.Nen.Whirlwind;
 import Physics.Velocity;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -98,7 +100,7 @@ public class Nen extends GameFigure {
                 attackFrameIndex = (attackFrameIndex == rangeAttackAnimation.length-1) ? 0 : attackFrameIndex + 1;
             }
             else{
-               frameImage = (isFacingRight) ? rangeAttackAnimation[0] : GameFigure.flipImageHorizontally(rangeAttackAnimation[0]); 
+               frameImage = (isFacingRight) ? rangeAttackAnimation[2] : GameFigure.flipImageHorizontally(rangeAttackAnimation[2]); 
             }
             
             
@@ -123,6 +125,26 @@ public class Nen extends GameFigure {
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             attackFrameIndex = (attackFrameIndex == heavyAttackAnimation.length-1) ? 0 : attackFrameIndex + 1;                      
+        }
+        //WhirlWind
+        else if(cState instanceof Whirlwind){
+            resetAnimationFrames("attack");
+            
+            //Select frame image based on which direction Nen is facing
+            frameImage = (isFacingRight) ? specialAttack1Animation[attackFrameIndex] : GameFigure.flipImageHorizontally(specialAttack1Animation[attackFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            attackFrameIndex = (attackFrameIndex == specialAttack1Animation.length-1) ? 0 : attackFrameIndex + 1;                      
+        }
+        //Earth Shatter
+        else if(cState instanceof GroundShatter){
+            resetAnimationFrames("attack");
+            
+            //Select frame image based on which direction Nen is facing
+            frameImage = (isFacingRight) ? specialAttack2Animation[attackFrameIndex] : GameFigure.flipImageHorizontally(specialAttack2Animation[attackFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            attackFrameIndex = (attackFrameIndex == specialAttack2Animation.length-1) ? 0 : attackFrameIndex + 1;                      
         }
         //RUN
         else if(mState instanceof Move)

@@ -47,6 +47,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     public Image staticImage;
     public final Image[] runAnimation, idleAnimation, jumpAnimation, dashAnimation, deathAnimation; 
     public final Image[] lightAttackAnimation, heavyAttackAnimation, rangeAttackAnimation;
+    public final Image[] specialAttack1Animation, specialAttack2Animation;
     
  
     //Static game figure constructor (no animation)
@@ -78,6 +79,8 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         this.lightAttackAnimation = null;
         this.heavyAttackAnimation = null;
         this.rangeAttackAnimation = null;
+        this.specialAttack1Animation = null;
+        this.specialAttack2Animation = null;
         this.idleAnimation = null;
         this.jumpAnimation = null;
         this.staticImage = null;
@@ -104,6 +107,8 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         this.lightAttackAnimation = new Image[animationLength];
         this.heavyAttackAnimation = new Image[animationLength];
         this.rangeAttackAnimation = new Image[animationLength];
+        this.specialAttack1Animation = new Image[animationLength];
+        this.specialAttack2Animation = new Image[animationLength];
         this.idleAnimation = new Image[animationLength];
         this.jumpAnimation = new Image[animationLength];
         this.staticImage = null;
@@ -127,6 +132,8 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         String lightAttackPath = imagePath + separator + "Light_Attack";
         String heavyAttackPath = imagePath + separator + "Heavy_Attack";
         String rangeAttackPath = imagePath + separator + "Range_Attack";
+        String specialAttack1Path = imagePath + separator + "Special_Attack1";
+        String specialAttack2Path = imagePath + separator + "Special_Attack2";
         
         
         Image img;
@@ -147,37 +154,49 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         //Evade Animation 
         if (fileExists(dashPath)){
             for(int i=0;i<dashAnimation.length;i++){
-                dashAnimation[i] = getImage(dashPath + separator +  "Slide__00" + i + ".png");
+                dashAnimation[i] = getImage(dashPath + separator +  "Dash_" + i + ".png");
             }
         }
         //Jump Animation
         if(fileExists(jumpPath)){
             for(int i=0;i<jumpAnimation.length;i++){
-                jumpAnimation[i] = getImage(jumpPath + separator + "Jump__00" + i + ".png");
+                jumpAnimation[i] = getImage(jumpPath + separator + "Jump_" + i + ".png");
             }
         }
         //Light Attack Animation
         if (fileExists(lightAttackPath)){
             for(int i=0;i<lightAttackAnimation.length;i++){
-                lightAttackAnimation[i] = getImage(lightAttackPath + separator + "Attack__00" + i + ".png");
+                lightAttackAnimation[i] = getImage(lightAttackPath + separator + "Light_Attack_" + i + ".png");
             }
         }
         //Heavy Attack Right Animation
         if (fileExists(heavyAttackPath)){
             for(int i=0;i<heavyAttackAnimation.length;i++){
-                heavyAttackAnimation[i] = getImage(heavyAttackPath + separator + "Attack__00" + i + ".png");
+                heavyAttackAnimation[i] = getImage(heavyAttackPath + separator + "Heavy_Attack_" + i + ".png");
             }  
         }
         //Ranged Attack Animation
         if (fileExists(rangeAttackPath)){
             for(int i=0;i<rangeAttackAnimation.length;i++){
-                rangeAttackAnimation[i] = getImage(rangeAttackPath + separator + "Throw_" + i + ".png");
+                rangeAttackAnimation[i] = getImage(rangeAttackPath + separator + "Range_Attack_" + i + ".png");
+            }
+        }
+        //Special Attack 1 Animation
+        if (fileExists(specialAttack1Path)){
+            for(int i=0;i<specialAttack1Animation.length;i++){
+                specialAttack1Animation[i] = getImage(specialAttack1Path + separator + "Special_Attack1_" + i + ".png");
+            }
+        }
+        //Special Attack 2 Animation
+        if (fileExists(specialAttack2Path)){
+            for(int i=0;i<specialAttack2Animation.length;i++){
+                specialAttack2Animation[i] = getImage(specialAttack2Path + separator + "Special_Attack2_" + i + ".png");
             }
         }
         //Death Animation
         if (fileExists(deathPath)){
             for(int i=0;i<deathAnimation.length;i++){
-                deathAnimation[i] = getImage(deathPath + separator + "Dead__00" + i + ".png");
+                deathAnimation[i] = getImage(deathPath + separator + "Death_" + i + ".png");
             }
         }
     }
