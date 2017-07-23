@@ -26,7 +26,10 @@ public class WallJumpCommand extends Command {
             if(Main.gamePanel.handler.checkWallLeftJump())
                 gameFigure.mState.nextState("WallJump");
             else if(Main.gamePanel.handler.checkWallRightJump())
+            {
+                System.out.println("Performing right wall jump");
                 gameFigure.mState.nextState("WallJump");
-        }
+            }
+           }
     }
 }

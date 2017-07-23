@@ -103,7 +103,7 @@ public class CollisionHandler implements CollisionObserver {
         {  
             if(Math.abs(c.getCollisionBox().getX() - (nen.x + nen.getCollisionBox().width )) <= 20 && 
                     nen.y  >=  c.getCollisionBox().getY() && 
-                    nen.y  <= c.getCollisionBox().getY() + c.getCollisionBox().height)
+                    nen.y  <= c.getCollisionBox().getY() + c.getCollisionBox().height && nen.isFacingRight)
                 if(!(c instanceof Nen))
                     return true;
            
@@ -124,9 +124,9 @@ public class CollisionHandler implements CollisionObserver {
 
             for(Collision c : possibleJumps)
             {  
-                if(Math.abs(c.getCollisionBox().getX() + c.getCollisionBox().getWidth() - nen.x) <= 20 && 
+                if(Math.abs(c.getCollisionBox().getX() + c.getCollisionBox().getWidth() - nen.x)<= 20 && 
                         nen.y  >=  c.getCollisionBox().getY() && 
-                        nen.y  <= c.getCollisionBox().getY() + c.getCollisionBox().height)
+                        nen.y  <= c.getCollisionBox().getY() + c.getCollisionBox().height && !nen.isFacingRight)
                     if(!(c instanceof Nen))
                         return true;
 
@@ -134,7 +134,7 @@ public class CollisionHandler implements CollisionObserver {
                 return false;
         }
         
-            public int rightCollision(int xInc){
+        public int rightCollision(int xInc){
         QuadTree jump = new QuadTree(7, 5, 0, 0, WORLD_WIDTH, WORLD_HEIGHT);
         GameFigure nen = Main.gameData.nen;
         for(GameFigure gf : Main.gameData.level.terrain)
