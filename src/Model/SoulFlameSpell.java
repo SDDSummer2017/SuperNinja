@@ -53,7 +53,7 @@ public class SoulFlameSpell extends Projectiles {
     @Override
     public void render(Graphics g) {
         g.setColor(color);
-        g.fillOval((int)x, (int)y, (int)super.size, (int)super.size);   
+        g.fillOval((int)(x - super.size), (int)(y - super.size), (int)super.size, (int)super.size);   
     }
     @Override
     public void update() {       

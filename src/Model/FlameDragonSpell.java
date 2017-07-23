@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * added sprint 5
  */
 public class FlameDragonSpell extends Projectiles {
-    ArrayList<HitBox> dragonBody;
+    ArrayList<BodyPart> dragonBody;
     
     double pi = Math.PI;
     double peroid = 2 * Math.PI/5;
@@ -32,16 +32,17 @@ public class FlameDragonSpell extends Projectiles {
         //super(x, y, size); 
         this.direction = direction;
         dragonBody = new ArrayList<>();
-        hitbox = new HitBox(x, y, 50, 50, this, new DamageEffect(this, 30, 5000), new DotEffect(this, 2, 5000, 1000));
-        dragonBody.add(hitbox);
-        Main.gameData.addGameData(hitbox);
+        BodyPart part = new BodyPart(this.x, this.y, 0, 0, Color.RED, false, 30, 40);
+        
+        dragonBody.add(part);
+        Main.gameData.addGameData(part);
         
     }
         
     @Override
     public void render(Graphics g) {
       
-        for(HitBox h : dragonBody)
+        for(BodyPart h : dragonBody)
         {
             double x = h.getCollisionBox().x;
             double y = h.getCollisionBox().y;
@@ -53,7 +54,7 @@ public class FlameDragonSpell extends Projectiles {
 
     @Override
     public void update() {       
-        for(HitBox h : dragonBody)
+        for(BodyPart h : dragonBody)
         {
             double x_displacement = h.getCollisionBox().x;
             double y_displacement = h.getCollisionBox().y;
@@ -65,8 +66,9 @@ public class FlameDragonSpell extends Projectiles {
     }
     
         public void increase(){
-        HitBox tmp = new HitBox(x, y, 50, 50, this, new DamageEffect(this, 30, 500));
+        BodyPart tmp = new BodyPart(this.x, this.y, 0, 0, Color.RED, false, 30, 50);
         dragonBody.add(tmp);
+        Main.gameData.addGameData(tmp.hitbox);
         Main.gameData.addGameData(tmp);
     }
     
@@ -77,8 +79,11 @@ public class FlameDragonSpell extends Projectiles {
         
         if( tailX > rightDistance || tailX < leftDistance)
         { 
-            for(HitBox h : dragonBody)
-                Main.gameData.removeGameData(h);
+            for(BodyPart h : dragonBody)
+            {
+                Main.gameData.removeGameData(h.hitbox);
+                Main.gameData.removeGameData(h); 
+            }
             Main.gameData.removeGameData(this);
         }
     }
