@@ -55,7 +55,11 @@ public class Shuriken extends Projectiles {
         super.y = currentLocation.y;
         hitbox.translate(super.x, super.y);
         
-         
+        Nen n = Main.gameData.nen;
+        if(Math.abs(n.x - this.x) >= 500){
+            Main.gameData.removeGameData(this);
+        }
+        
 //        synchronized (bullets) {
 //            for (GameFigure b : bullets) {
 //                b.update();
