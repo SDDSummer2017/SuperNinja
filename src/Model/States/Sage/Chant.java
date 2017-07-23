@@ -82,6 +82,7 @@ public class Chant extends CombatState{
             gameFigure.cState = new FlameCannon(gameFigure, observers);
         else if(s.equals("FlameDragon"))
             gameFigure.cState = new FlameDragon(gameFigure, observers);
+        gameFigure.cState.notifyObservers();
     }
     
     private void determineNextSpell(){
