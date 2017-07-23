@@ -9,7 +9,6 @@ import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import View.GamePanel;
 import EventHandling.SoundHandler; 
-import Model.States.Death;
 import Model.States.Nen.Dash;
 import Model.States.Nen.Move;
 import Model.States.Nen.Jump;
@@ -178,7 +177,7 @@ public class Nen extends GameFigure {
         
         if(this.health <= 0) 
         {
-            cState = new Death(this, cState.observers);
+            cState = new Model.States.Nen.Death(this, cState.observers);
         }   
         
         if(cState instanceof NeutralCombat)

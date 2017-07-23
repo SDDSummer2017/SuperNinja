@@ -3,12 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model.States.Rai;
+package Model.States.Sage;
 
-import Controller.Main;
 import EventHandling.Observer;
 import Model.GameFigure;
-import Model.Rai;
 import Model.States.CombatState;
 import java.util.ArrayList;
 
@@ -24,17 +22,13 @@ public class Hit extends CombatState{
 
     @Override
     public void execute() {
-        Rai rai = (Rai) this.gameFigure;
-        rai.image = rai.hit;
-        rai.setImage(rai.image);
         if (this.gameFigure.health <= 0){
             nextState("Death");
         }
         else if ((System.currentTimeMillis() - initTime >= 1000)){
             nextState("Neutral");
         }
-        else{
-            //apply a knockback
+        else{//apply a knockback
             if(this.gameFigure.isFacingRight){
                 this.gameFigure.x -= 2;
             }
@@ -42,7 +36,7 @@ public class Hit extends CombatState{
                 this.gameFigure.x += 2;
             }
             
-            this.gameFigure.mState = new Neutral(this.gameFigure, observers);
+        this.gameFigure.mState = new NeutralMotion(this.gameFigure, observers);
         }
     }
 
@@ -50,8 +44,8 @@ public class Hit extends CombatState{
     public void nextState(String s) {
         switch (s) {
             case "Neutral":
-                gameFigure.mState = new Neutral(this.gameFigure, observers);
-                gameFigure.cState = new Default(this.gameFigure, observers);
+                gameFigure.mState = new NeutralMotion(this.gameFigure, observers);
+                gameFigure.cState = new NeutralCombat(this.gameFigure, observers);
                 break;
             case "Death":
                 gameFigure.cState = new Death(this.gameFigure, observers);

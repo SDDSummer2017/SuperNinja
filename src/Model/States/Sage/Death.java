@@ -3,29 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model.States;
+package Model.States.Sage;
 
 import EventHandling.Observer;
 import Model.GameFigure;
+import Model.States.CombatState;
 import java.util.ArrayList;
 
 /**
  *
- * @author Garrett A. Clement
+ * @author matlock
  */
-public class Death extends CombatState {
+public class Death extends CombatState{
 
     public Death(GameFigure gameFigure, ArrayList<Observer> observers) {
         super(gameFigure, observers);
     }
- 
 
     @Override
-    public void execute() { 
-    }
+    public void execute() {}
 
     @Override
-    public void nextState(String s) { 
-    }
+    public void nextState(String s) {}
     
 }

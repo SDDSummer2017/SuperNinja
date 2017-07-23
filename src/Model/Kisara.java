@@ -48,6 +48,9 @@ public class Kisara extends Enemy{
         
         String imagePath = System.getProperty("user.dir");
         String separator = System.getProperty("file.separator");
+       
+        super.hit = getImage(imagePath + separator + "images" + separator
+        + "Kisara_Hit.png");
         super.attack1 = getImage(imagePath + separator + "images" + separator
                 + "Kisara_ShadowStrike.png");
         super.attack2 = getImage(imagePath + separator + "images" + separator

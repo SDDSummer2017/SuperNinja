@@ -44,7 +44,7 @@ public class Shuriken extends Projectiles {
     @Override
     public void render(Graphics g) {
         g.setColor(color);
-        g.fillOval((int)x - (int)super.size, (int)y - (int)super.size, (int)super.size * 2, (int)super.size * 2);   
+        g.fillOval((int)x, (int)y, (int)super.size * 2, (int)super.size * 2);   
     }
     @Override
     public void update() {       
@@ -55,7 +55,11 @@ public class Shuriken extends Projectiles {
         super.y = currentLocation.y;
         hitbox.translate(super.x, super.y);
         
-         
+        Nen n = Main.gameData.nen;
+        if(Math.abs(n.x - this.x) >= 500){
+            Main.gameData.removeGameData(this);
+        }
+        
 //        synchronized (bullets) {
 //            for (GameFigure b : bullets) {
 //                b.update();
@@ -71,7 +75,7 @@ public class Shuriken extends Projectiles {
 
     @Override
     public Rectangle2D.Double getCollisionBox() {
-        return new Rectangle2D.Double(super.x - super.size, super.y - super.size, super.size * 2, super.size * 2);
+        return new Rectangle2D.Double(super.x, super.y, super.size * 2, super.size * 2);
     }
 
     

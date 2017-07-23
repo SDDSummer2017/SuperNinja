@@ -42,6 +42,9 @@ public class Rai extends Enemy {
         
         String imagePath = System.getProperty("user.dir");
         String separator = System.getProperty("file.separator");
+        
+        super.hit = getImage(imagePath + separator + "images" + separator
+        + "Rai_Hit.png");
         super.attack1 = getImage(imagePath + separator + "images" + separator
                 + "ViperStrike.png");
         super.attack2 = getImage(imagePath + separator + "images" + separator
