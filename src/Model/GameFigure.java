@@ -58,7 +58,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     public ArrayList<Force> forces;
  
     public double maxHealth; 
-    public GameFigure(double x, double y, double size, boolean isGoodGuy) {
+    public GameFigure(double x, double y, double size, boolean isGoodGuy, ImageResource imageResource) {
  
         this.hit = false;
         this.x = x;
@@ -73,22 +73,22 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         maxHealth = health; 
   
         this.moveFrameIndex = this.idleFrameIndex = this.jumpFrameIndex = this.deathFrameIndex = 0;
-        this.deathAnimation = null;
-        this.runAnimation = null;
-        this.dashAnimation = null;
-        this.lightAttackAnimation = null;
-        this.heavyAttackAnimation = null;
-        this.rangeAttackAnimation = null;
-        this.specialAttack1Animation = null;
-        this.specialAttack2Animation = null;
-        this.idleAnimation = null;
-        this.jumpAnimation = null;
+        this.deathAnimation = imageResource.deathAnimation;
+        this.runAnimation = imageResource.runAnimation;
+        this.dashAnimation = imageResource.dashAnimation;
+        this.lightAttackAnimation = imageResource.lightAttackAnimation;
+        this.heavyAttackAnimation = imageResource.heavyAttackAnimation;
+        this.rangeAttackAnimation = imageResource.rangeAttackAnimation;
+        this.specialAttack1Animation = imageResource.specialAttack1Animation;
+        this.specialAttack2Animation = imageResource.specialAttack2Animation;
+        this.idleAnimation = imageResource.idleAnimation;
+        this.jumpAnimation = imageResource.jumpAnimation;
         this.staticImage = null;
         this.forces = new ArrayList<Force>();
         
     }
     //Animation game figure constructor (backwards compatibility
-    public GameFigure(double x, double y, double size, int animationLength, String name, boolean isGoodGuy) {
+    public GameFigure(double x, double y, double size, int animationLength, String name, boolean isGoodGuy, ImageResource imageResource) {
         this.hit = false;
         this.x = x;
         this.y = y;
@@ -101,16 +101,16 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
  
         maxHealth = health;
  
-        this.deathAnimation = new Image[animationLength];
-        this.runAnimation = new Image[animationLength];
-        this.dashAnimation = new Image[animationLength];
-        this.lightAttackAnimation = new Image[animationLength];
-        this.heavyAttackAnimation = new Image[animationLength];
-        this.rangeAttackAnimation = new Image[animationLength];
-        this.specialAttack1Animation = new Image[animationLength];
-        this.specialAttack2Animation = new Image[animationLength];
-        this.idleAnimation = new Image[animationLength];
-        this.jumpAnimation = new Image[animationLength];
+        this.deathAnimation = imageResource.deathAnimation;
+        this.runAnimation = imageResource.runAnimation;
+        this.dashAnimation = imageResource.deathAnimation;
+        this.lightAttackAnimation = imageResource.lightAttackAnimation ;
+        this.heavyAttackAnimation =  imageResource.heavyAttackAnimation;
+        this.rangeAttackAnimation = imageResource.rangeAttackAnimation;
+        this.specialAttack1Animation = imageResource.specialAttack1Animation;
+        this.specialAttack2Animation = imageResource.specialAttack2Animation;
+        this.idleAnimation = imageResource.idleAnimation;
+        this.jumpAnimation = imageResource.jumpAnimation;
         this.staticImage = null;
         
         this.diedFacingRight = false;

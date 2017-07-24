@@ -5,6 +5,7 @@
  */
 package Level;
 
+import Model.GameData;
 import Model.GameFigure;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -18,7 +19,7 @@ import java.awt.geom.Rectangle2D;
 public class Platform extends GameFigure{
     public Tile tile; 
     public Platform(double x, double y, Tile tile) {
-        super(x, y, 128, false);
+        super(x, y, 128, false, GameData.windmillResource);
          collisionBox = new Rectangle2D.Double(x, y, 128, 128);
          this.tile = tile; 
            

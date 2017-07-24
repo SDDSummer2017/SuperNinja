@@ -27,7 +27,7 @@ public class ProjectileWindmillShuriken extends Projectiles{
     public double secondY;
     
     public ProjectileWindmillShuriken(double x, double y, double tx, double ty, Color color, boolean isGoodGuy, int d, double s) {
-        super(x, y, tx, ty, color, isGoodGuy, d, s, 8, "WindMillShuriken");
+        super(x, y, tx, ty, color, isGoodGuy, d, s, GameData.windmillResource);
         finnished = false;
         this.targetX = tx;
         this.targetY = ty;

@@ -23,7 +23,7 @@ public class Shuriken extends Projectiles {
     
     public Shuriken(double x, double y, double tx, double ty, Color color, boolean isGoodGuy, int d, double s) {
 //        super(x, y, tx, ty, color, isGoodGuy, d, s);
-        super(x, y, tx, ty, color, isGoodGuy, d, s, 8,"Shuriken");
+        super(x, y, tx, ty, color, isGoodGuy, d, s, GameData.projectileResource);
         this.targetX = tx;
         this.targetY = ty;
         this.color = color;

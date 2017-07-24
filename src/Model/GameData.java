@@ -47,7 +47,15 @@ public class GameData implements Subject, Updateable, Renderable  {
     private final Force rfriction;
     private CheckpointHandler checkpointHandler;
     public Thread musicThread; 
-        
+    public static ImageResource terroResource = new ImageResource("Terro", 8); 
+    public static ImageResource kisaraResource = new ImageResource("Kisara", 8);    
+    public static ImageResource raiResource = new ImageResource("Rai", 8);   
+    public static ImageResource sageResource = new ImageResource("Sage", 8);  
+    public static ImageResource projectileResource = new ImageResource("Shuriken", 8);      
+    public static ImageResource shockWaveResource = new ImageResource("EarthShatter", 8);
+    public static ImageResource nenResource = new ImageResource("Nen", 8);
+    public static ImageResource windmillResource = new ImageResource("WindmMllShuriken", 8);   
+    
     public GameData()  {
       
         

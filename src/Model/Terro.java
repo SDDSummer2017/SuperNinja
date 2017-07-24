@@ -37,7 +37,7 @@ public class Terro extends Enemy{
    ArrayList<Observer> observers = new ArrayList<>();
    
     public Terro(double x, double y, double size) {
-        super(x, y, size, 8, "Terro");
+        super(x, y, size, GameData.terroResource);
         
         
         

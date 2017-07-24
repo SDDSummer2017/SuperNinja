@@ -6,6 +6,7 @@
 package Level;
 
 import Controller.Main;
+import Model.GameData;
 import Model.GameFigure;
 import Model.HitBox;
 import Physics.Acceleration;
@@ -25,7 +26,7 @@ public class Fireball extends GameFigure {
     HitBox hitbox;
     int iterable = 0; 
     public Fireball(double x, double y) {
-        super(x + 32, y, 64, false);
+        super(x + 32, y, 64, false, GameData.windmillResource);
         this.forces.add(new Force(9, new Acceleration(0, -6)));
         this.velocity = new Velocity();
         

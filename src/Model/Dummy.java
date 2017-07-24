@@ -19,7 +19,7 @@ public class Dummy extends GameFigure {
     private Rectangle2D.Double collisionBox;
     
     public Dummy(double x, double y, double size) {
-        super(x, y, size, false);
+        super(x, y, size, false, null);
         super.health = 50;
         collisionBox = new Rectangle2D.Double(x, y, size, size);
     }

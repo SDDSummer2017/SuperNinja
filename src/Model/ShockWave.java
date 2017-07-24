@@ -31,7 +31,7 @@ public class ShockWave extends GameFigure {
     private boolean isFinished;
     
     public ShockWave(double x, double y, int width, int height, int direction, boolean isGoodGuy) {
-        super(x, y, width + height,8, "EarthShatter", isGoodGuy);
+        super(x, y, width + height, isGoodGuy, GameData.shockWaveResource);
         shatter_x = (int)x;
         shatter_y = (int)y;
         shatter_h = height;

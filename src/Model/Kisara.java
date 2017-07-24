@@ -38,7 +38,7 @@ public class Kisara extends Enemy{
    ArrayList<Observer> observers = new ArrayList<>();
 
     public Kisara(double x, double y, double size) {
-        super(x, y, size, 8, "Kisara");
+        super(x, y, size, GameData.kisaraResource);
         
         
         super.mState = new Neutral(this, observers);
