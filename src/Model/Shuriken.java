@@ -15,6 +15,7 @@ public class Shuriken extends Projectiles {
     private final Color color;
     public double targetX, targetY, dx, dy;
     private double damage = 50;
+    public final Image[] runAnimation;
     
     private final float moveDistance = 20;
     Vector2f currentLocation;
@@ -29,6 +30,7 @@ public class Shuriken extends Projectiles {
         this.color = color;
         this.damage = 10;
         this.size = 3;
+        this.runAnimation = Main.gameData.a_store.shurikenAnimation;
         this.currentLocation = new Vector2f((float)super.x, (float)super.y);
         this.targetPath = new Vector2f((float)targetX,(float)targetY);
         targetPath.sub(currentLocation);

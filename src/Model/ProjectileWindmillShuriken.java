@@ -25,6 +25,7 @@ public class ProjectileWindmillShuriken extends Projectiles{
     public boolean finnished;
     public double secondX;
     public double secondY;
+    public final Image[] runAnimation;
     
     public ProjectileWindmillShuriken(double x, double y, double tx, double ty, Color color, boolean isGoodGuy, int d, double s) {
         super(x, y, tx, ty, color, isGoodGuy, d, s, 8, "WindMillShuriken");
@@ -34,6 +35,7 @@ public class ProjectileWindmillShuriken extends Projectiles{
         this.color = color;
         this.damage = 30;
         this.size = 30;
+        this.runAnimation = Main.gameData.a_store.windmillShurikenAnimation;
         this.currentLocation = new Vector2f((float)super.x, (float)super.y);
         this.targetPath = new Vector2f((float)targetX,(float)targetY);
         secondY = ty;

@@ -5,6 +5,7 @@
  */
 package Model;
 
+import Controller.Main;
 import EventHandling.Observer;
 import Model.States.Sage.Chant;
 import Model.States.Sage.FlameDragon;
@@ -27,6 +28,8 @@ import javax.swing.JOptionPane;
  */
 public class Sage extends Enemy {
     public int c; // used as a display count for placeholders only
+    public final Image[] runAnimation, idleAnimation, deathAnimation; 
+    public final Image[] lightAttackAnimation, heavyAttackAnimation, rangeAttackAnimation;
     
     public Sage(double x, double y, double size) {
         super(x, y, size, 8, "Sage");
@@ -36,6 +39,13 @@ public class Sage extends Enemy {
         super.cState = new Chant(this, observers);
         this.health = 70; 
         this.maxHealth = health;
+        
+        this.deathAnimation = Main.gameData.a_store.deathAnimation_Sage;
+        this.runAnimation = Main.gameData.a_store.rangeAttackAnimation_Sage;
+        this.idleAnimation = Main.gameData.a_store.idleAnimation_Sage;
+        this.lightAttackAnimation = Main.gameData.a_store.lightAttackAnimation_Sage;
+        this.heavyAttackAnimation = Main.gameData.a_store.heavyAttackAnimation_Sage;
+        this.rangeAttackAnimation = Main.gameData.a_store.rangeAttackAnimation_Sage;
     }
     
     @Override

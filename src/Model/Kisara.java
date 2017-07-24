@@ -5,6 +5,7 @@
  */
 package Model;
 
+import Controller.Main;
 import EventHandling.Observer;
 import static Model.GameFigure.GRAVITY;
 import Model.States.CombatState;
@@ -36,6 +37,8 @@ public class Kisara extends Enemy{
    public boolean direction; //used in movement to toggle movement towards Nen or away
    public int countDelay; // used as a delay counter so Terro isnt constantly attacking 
    ArrayList<Observer> observers = new ArrayList<>();
+   public final Image[] runAnimation, idleAnimation, jumpAnimation, deathAnimation; 
+   public final Image[] lightAttackAnimation, heavyAttackAnimation, rangeAttackAnimation;
 
     public Kisara(double x, double y, double size) {
         super(x, y, size, 8, "Kisara");
@@ -49,6 +52,14 @@ public class Kisara extends Enemy{
         
         //false for left true for right in movementState
         this.direction = false;
+        
+        this.deathAnimation = Main.gameData.a_store.deathAnimation_Kisara;
+        this.runAnimation = Main.gameData.a_store.rangeAttackAnimation_Kisara;
+        this.idleAnimation = Main.gameData.a_store.idleAnimation_Kisara;
+        this.jumpAnimation = Main.gameData.a_store.jumpAnimation_Kisara;
+        this.lightAttackAnimation = Main.gameData.a_store.lightAttackAnimation_Kisara;
+        this.heavyAttackAnimation = Main.gameData.a_store.heavyAttackAnimation_Kisara;
+        this.rangeAttackAnimation = Main.gameData.a_store.rangeAttackAnimation_Kisara;
     }
     
     //the following delayCount functions are used to delay the actions of Kisaras' for attack

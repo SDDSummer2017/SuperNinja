@@ -29,6 +29,7 @@ public class ShockWave extends GameFigure {
     private int cumulativeDistance;
     private int direction;
     private boolean isFinished;
+    public final Image[] runAnimation;
     
     public ShockWave(double x, double y, int width, int height, int direction, boolean isGoodGuy) {
         super(x, y, width + height,8, "EarthShatter", isGoodGuy);
@@ -37,6 +38,7 @@ public class ShockWave extends GameFigure {
         shatter_h = height;
         shatter_w = width;
         this.direction = direction;
+        this.runAnimation = Main.gameData.a_store.earthShatterAnimation;
         hitbox =  new HitBox(shatter_x, shatter_y, shatter_w, shatter_h, this, new DamageEffect(this, 40 ,5000));
      //  cState = new Shattering(this, null,shatter_x, shatter_y, shatter_w, shatter_h, direction);
       

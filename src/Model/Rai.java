@@ -5,6 +5,7 @@
  */
 package Model;
 
+import Controller.Main;
 import EventHandling.Observer;
 import Model.States.CombatState;
 import Model.States.MotionState;
@@ -31,6 +32,8 @@ import javax.swing.JOptionPane;
  */
 public class Rai extends Enemy {
     public int c; // used as a display count for placeholders only
+    public final Image[] runAnimation, idleAnimation, deathAnimation; 
+    public final Image[] lightAttackAnimation, heavyAttackAnimation, rangeAttackAnimation;
     
     public Rai(double x, double y, double size) {
         super(x, y, size, 8, "Rai");
@@ -42,7 +45,12 @@ public class Rai extends Enemy {
         
         //System.out.println("mState = " + super.mState);
         //System.out.println("cState = " + super.cState);
-        
+        this.deathAnimation = Main.gameData.a_store.deathAnimation_Rai;
+        this.runAnimation = Main.gameData.a_store.rangeAttackAnimation_Rai;
+        this.idleAnimation = Main.gameData.a_store.idleAnimation_Rai;
+        this.lightAttackAnimation = Main.gameData.a_store.lightAttackAnimation_Rai;
+        this.heavyAttackAnimation = Main.gameData.a_store.heavyAttackAnimation_Rai;
+        this.rangeAttackAnimation = Main.gameData.a_store.rangeAttackAnimation_Rai;
     }
         
     @Override

@@ -5,6 +5,7 @@
  */
 package Model;
 
+import Controller.Main;
 import EventHandling.Observer;
 import Model.States.CombatState;
 import Model.States.MotionState;
@@ -31,10 +32,12 @@ import javax.swing.JOptionPane;
  */
 public class Terro extends Enemy{
     
-   public int c; // used as a display count for placeholders only
-   public boolean direction; //used in movement to toggle movement towards Nen or away
-   public int countDelay; // used as a delay counter so Terro isnt constantly attacking 
-   ArrayList<Observer> observers = new ArrayList<>();
+    public int c; // used as a display count for placeholders only
+    public boolean direction; //used in movement to toggle movement towards Nen or away
+    public int countDelay; // used as a delay counter so Terro isnt constantly attacking 
+    ArrayList<Observer> observers = new ArrayList<>();
+    public final Image[] runAnimation, idleAnimation, jumpAnimation, deathAnimation; 
+    public final Image[] lightAttackAnimation, heavyAttackAnimation, rangeAttackAnimation;
    
     public Terro(double x, double y, double size) {
         super(x, y, size, 8, "Terro");
@@ -52,6 +55,13 @@ public class Terro extends Enemy{
         
         //System.out.println("mState = " + super.mState);
         //System.out.println("cState = " + super.cState);
+        this.deathAnimation = Main.gameData.a_store.deathAnimation_Terro;
+        this.runAnimation = Main.gameData.a_store.rangeAttackAnimation_Terro;
+        this.idleAnimation = Main.gameData.a_store.idleAnimation_Terro;
+        this.jumpAnimation = Main.gameData.a_store.jumpAnimation_Terro;
+        this.lightAttackAnimation = Main.gameData.a_store.lightAttackAnimation_Terro;
+        this.heavyAttackAnimation = Main.gameData.a_store.heavyAttackAnimation_Terro;
+        this.rangeAttackAnimation = Main.gameData.a_store.rangeAttackAnimation_Terro;
         
 
     }
