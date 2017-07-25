@@ -9,6 +9,7 @@ import Model.States.CombatState;
 import Model.States.Nen.NeutralCombat;
 import java.awt.Color;
 import java.util.ArrayList;
+import view.Camera;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -59,7 +60,12 @@ public class ThrowingMode extends CombatState{
         {
             lastThrown = System.currentTimeMillis();
             throwCount++; 
-            Main.gameData.addGameData(new Shuriken(gameFigure.x + gameFigure.size/2, 
+            
+            tx += Main.gamePanel.camera.camX;
+            ty += Main.gamePanel.camera.camY;
+                System.out.println("Camera: ( " + Main.gamePanel.camera.camX + " , " + Main.gamePanel.camera.camY + " )");
+            
+            Main.gameData.addGameData(new Shuriken(gameFigure.x  + gameFigure.size/2, 
                    gameFigure.y + gameFigure.size/2, tx, ty, Color.yellow, true, 10, 3)); 
             
         }
