@@ -69,6 +69,8 @@ public class ThrowingMode extends CombatState{
                    gameFigure.y + gameFigure.size/2, tx, ty, Color.yellow, true, 10, 3)); 
             
         }
+        
+        this.notifyObservers("Shuriken");
     }
     
     public boolean getCoolDown
