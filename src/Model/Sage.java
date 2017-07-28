@@ -58,7 +58,7 @@ public class Sage extends Enemy {
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             deathFrameIndex = (deathFrameIndex == deathAnimation.length-1) ? deathFrameIndex : deathFrameIndex + 1;                 
         }
-        //LIGHT ATTACK (Steel Twister)
+        //LIGHT ATTACK (Soul Flame)
         else if(cState instanceof SoulFlame){
             resetAnimationFrames("attack");
             
@@ -67,7 +67,7 @@ public class Sage extends Enemy {
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             attackFrameIndex = (attackFrameIndex == lightAttackAnimation.length-1) ? 0 : attackFrameIndex + 1;                 
         }
-        //HEAVY ATTACK (Viper Strike)
+        //HEAVY ATTACK (Flame Dragon)
         else if(cState instanceof FlameDragon){
             resetAnimationFrames("attack");
             
