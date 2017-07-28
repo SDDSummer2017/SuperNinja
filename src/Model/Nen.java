@@ -213,8 +213,7 @@ public class Nen extends GameFigure implements Subject{
         g.fillRect(3, GamePanel.CAMERA_HEIGHT - 102, 10, 100);
 
         g.setColor(Color.green);
-        g.fillRect(3, GamePanel.CAMERA_HEIGHT - (int) this.health - 2, 10, (int) this.health);
-        ((Graphics2D)g).draw(getCollisionBox());
+        g.fillRect(3, GamePanel.CAMERA_HEIGHT - (int) this.health - 2, 10, (int) this.health); 
     }
     
     private void resetAnimationFrames(String currentAnimation){

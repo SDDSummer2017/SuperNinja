@@ -48,9 +48,7 @@ public class ProjectileSmokeBomb extends Projectiles{
     }
     
     @Override
-    public void render(Graphics g) {
-        g.setColor(color);
-        g.fillOval((int)x, (int)y, (int)super.size * 2, (int)super.size * 2);
+    public void render(Graphics g) { 
         //If we are moving, reset the idle animtion frame index
 
         Image frameImage;

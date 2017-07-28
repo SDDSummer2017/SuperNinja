@@ -18,7 +18,7 @@ import java.util.ArrayList;
  *
  * @author Garrett A. Clement
  */
-public class HitBox implements Collision, Renderable, Updateable {
+public class HitBox implements Collision, Updateable {
 
     private int length;
     private int width; 
@@ -51,17 +51,6 @@ public class HitBox implements Collision, Renderable, Updateable {
     public void translate(double x, double y, double width, double height)
     {
         collisionBox = new Rectangle2D.Double(x, y, width, height);
-    }
-     
-    @Override
-    public void render(Graphics g) {
-       Graphics2D g2 = (Graphics2D)g; 
-
-       g2.setColor(Color.green);
-       g2.draw(collisionBox);
-       g2.fill(collisionBox); 
-       g2.setColor(Color.black); 
-       
     } 
     
     @Override
