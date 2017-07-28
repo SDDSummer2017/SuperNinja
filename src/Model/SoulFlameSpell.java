@@ -12,6 +12,7 @@ import View.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 import javax.vecmath.Vector2d;
 import javax.vecmath.Vector2f;
@@ -33,7 +34,7 @@ public class SoulFlameSpell extends Projectiles {
     
     
     public SoulFlameSpell(double x, double y, double tx, double ty) {
-        super(x, y, tx, ty, Color.RED, false, 25, 40);
+        super(x, y, tx, ty, Color.RED, false, 25, 40, GameData.fireballResource);
         //super(x, y, 40);
         this.targetX = tx;
         this.targetY = ty; 
@@ -53,7 +54,14 @@ public class SoulFlameSpell extends Projectiles {
     @Override
     public void render(Graphics g) {
         g.setColor(color);
-        g.fillOval((int)(x - super.size), (int)(y - super.size), (int)super.size, (int)super.size);   
+//        g.fillOval((int)(x - super.size), (int)(y - super.size), (int)super.size, (int)super.size);
+        Image frameImage;
+
+        //Select frame image based on which direction Nen is facing
+        frameImage = (isFacingRight) ? runAnimation[moveFrameIndex] : GameFigure.flipImageHorizontally(runAnimation[moveFrameIndex]);
+
+        g.drawImage(frameImage, (int) (x - size - 10), (int) (y - size - 10), (int) super.size * 2, (int) super.size * 2, null);
+        moveFrameIndex = (moveFrameIndex == runAnimation.length-1) ? 0 : moveFrameIndex + 1;
     }
     @Override
     public void update() {       

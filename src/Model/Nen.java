@@ -36,8 +36,8 @@ public class Nen extends GameFigure implements Subject{
     private int hitBox_Y = 0;
     private int hitBox_width = 0;
     private int hitBox_height = 0;
-    private final int idleAnimationDelay = 2;
-    private int idleAnimationDelayCounter = 0;
+    private final int shatterAnimationDelay = 10;
+    private int shatterAnimationDelayCounter = 0;
       ArrayList<Observer> observers;
     private final SoundHandler soundHandler = new SoundHandler("");
     public boolean removeSelf = false; 
@@ -145,7 +145,11 @@ public class Nen extends GameFigure implements Subject{
             frameImage = (isFacingRight) ? specialAttack2Animation[attackFrameIndex] : GameFigure.flipImageHorizontally(specialAttack2Animation[attackFrameIndex]);
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-            attackFrameIndex = (attackFrameIndex == specialAttack2Animation.length-1) ? 0 : attackFrameIndex + 1;                      
+            if(shatterAnimationDelayCounter == shatterAnimationDelay){
+                attackFrameIndex = (attackFrameIndex == specialAttack2Animation.length-1) ? 0 : attackFrameIndex + 1;                      
+            }
+            else
+                shatterAnimationDelayCounter++;
         }
         //RUN
         else if(mState instanceof Move)

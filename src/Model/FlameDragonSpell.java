@@ -12,6 +12,7 @@ import View.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
@@ -28,7 +29,7 @@ public class FlameDragonSpell extends Projectiles {
     double amplitude = 20;
     double direction;
     public FlameDragonSpell(double x, double y, double size, int direction) {
-        super(x, y, 0, 0, Color.RED, false, 30, 40);
+        super(x, y, 0, 0, Color.RED, false, 30, 40, GameData.fireballResource);
         //super(x, y, size); 
         this.direction = direction;
         dragonBody = new ArrayList<>();
@@ -46,8 +47,8 @@ public class FlameDragonSpell extends Projectiles {
         {
             double x = h.getCollisionBox().x;
             double y = h.getCollisionBox().y;
-            g.fillOval((int)x, (int)y, (int)super.size , (int)super.size);
- 
+//            g.fillOval((int)x, (int)y, (int)super.size , (int)super.size);
+            
         } 
     }
     

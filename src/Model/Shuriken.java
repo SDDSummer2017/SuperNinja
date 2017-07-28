@@ -52,7 +52,7 @@ public class Shuriken extends Projectiles {
         //Select frame image based on which direction Nen is facing
         frameImage = (isFacingRight) ? runAnimation[moveFrameIndex] : GameFigure.flipImageHorizontally(runAnimation[moveFrameIndex]);
 
-        g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size * 2, (int) super.size * 2, null);
+        g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size * 4, (int) super.size * 4, null);
         moveFrameIndex = (moveFrameIndex == runAnimation.length-1) ? 0 : moveFrameIndex + 1;
     }
     @Override
@@ -69,19 +69,7 @@ public class Shuriken extends Projectiles {
             Main.gameData.removeGameData(this);
             Main.gameData.removeGameData(hitbox);
         }
-        
-//        synchronized (bullets) {
-//            for (GameFigure b : bullets) {
-//                b.update();
-//                if(b.hit==true 
-//                        || b.x < 0
-//                        || b.x > GamePanel.CAMERA_WIDTH
-//                        || b.y > GamePanel.CAMERA_HEIGHT
-//                        || b.y <0)deadBullets.add(b);
-//            }
-//        }       
-  
-        }
+    }
 
     @Override
     public Rectangle2D.Double getCollisionBox() {

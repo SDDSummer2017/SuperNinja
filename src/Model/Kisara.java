@@ -181,11 +181,25 @@ public class Kisara extends Enemy{
         //IDLE
         else
         {
+//            resetAnimationFrames("idle");
+//            frameImage = (isFacingRight) ? idleAnimation[idleFrameIndex] : GameFigure.flipImageHorizontally(idleAnimation[idleFrameIndex]);
+//            
+//            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+//            idleFrameIndex = (idleFrameIndex == idleAnimation.length-1) ? 0 : idleFrameIndex + 1;
+            //If they are standing still we need to reset the frameCounter
             resetAnimationFrames("idle");
+
+            //Select frame image based on which direction Nen is facing
             frameImage = (isFacingRight) ? idleAnimation[idleFrameIndex] : GameFigure.flipImageHorizontally(idleAnimation[idleFrameIndex]);
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-            idleFrameIndex = (idleFrameIndex == idleAnimation.length-1) ? 0 : idleFrameIndex + 1;
+            if (idleAnimationDelayCounter == idleAnimationDelay){
+               idleFrameIndex = (idleFrameIndex == idleAnimation.length-1) ? 0 : idleFrameIndex + 1;
+               idleAnimationDelayCounter = 0;
+            }
+            else {
+                idleAnimationDelayCounter++;
+            }
         
         }
       

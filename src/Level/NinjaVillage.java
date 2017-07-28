@@ -109,24 +109,24 @@ public class NinjaVillage extends Level {
             {
                 if(i == 2)
                 {
-                    Spawner s =  new Spawner(i * 128, 535, this, Kisara.class, new Tile( i * 128, i * 535, ground));
-                    s.registerObserver(checkpointHandler);
-                    
-                    this.terrain.add(s);
+//                    Spawner s =  new Spawner(i * 128, 535, this, Kisara.class, new Tile( i * 128, i * 535, ground));
+//                    s.registerObserver(checkpointHandler);
+//                    
+//                    this.terrain.add(s);
                 }
                 else if(i == 6)
                 {
-                     Spawner s =  new Spawner(i * 128, 535, this, Rai.class, new Tile( i * 128, i * 535, ground));
-                    s.registerObserver(checkpointHandler);
-                    
-                    this.terrain.add(s);
+//                     Spawner s =  new Spawner(i * 128, 535, this, Rai.class, new Tile( i * 128, i * 535, ground));
+//                    s.registerObserver(checkpointHandler);
+//                    
+//                    this.terrain.add(s);
                 }
                 else if(i == 3)
                 {
-                    Spawner s =  new Spawner(i * 128, 535, this, Terro.class, new Tile( i * 128, i * 535, ground));
-                    s.registerObserver(checkpointHandler);
-                    
-                    this.terrain.add(s);
+//                    Spawner s =  new Spawner(i * 128, 535, this, Terro.class, new Tile( i * 128, i * 535, ground));
+//                    s.registerObserver(checkpointHandler);
+//                    
+//                    this.terrain.add(s);
                 }
                  else if(i == 7)
                 {
