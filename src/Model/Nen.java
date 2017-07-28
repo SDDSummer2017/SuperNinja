@@ -13,6 +13,7 @@ import EventHandling.SoundHandler;
  
  
 import EventHandling.Subject;
+import Model.States.Nen.Crouch;
  
 import Model.States.Nen.Dash;
 import Model.States.Nen.GroundShatter;
@@ -192,7 +193,10 @@ public class Nen extends GameFigure implements Subject{
             resetAnimationFrames("idle");
 
             //Select frame image based on which direction Nen is facing
-            frameImage = (isFacingRight) ? idleAnimation[idleFrameIndex] : GameFigure.flipImageHorizontally(idleAnimation[idleFrameIndex]);
+            if (mState instanceof Crouch)
+                frameImage = (isFacingRight) ? crouchAnimation[idleFrameIndex] : GameFigure.flipImageHorizontally(crouchAnimation[idleFrameIndex]);
+            else
+                frameImage = (isFacingRight) ? idleAnimation[idleFrameIndex] : GameFigure.flipImageHorizontally(idleAnimation[idleFrameIndex]);
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             if (idleAnimationDelayCounter == idleAnimationDelay){

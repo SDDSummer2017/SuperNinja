@@ -45,7 +45,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     public int moveFrameIndex, idleFrameIndex, jumpFrameIndex, attackFrameIndex, deathFrameIndex;
     public boolean jump, movingLeft, movingRight, diedFacingRight;
     public Image staticImage;
-    public final Image[] runAnimation, idleAnimation, jumpAnimation, dashAnimation, deathAnimation; 
+    public final Image[] runAnimation, idleAnimation, crouchAnimation, jumpAnimation, dashAnimation, deathAnimation; 
     public final Image[] lightAttackAnimation, heavyAttackAnimation, rangeAttackAnimation;
     public final Image[] specialAttack1Animation, specialAttack2Animation;
     public final int idleAnimationDelay = 2;
@@ -85,6 +85,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         this.specialAttack2Animation = imageResource.specialAttack2Animation;
         this.idleAnimation = imageResource.idleAnimation;
         this.jumpAnimation = imageResource.jumpAnimation;
+        this.crouchAnimation = imageResource.crouchAnimation;
         this.staticImage = null;
         this.forces = new ArrayList<Force>();
         
@@ -112,6 +113,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
         this.specialAttack1Animation = imageResource.specialAttack1Animation;
         this.specialAttack2Animation = imageResource.specialAttack2Animation;
         this.idleAnimation = imageResource.idleAnimation;
+        this.crouchAnimation = imageResource.crouchAnimation;
         this.jumpAnimation = imageResource.jumpAnimation;
         this.staticImage = null;
         

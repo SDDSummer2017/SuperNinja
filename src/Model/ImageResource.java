@@ -14,13 +14,13 @@ import java.io.File;
  * @author abilb
  */
 public class ImageResource {
-      public  Image[] runAnimation, idleAnimation, jumpAnimation, dashAnimation, deathAnimation; 
-    public   Image[] lightAttackAnimation, heavyAttackAnimation, rangeAttackAnimation;
+    public  Image[] runAnimation, idleAnimation, crouchAnimation, jumpAnimation, dashAnimation, deathAnimation; 
+    public  Image[] lightAttackAnimation, heavyAttackAnimation, rangeAttackAnimation;
     public  Image[] specialAttack1Animation, specialAttack2Animation;
     
     public ImageResource(String name, int animationLength)
     {
-             this.deathAnimation = new Image[animationLength];
+        this.deathAnimation = new Image[animationLength];
         this.runAnimation = new Image[animationLength];
         this.dashAnimation = new Image[animationLength];
         this.lightAttackAnimation = new Image[animationLength];
@@ -30,6 +30,7 @@ public class ImageResource {
         this.specialAttack2Animation = new Image[animationLength];
         this.idleAnimation = new Image[animationLength];
         this.jumpAnimation = new Image[animationLength];
+        this.crouchAnimation = new Image[animationLength];
         loadAnimations(name);
     }
     private void loadAnimations(String name){
@@ -40,6 +41,7 @@ public class ImageResource {
 
         String movePath = imagePath + separator + "Run";
         String idlePath = imagePath + separator + "Idle";
+        String crouchPath = imagePath + separator + "Crouch";
         String dashPath = imagePath + separator + "Dash"; 
         String jumpPath = imagePath + separator + "Jump";
         String deathPath = imagePath + separator + "Death";
@@ -62,6 +64,13 @@ public class ImageResource {
         if (fileExists(idlePath)){
             for(int i=0;i<idleAnimation.length;i++){
                 idleAnimation[i] = getImage(idlePath + separator + "Idle_" + i + ".png");
+            } 
+        }
+        
+        //Crouch Animation 
+        if (fileExists(crouchPath)){
+            for(int i=0;i<crouchAnimation.length;i++){
+                crouchAnimation[i] = getImage(crouchPath + separator + "Crouch_" + i + ".png");
             } 
         }
         
