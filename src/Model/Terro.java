@@ -35,6 +35,8 @@ public class Terro extends Enemy{
    public boolean direction; //used in movement to toggle movement towards Nen or away
    public int countDelay; // used as a delay counter so Terro isnt constantly attacking 
    ArrayList<Observer> observers = new ArrayList<>();
+   public int windmillAnimationDelay = 4;
+   public int windmillAnimationCount = 0;
    
     public Terro(double x, double y, double size) {
         super(x, y, size, GameData.terroResource);
@@ -149,9 +151,14 @@ public class Terro extends Enemy{
             resetAnimationFrames("attack");
             
             frameImage = (isFacingRight) ? heavyAttackAnimation[attackFrameIndex] : GameFigure.flipImageHorizontally(heavyAttackAnimation[attackFrameIndex]);
-            
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-            attackFrameIndex = (attackFrameIndex == heavyAttackAnimation.length-1) ? 0 : attackFrameIndex + 1;                      
+            
+            if (windmillAnimationCount == windmillAnimationDelay){
+                attackFrameIndex = (attackFrameIndex == heavyAttackAnimation.length-1) ? 0 : attackFrameIndex + 1;
+                windmillAnimationCount = 0;
+            }
+            else
+                windmillAnimationCount++;                    
         }
         else if(mState instanceof Movement)
         {

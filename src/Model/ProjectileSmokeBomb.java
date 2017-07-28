@@ -11,6 +11,7 @@ import View.GamePanel;
 import java.awt.Color;
 import static java.awt.Color.BLUE;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 import javax.vecmath.Vector2f;
 
@@ -26,7 +27,7 @@ public class ProjectileSmokeBomb extends Projectiles{
     private static final int growth = 8;
     
     public ProjectileSmokeBomb(double x, double y, double tx, double ty, Color color, boolean isGoodGuy, int d, double s) {
-        super(x, y, tx, ty, color, isGoodGuy, d, s);
+        super(x, y, tx, ty, color, isGoodGuy, d, s, GameData.smokebombResource);
         finnished = false;
         this.targetX = tx;
         this.targetY = ty;
@@ -49,7 +50,15 @@ public class ProjectileSmokeBomb extends Projectiles{
     @Override
     public void render(Graphics g) {
         g.setColor(color);
-        g.fillOval((int)x, (int)y, (int)super.size * 2, (int)super.size * 2);   
+        g.fillOval((int)x, (int)y, (int)super.size * 2, (int)super.size * 2);
+        //If we are moving, reset the idle animtion frame index
+
+        Image frameImage;
+        //Select frame image based on which direction Nen is facing
+        frameImage = (isFacingRight) ? runAnimation[moveFrameIndex] : GameFigure.flipImageHorizontally(runAnimation[moveFrameIndex]);
+
+        g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size * 2, (int) super.size * 2, null);
+        moveFrameIndex = (moveFrameIndex == runAnimation.length-1) ? 0 : moveFrameIndex + 1;
     }
     
     @Override

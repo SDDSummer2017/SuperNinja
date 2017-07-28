@@ -48,7 +48,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     public final Image[] runAnimation, idleAnimation, crouchAnimation, jumpAnimation, dashAnimation, deathAnimation; 
     public final Image[] lightAttackAnimation, heavyAttackAnimation, rangeAttackAnimation;
     public final Image[] specialAttack1Animation, specialAttack2Animation;
-    public final int idleAnimationDelay = 2;
+    public int idleAnimationDelay = 2;
     public int idleAnimationDelayCounter = 0;
     
  

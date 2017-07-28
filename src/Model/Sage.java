@@ -36,6 +36,7 @@ public class Sage extends Enemy {
         super.cState = new Chant(this, observers);
         this.health = 70; 
         this.maxHealth = health;
+        this.idleAnimationDelay = 6;
     }
     
     @Override
@@ -88,12 +89,29 @@ public class Sage extends Enemy {
 
         else
         {
+//            resetAnimationFrames("idle");
+//            
+//            frameImage = (isFacingRight) ? idleAnimation[idleFrameIndex] : GameFigure.flipImageHorizontally(idleAnimation[idleFrameIndex]);
+//            
+//            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+//            idleFrameIndex = (idleFrameIndex == idleAnimation.length-1) ? 0 : idleFrameIndex + 1;
+            //If they are standing still we need to reset the frameCounter
             resetAnimationFrames("idle");
+
+            //Select frame image based on which direction Nen is facing
+            Image frameIamge;
             
             frameImage = (isFacingRight) ? idleAnimation[idleFrameIndex] : GameFigure.flipImageHorizontally(idleAnimation[idleFrameIndex]);
             
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
-            idleFrameIndex = (idleFrameIndex == idleAnimation.length-1) ? 0 : idleFrameIndex + 1;
+            if (idleAnimationDelayCounter == idleAnimationDelay){
+               idleFrameIndex = (idleFrameIndex == idleAnimation.length-1) ? 0 : idleFrameIndex + 1;
+               idleAnimationDelayCounter = 0;
+            }
+            else {
+                idleAnimationDelayCounter++;
+            }
+            
         
         }
           

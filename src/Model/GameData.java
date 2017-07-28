@@ -56,6 +56,7 @@ public class GameData implements Subject, Updateable, Renderable  {
     public static ImageResource nenResource = new ImageResource("Nen", 8);
     public static ImageResource windmillResource = new ImageResource("WindMillShuriken", 8);
     public static ImageResource fireballResource = new ImageResource("Fireball", 8);
+    public static ImageResource smokebombResource = new ImageResource("Smokebomb", 8);
     
     public GameData()  {
       
