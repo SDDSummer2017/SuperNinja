@@ -145,6 +145,15 @@ public class Terro extends Enemy{
             g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
             deathFrameIndex = (deathFrameIndex == deathAnimation.length-1) ? deathFrameIndex : deathFrameIndex + 1;                 
         }
+        //LIGHT ATTACK (Shuriken Throw)
+        else if(cState instanceof ShurikenThrow){
+            resetAnimationFrames("attack");
+            
+            frameImage = (isFacingRight) ? lightAttackAnimation[attackFrameIndex] : GameFigure.flipImageHorizontally(lightAttackAnimation[attackFrameIndex]);
+            
+            g.drawImage(frameImage, (int) super.x, (int) super.y, (int) super.size, (int) super.size, null);
+            attackFrameIndex = (attackFrameIndex == lightAttackAnimation.length-1) ? 0 : attackFrameIndex + 1;                 
+        }
          
         //HEAVY ATTACK (Windmill Shuriken)
         else if(cState instanceof WindmillShuriken){
