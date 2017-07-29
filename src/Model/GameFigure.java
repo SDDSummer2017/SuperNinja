@@ -37,7 +37,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     public boolean airborn;
     public Point2D.Double location;
     public static final int GRAVITY = 8;
-    public boolean hit;
+    public boolean hit, dead;
     public EffectsManager effectsManager;
     public HitBox hitbox;
     public boolean isGoodGuy;
@@ -50,6 +50,8 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     public final Image[] specialAttack1Animation, specialAttack2Animation;
     public int idleAnimationDelay = 2;
     public int idleAnimationDelayCounter = 0;
+    public final int DEATH_DELAY = 750;
+    public long deathTime;
     
  
     //Static game figure constructor (no animation)
@@ -63,6 +65,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     public GameFigure(double x, double y, double size, boolean isGoodGuy, ImageResource imageResource) {
  
         this.hit = false;
+        this.dead = false;
         this.x = x;
         this.y = y;
         this.size = size;
@@ -93,6 +96,7 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
     //Animation game figure constructor (backwards compatibility
     public GameFigure(double x, double y, double size, int animationLength, String name, boolean isGoodGuy, ImageResource imageResource) {
         this.hit = false;
+        this.dead = false;
         this.x = x;
         this.y = y;
         this.size = size;
@@ -217,8 +221,15 @@ public abstract class GameFigure implements Collision, Renderable, Updateable {
 
         effectsManager.applyEffects(this);
         
-        if(this.health <= 0) 
-            Main.gameData.removeGameData(this); 
+        //Once dead, wait a little before removing from RAM so we can see the death animation.
+        if(this.health <= 0){
+            if (this.dead == false){
+                this.deathTime = System.currentTimeMillis();
+                this.dead = true;
+            }else if (System.currentTimeMillis() - deathTime >= DEATH_DELAY)
+                Main.gameData.removeGameData(this); 
+        } 
+            
         
     }
     public void calculatePhysics()
