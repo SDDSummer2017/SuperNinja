@@ -50,14 +50,16 @@ public class CheckpointHandler implements Observer{
                     //TODO: add to Renderables Title Card
                     
                     gameData.level = new NinjaTower(gameData); 
-                    gameData.level.addGameData(gameData.nen);
-                    gameData.nen.x = gameData.level.nenStartX;
+                          gameData.nen.x = gameData.level.nenStartX;
                     gameData.nen.y = gameData.level.nenStartY;
                     
-                    gameData.titleCard = new TitleCard(gamePanel, "Level Complete");
- 
+                    gameData.level.addGameData(gameData.nen);
+                    
                     GamePanel.WORLD_HEIGHT = gameData.level.height;
                     GamePanel.WORLD_WIDTH = gameData.level.width;
+              
+                    gameData.titleCard = new TitleCard(gamePanel, "Level Complete");
+ 
                     
                     gameData.notifyObservers("Level Two");
                     

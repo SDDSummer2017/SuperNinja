@@ -34,8 +34,8 @@ public class NinjaTower extends Level{
             //This constructor is where level development currently happens. 
         this.width = 1900;
         this.height = 2560;
-        this.nenStartX = 80; 
-        this.nenStartY = 2490; 
+        this.nenStartX = -500; 
+        this.nenStartY = 2420; 
         this.gameData = gameData; 
         this.tiles = Collections.synchronizedList(new ArrayList<Tile>());  
         this.terrain = Collections.synchronizedList(new ArrayList<GameFigure>()); 
