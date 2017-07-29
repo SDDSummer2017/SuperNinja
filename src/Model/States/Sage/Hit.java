@@ -21,8 +21,7 @@ public class Hit extends CombatState{
     }
 
     @Override
-    public void execute() { 
-        System.out.println("Hey I am in the sages hit state");
+    public void execute() {  
         if (this.gameFigure.health <= 0){
             nextState("Death");
         }
